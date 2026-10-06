@@ -141,7 +141,13 @@ feature/talleres             ●───●
 
 ## 👥 Equipo
 
-> Agrega aquí los nombres de las personas que participan en el proyecto.
+| Integrante |
+|---|
+| Narciris Mena |
+| Laura Torres |
+| Daniel Getial |
+| Juan Rodriguez |
+| Aura Rodriguez |
 
 ---
 
