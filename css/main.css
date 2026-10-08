@@ -1,0 +1,19 @@
+:root {
+    /* Marca */
+    --color-primary: #2F6BFF;
+    --color-accent: #FF6A2B;
+    --color-navy: #0B1B3A;
+
+    /* Fondos */
+    --color-bg-soft: #EAF1FF;
+    --color-bg-section: #F3F6FC;
+    --color-surface: #FFFFFF;
+
+    /* Texto y bordes (aproximados) */
+    --color-text-secondary: #6B7694;
+    --color-border: #E3E8F5;
+
+    /* Estados */
+    --color-success: #2F6BFF;
+    --color-error: #E5484D;
+}
