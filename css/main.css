@@ -12,8 +12,24 @@
     /* Texto y bordes (aproximados) */
     --color-text-secondary: #6B7694;
     --color-border: #E3E8F5;
+    --font-base: 'Manrope', system-ui, sans-serif;
+    --bs-body-font-family: var(--font-base);
 
     /* Estados */
     --color-success: #2F6BFF;
     --color-error: #E5484D;
 }
+
+h1,h2{
+   color: var(--color-navy);
+   font-family: var(--font-base);
+
+}
+
+.card .rounded-circle{
+    background-color: var(--color-bg-soft);
+    color: var(--color-primary);
+}
+
+
+
