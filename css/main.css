@@ -1,0 +1,53 @@
+:root {
+    /* Marca */
+    --color-primary: #2F6BFF;
+    --color-accent: #FF6A2B;
+    --color-navy: #0B1B3A;
+
+    /* Fondos */
+    --color-bg-soft: #EAF1FF;
+    --color-bg-section: #F3F6FC;
+    --color-surface: #FFFFFF;
+
+    /* Texto y bordes (aproximados) */
+    --color-text-secondary: #6B7694;
+    --color-border: #E3E8F5;
+    --bs-border-color: var(--color-bg-soft);
+    --font-base: 'Manrope', system-ui, sans-serif;
+    --bs-body-font-family: var(--font-base);
+
+    /* Estados */
+    --color-success: #2F6BFF;
+    --color-error: #E5484D;
+}
+
+body {
+    background-color: var(--color-bg-section);
+}
+
+header {
+    background-color: var(--color-bg-soft);
+}
+
+h1,h2{
+   color: var(--color-navy);
+   font-family: var(--font-base);
+
+}
+
+.card .rounded-circle{
+    background-color: var(--color-bg-soft);
+    color: var(--color-primary);
+}
+
+
+h2 {
+  animation: fade-in linear both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 40%;
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: scale(0.8) translateY(50px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
