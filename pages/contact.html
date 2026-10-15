@@ -4,110 +4,226 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contáctenos - TuTaller</title>
-    <!-- Incluir Bootstrap CSS (puedes usar un CDN o archivo local) -->
+    <!-- Bootstrap CSS CDN -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Tu hoja de estilos personalizada vacía (para que tu equipo trabaje aquí) -->
-    <link rel="stylesheet" href="estilos.css">
+    <!-- Estilos personalizados para pequeños detalles no soportados en Bootstrap -->
+    <link rel="stylesheet" href="../estilos.css">
 </head>
-<body>
+<body class="bg-light">
+
+    <!-- === BARRA DE NAVEGACIÓN === -->
+    <nav class="navbar navbar-expand-lg navbar-light bg-white border-bottom py-3">
+        <div class="container-fluid container-lg">
+            <a class="navbar-brand fw-bold text-primary d-flex align-items-center" href="#">
+                <span class="info-nombre h4 mb-0 me-2">TuTaller</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#menuNavegacion">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="menuNavegacion">
+                <ul class="navbar-nav mx-auto mb-2 mb-lg-0 fw-semibold">
+                    <li class="nav-item"><a class="nav-link text-secondary" href="#">Inicio</a></li>
+                    <li class="nav-item"><a class="nav-link text-secondary" href="#">Catálogo</a></li>
+                    <li class="nav-item"><a class="nav-link text-secondary" href="#">Sobre nosotros</a></li>
+                    <li class="nav-item"><a class="nav-link active text-dark fw-bold border-bottom border-warning border-2" href="#">Contáctanos</a></li>
+                </ul>
+                <div class="d-flex gap-2">
+                    <a href="#" class="btn btn-outline-secondary rounded-pill px-4">Iniciar sesión</a>
+                    <a href="#" class="btn btn-warning text-white rounded-pill px-4" style="background-color: #ff6b35; border: none;">Registrarme</a>
+                </div>
+            </div>
+        </div>
+    </nav>
 
     <!-- === SECCIÓN PRINCIPAL (Ancho Completo) === -->
-    <div class="contenedor-pagina container-fluid px-0">
+    <div class="contenedor-pagina container-lg py-5">
 
-        <!-- Fila principal que divide la pantalla -->
-        <div class="row g-0 align-items-stretch">
+        <!-- Miga de pan / Breadcrumb -->
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb mb-2 small text-muted">
+                <li class="breadcrumb-item"><a href="#" class="text-decoration-none text-muted">Inicio</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Contáctanos</li>
+            </ol>
+        </nav>
 
-            <!-- === COLUMNA IZQUIERDA (Info/Imagen) === -->
-            <!-- Esta columna tendrá el fondo azul en CSS -->
-            <div class="columna-info col-md-6 col-lg-5 p-5 d-flex flex-column justify-content-center text-white">
-                
-                <!-- Placeholder para el logo y nombre -->
-                <div class="info-logo mb-5">
-                    <img src="ruta/al/logo.png" alt="Logo TuTaller" class="img-fluid" style="max-height: 40px;">
-                    <span class="info-nombre h4 ms-2">TuTaller</span>
+        <!-- Título principal -->
+        <div class="mb-5">
+            <h1 class="fw-bold text-dark display-6">Contáctanos</h1>
+            <p class="text-muted">Escríbenos y te responderemos lo antes posible.</p>
+        </div>
+
+        <!-- Fila principal que divide las tarjetas de información y el formulario -->
+        <div class="row g-4">
+
+            <!-- === COLUMNA IZQUIERDA (Tarjetas de Contacto) === -->
+            <div class="columna-info col-12 col-lg-4">
+                <div class="d-flex flex-column gap-3">
+
+                    <!-- Tarjeta 1: Correo -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-secondary fs-5">✉️</span>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block fs-7">Correo</small>
+                                <strong class="text-dark">contacto@tutaller.com</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 2: Teléfono -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-secondary fs-5">📞</span>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block fs-7">Teléfono</small>
+                                <strong class="text-dark">+57 300 000 0000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 3: WhatsApp -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-secondary fs-5">💬</span>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block fs-7">WhatsApp</small>
+                                <strong class="text-dark">+57 300 000 0000</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Tarjeta 4: Horario -->
+                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center" style="width: 50px; height: 50px;">
+                                <span class="text-secondary fs-5">🕒</span>
+                            </div>
+                            <div>
+                                <small class="text-muted d-block fs-7">Horario</small>
+                                <strong class="text-dark">Lunes a sábado, 8:00 am a 6:00 pm</strong>
+                            </div>
+                        </div>
+                    </div>
+
                 </div>
-
-                <!-- Placeholder para la imagen de la bombilla -->
-                <div class="info-imagen text-center mb-5">
-                    <img src="ruta/a/la/imagen-bombilla.png" alt="Icono de vehículo" class="img-fluid" style="max-width: 200px;">
-                </div>
-
-                <!-- Título y subtítulo -->
-                <div class="info-texto mb-5">
-                    <h1 class="display-4 fw-bold">Tu vehículo,<br> en buenas manos.</h1>
-                    <p class="lead mt-3">¡Estamos aquí para ayudarte! Ponte en contacto con nosotros.</p>
-                </div>
-
-                <!-- Lista de beneficios (Placeholders) -->
-                <ul class="info-lista list-unstyled text-start">
-                    <li class="mb-3 d-flex align-items-center">
-                        <span class="punto-lista bg-danger rounded-circle me-3" style="width: 15px; height: 15px;"></span>
-                        Asistencia rápida y confiable.
-                    </li>
-                    <li class="mb-3 d-flex align-items-center">
-                        <span class="punto-lista bg-danger rounded-circle me-3" style="width: 15px; height: 15px;"></span>
-                        Precios competitivos.
-                    </li>
-                    <li class="mb-3 d-flex align-items-center">
-                        <span class="punto-lista bg-danger rounded-circle me-3" style="width: 15px; height: 15px;"></span>
-                        Atención personalizada.
-                    </li>
-                </ul>
             </div>
 
             <!-- === COLUMNA DERECHA (Formulario de Contacto) === -->
-            <!-- Esta columna tendrá el fondo claro en CSS -->
-            <div class="columna-formulario col-md-6 col-lg-7 p-5 d-flex flex-column justify-content-center bg-light">
-                
-                <!-- Cabecera del Formulario -->
-                <div class="formulario-cabecera mb-5 text-start">
-                    <h2 class="fw-bold text-primary">¡Contáctanos!</h2>
-                    <p class="text-muted">Déjanos tu mensaje y nos comunicaremos pronto.</p>
+            <div class="columna-formulario col-12 col-lg-8">
+                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
+                    <h3 class="fw-bold text-dark mb-4 h4">Envíanos un mensaje</h3>
+
+                    <form id="form-contacto">
+                        <div class="row g-3">
+                            
+                            <!-- Campo: Nombre completo -->
+                            <div class="col-12 col-md-6">
+                                <label for="campo-nombre" class="form-label small fw-semibold text-secondary">Nombre completo</label>
+                                <input type="text" class="form-control py-2 rounded-3" id="campo-nombre" placeholder="Tu nombre">
+                            </div>
+
+                            <!-- Campo: Correo electrónico -->
+                            <div class="col-12 col-md-6">
+                                <label for="campo-email" class="form-label small fw-semibold text-secondary">Correo electrónico</label>
+                                <input type="email" class="form-control py-2 rounded-3" id="campo-email" placeholder="ejemplo@correo.com">
+                            </div>
+
+                            <!-- Campo: Asunto -->
+                            <div class="col-12 col-md-6">
+                                <label for="campo-asunto" class="form-label small fw-semibold text-secondary">Asunto</label>
+                                <select class="form-select py-2 rounded-3 text-muted" id="campo-asunto">
+                                    <option selected disabled>Selecciona un asunto</option>
+                                    <option value="cotizacion">Cotización</option>
+                                    <option value="soporte">Soporte técnico</option>
+                                    <option value="otro">Otro</option>
+                                </select>
+                            </div>
+
+                            <!-- Campo: Teléfono -->
+                            <div class="col-12 col-md-6">
+                                <label for="campo-telefono" class="form-label small fw-semibold text-secondary">Teléfono</label>
+                                <input type="tel" class="form-control py-2 rounded-3" id="campo-telefono" placeholder="+57 301 000 0000">
+                            </div>
+
+                            <!-- Campo: Mensaje -->
+                            <div class="col-12">
+                                <label for="campo-mensaje" class="form-label small fw-semibold text-secondary">Mensaje</label>
+                                <textarea class="form-control rounded-3" id="campo-mensaje" rows="4" placeholder="Escribe tu mensaje..."></textarea>
+                            </div>
+
+                            <!-- Botón Enviar mensaje -->
+                            <div class="col-12 mt-4">
+                                <button type="submit" class="btn text-white rounded-3 px-4 py-2 fw-semibold" style="background-color: #ff6b35; border: none;">
+                                    Enviar mensaje
+                                </button>
+                            </div>
+
+                        </div>
+                    </form>
                 </div>
-
-                <!-- Formulario -->
-                <form id="form-contacto" class="needs-validation" novalidate>
-                    
-                    <!-- Campo: Nombre Completo -->
-                    <div class="form-grupo mb-4">
-                        <label for="campo-nombre" class="form-label text-dark fw-bold">Nombre Completo</label>
-                        <input type="text" class="form-control" id="campo-nombre" name="nombre" placeholder="Tu nombre" required>
-                    </div>
-
-                    <!-- Campo: Correo Electrónico -->
-                    <div class="form-grupo mb-4">
-                        <label for="campo-email" class="form-label text-dark fw-bold">Correo Electrónico</label>
-                        <input type="email" class="form-control" id="campo-email" name="email" placeholder="correo@ejemplo.com" required>
-                    </div>
-
-                    <!-- Campo: Teléfono -->
-                    <div class="form-grupo mb-4">
-                        <label for="campo-telefono" class="form-label text-dark fw-bold">Teléfono (opcional)</label>
-                        <input type="tel" class="form-control" id="campo-telefono" name="telefono" placeholder="Número de contacto">
-                    </div>
-
-                    <!-- Campo: Mensaje (TextArea) -->
-                    <div class="form-grupo mb-4">
-                        <label for="campo-mensaje" class="form-label text-dark fw-bold">Tu Mensaje</label>
-                        <textarea class="form-control" id="campo-mensaje" name="mensaje" rows="4" placeholder="Escribe aquí tu consulta..." required></textarea>
-                    </div>
-
-                    <!-- Botón de Envío -->
-                    <div class="form-grupo-boton text-start">
-                        <button type="submit" class="btn btn-warning btn-lg text-white w-100">Enviar Mensaje</button>
-                    </div>
-
-                </form>
-
             </div>
 
         </div>
 
+        <!-- === SECCIÓN DÓNDE ESTAMOS (Mapa) === -->
+        <div class="seccion-mapa mt-5 pt-4">
+            <h3 class="fw-bold text-dark mb-4 h4">Dónde estamos</h3>
+            <div class="card border border-primary-subtle bg-light rounded-4 p-5 text-center d-flex align-items-center justify-content-center" style="min-height: 250px;">
+                <span class="text-muted small">Mapa de ubicación del taller</span>
+            </div>
+        </div>
+
     </div>
 
-    <!-- Incluir Bootstrap JS (necesario para validaciones y componentes interactivos si se añaden) -->
+    <!-- === FOOTER === -->
+    <footer class="bg-dark text-white pt-5 pb-4 mt-5" style="background-color: #0b172a !important;">
+        <div class="container-lg">
+            <div class="row g-4 mb-4">
+                <div class="col-12 col-md-4">
+                    <h5 class="fw-bold text-primary mb-3">TuTaller</h5>
+                    <p class="small text-secondary mb-0">Consulta talleres, cotiza servicios y agenda tus citas de forma fácil y organizada.</p>
+                </div>
+                <div class="col-6 col-md-2">
+                    <h6 class="fw-bold small mb-3">Navegación</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 text-secondary">
+                        <li><a href="#" class="text-decoration-none text-secondary">Inicio</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Sobre nosotros</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Catálogo</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Contáctanos</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-md-3">
+                    <h6 class="fw-bold small mb-3">Mi cuenta</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 text-secondary">
+                        <li><a href="#" class="text-decoration-none text-secondary">Iniciar sesión</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Registrarme</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Cotizar</a></li>
+                        <li><a href="#" class="text-decoration-none text-secondary">Agendar cita</a></li>
+                    </ul>
+                </div>
+                <div class="col-12 col-md-3">
+                    <h6 class="fw-bold small mb-3">Contacto</h6>
+                    <ul class="list-unstyled small d-flex flex-column gap-2 text-secondary">
+                        <li>contacto@tutaller.com</li>
+                        <li>+57 300 000 0000</li>
+                        <li>Lun a sáb, 8 am a 6 pm</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="border-secondary opacity-25">
+            <div class="d-flex justify-content-between align-items-center small text-secondary pt-2">
+                <p class="mb-0">© 2026 TuTaller - Proyecto Integrador - Equipo 7</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    <!-- Tu archivo JS personalizado (para validaciones de tu equipo) -->
-    <script src="script.js"></script>
 </body>
 </html>
