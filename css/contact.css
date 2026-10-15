@@ -1,189 +1,71 @@
-/* ==========================================================
-   Contáctanos · estilos específicos de la página
-   Requiere cargar ANTES: bootstrap.css -> main.css
-   Los colores y la fuente vienen de las variables de main.css
-   ========================================================== */
-
-:root {
-  --navbar-h: 72px; /* ajustar cuando integren el navbar */
-}
-
-/* ---------- Puente con Bootstrap (solo dentro de esta página) ----------
-   Las utilidades de Bootstrap (text-primary, bg-light, text-dark...)
-   leen triples RGB, por eso se declaran aquí y no se afecta al resto. */
+/* Ajuste general para la página de contacto */
 .contenedor-pagina {
-  --bs-primary-rgb: 47, 107, 255;
-  --bs-dark-rgb: 11, 27, 58;
-  --bs-light-rgb: 243, 246, 252;
-  --bs-secondary-color: var(--color-text-secondary);
-}
-
-.contenedor-pagina .row {
-  min-height: calc(100vh - var(--navbar-h));
-}
-
-/* ---------- Panel izquierdo ---------- */
-.columna-info {
-  position: relative;
-  overflow: hidden;
-  background-color: var(--color-primary);
-}
-
-.columna-info::after {
-  content: "";
-  position: absolute;
-  right: -140px;
-  bottom: -140px;
-  width: 440px;
-  height: 440px;
-  border-radius: 50%;
-  background: var(--color-surface);
-  opacity: 0.07;
-  pointer-events: none;
-}
-
-.columna-info > * {
-  position: relative;
-  z-index: 1;
-}
-
-.info-nombre {
-  font-weight: 800;
-}
-
-/* main.css pinta todos los h1 en navy; aquí va sobre fondo azul */
-.info-texto h1 {
-  color: var(--color-surface);
-  font-size: clamp(2rem, 3.6vw, 3rem);
-  font-weight: 800;
-  line-height: 1.1;
-  letter-spacing: -0.02em;
-}
-
-.info-texto .lead {
-  color: var(--color-bg-soft);
-  font-size: 1.05rem;
-  font-weight: 500;
-  max-width: 460px;
-}
-
-.info-lista {
-  --bs-danger-rgb: 255, 106, 43; /* bg-danger -> color de acento, solo aquí */
-}
-
-.info-lista li {
-  font-weight: 700;
-  font-size: 0.95rem;
-}
-
-.punto-lista {
-  flex-shrink: 0;
-}
-
-/* ---------- Panel derecho ---------- */
-.columna-formulario {
   background-color: var(--color-bg-section);
 }
 
-.formulario-cabecera,
-#form-contacto {
-  width: 100%;
-  max-width: 600px;
-  margin-inline: auto;
-}
-
-.formulario-cabecera h2 {
-  font-size: 2rem;
-  font-weight: 800;
-}
-
-#form-contacto {
-  background: var(--color-surface);
-  border: 1.5px solid var(--color-border);
-  border-radius: 20px;
-  padding: 2rem;
-}
-
-#form-contacto .form-label {
-  font-size: 0.8125rem;
-  font-weight: 700;
-  margin-bottom: 0.4rem;
-}
-
-#form-contacto .form-control {
-  min-height: 46px;
-  padding: 0.65rem 0.9rem;
-  font-size: 0.9rem;
-  font-weight: 500;
+/* Tipografía y colores de títulos principales */
+.contenedor-pagina h1,
+.contenedor-pagina h3 {
   color: var(--color-navy);
-  border: 1.5px solid var(--color-border);
-  border-radius: 10px;
+  font-family: var(--font-base);
 }
 
-#form-contacto .form-control::placeholder {
-  color: var(--color-text-secondary);
-  opacity: 0.7;
+/* Tarjetas de información de contacto */
+.columna-info .card {
+  border: 1px solid var(--color-border) !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
 }
 
-#form-contacto .form-control:focus {
+.columna-info .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(11, 27, 58, 0.05) !important;
+}
+
+/* Círculos contenedores de los íconos de contacto */
+.columna-info .rounded-circle {
+  background-color: var(--color-bg-soft) !important;
+  color: var(--color-primary) !important;
+}
+
+/* Tarjeta contenedora del formulario */
+.columna-formulario .card {
+  border: 1px solid var(--color-border) !important;
+}
+
+/* Estilos para los elemnetos del formulario*/
+.form-control,
+.form-select {
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-navy);
+  font-family: var(--font-base);
+}
+
+.form-control:focus,
+.form-select:focus {
   border-color: var(--color-primary);
-  box-shadow: 0 0 0 4px
-    color-mix(in srgb, var(--color-primary) 15%, transparent);
+  box-shadow: 0 0 0 0.25rem rgba(47, 107, 255, 0.15);
 }
 
-#form-contacto textarea.form-control {
-  min-height: 130px;
-  resize: vertical;
+/* Etiquetas de los campos */
+.form-label {
+  color: var(--color-text-secondary) !important;
 }
 
-/* ---------- Botón (btn-warning -> acento de marca) ---------- */
-.form-grupo-boton .btn-warning {
-  --bs-btn-color: var(--color-surface);
-  --bs-btn-bg: var(--color-accent);
-  --bs-btn-border-color: var(--color-accent);
-  --bs-btn-hover-color: var(--color-surface);
-  --bs-btn-hover-bg: color-mix(in srgb, var(--color-accent) 85%, black);
-  --bs-btn-hover-border-color: color-mix(
-    in srgb,
-    var(--color-accent) 85%,
-    black
-  );
-  --bs-btn-active-color: var(--color-surface);
-  --bs-btn-active-bg: color-mix(in srgb, var(--color-accent) 75%, black);
-  --bs-btn-active-border-color: color-mix(
-    in srgb,
-    var(--color-accent) 75%,
-    black
-  );
-  --bs-btn-focus-shadow-rgb: 255, 106, 43;
-  min-height: 52px;
-  border-radius: 12px;
-  font-weight: 800;
+/* Botón de envio */
+#form-contacto button[type="submit"] {
+  background-color: var(--color-accent) !important;
+  transition: opacity 0.2s ease;
 }
 
-/* ---------- Responsive ---------- */
-@media (max-width: 767.98px) {
-  .columna-info,
-  .columna-formulario {
-    padding: 2rem 1.25rem !important; /* p-5 de Bootstrap usa !important */
-  }
+#form-contacto button[type="submit"]:hover {
+  opacity: 0.9;
+}
 
-  .info-logo,
-  .info-imagen,
-  .info-texto {
-    margin-bottom: 1.5rem !important;
-  }
-
-  .info-imagen img {
-    max-width: 120px !important; /* el HTML lo fija inline */
-  }
-
-  .contenedor-pagina .row {
-    min-height: 0;
-  }
-
-  #form-contacto {
-    padding: 1.25rem;
-    border-radius: 16px;
-  }
+/* Sección del mapa de ubicación */
+.seccion-mapa .card {
+  background-color: var(--color-surface) !important;
+  border: 2px dashed var(--color-border) !important;
 }
