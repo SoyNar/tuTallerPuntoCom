@@ -1,0 +1,71 @@
+/* Ajuste general para la página de contacto */
+.contenedor-pagina {
+  background-color: var(--color-bg-section);
+}
+
+/* Tipografía y colores de títulos principales */
+.contenedor-pagina h1,
+.contenedor-pagina h3 {
+  color: var(--color-navy);
+  font-family: var(--font-base);
+}
+
+/* Tarjetas de información de contacto */
+.columna-info .card {
+  border: 1px solid var(--color-border) !important;
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.columna-info .card:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 0.5rem 1rem rgba(11, 27, 58, 0.05) !important;
+}
+
+/* Círculos contenedores de los íconos de contacto */
+.columna-info .rounded-circle {
+  background-color: var(--color-bg-soft) !important;
+  color: var(--color-primary) !important;
+}
+
+/* Tarjeta contenedora del formulario */
+.columna-formulario .card {
+  border: 1px solid var(--color-border) !important;
+}
+
+/* Estilos para los elemnetos del formulario*/
+.form-control,
+.form-select {
+  border-color: var(--color-border);
+  background-color: var(--color-surface);
+  color: var(--color-navy);
+  font-family: var(--font-base);
+}
+
+.form-control:focus,
+.form-select:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 0.25rem rgba(47, 107, 255, 0.15);
+}
+
+/* Etiquetas de los campos */
+.form-label {
+  color: var(--color-text-secondary) !important;
+}
+
+/* Botón de envio */
+#form-contacto button[type="submit"] {
+  background-color: var(--color-accent) !important;
+  transition: opacity 0.2s ease;
+}
+
+#form-contacto button[type="submit"]:hover {
+  opacity: 0.9;
+}
+
+/* Sección del mapa de ubicación */
+.seccion-mapa .card {
+  background-color: var(--color-surface) !important;
+  border: 2px dashed var(--color-border) !important;
+}
