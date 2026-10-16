@@ -15,24 +15,17 @@
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/contact.css" />
     <link rel="stylesheet" href="../css/toast.css">
+    <link rel="stylesheet" href="../css/navbar.css">
     <!-- Scripts propios de la pagina contacto -->
     <script type="module" src="../js/pages/contact.js"></script>
 </head>
 
 <body class="bg-light">
+    <nav-bar></nav-bar>
     <!-- === SECCIÓN PRINCIPAL  === -->
     <div class="contenedor-pagina container-lg py-5">
         <!-- Miga de pan / Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-2 small text-muted">
-                <li class="breadcrumb-item">
-                    <a href="#" class="text-decoration-none text-muted">Inicio</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Contáctanos
-                </li>
-            </ol>
-        </nav>
+         
 
         <!-- Título principal -->
         <div class="mb-5">
@@ -184,6 +177,7 @@
     <!-- Bootstrap JS Bundle -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
          <script    type="module" src="../services/contact-service.js"></script>
+         <script type="module" src="../components/navbar.js"></script>
 
 </body>
 
