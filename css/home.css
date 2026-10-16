@@ -1,8 +1,4 @@
-/* ==========================================================================
-   ESTILOS ESPECÍFICOS DE HOME (Reutilizando variables de main.css)
-   ========================================================================== */
-
-/* Hero y fondos personalizados */
+/* encabezado y fondos personalizados */
 .hero-section {
   background-color: var(--color-bg-soft);
 }
@@ -23,7 +19,7 @@
 }
 
 .btn-accent-custom:hover {
-  background-color: #e55b1f; /* Tono ligeramente más oscuro para hover */
+  background-color: #e55b1f;
   color: var(--color-surface);
 }
 
