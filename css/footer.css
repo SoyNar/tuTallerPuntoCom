@@ -10,14 +10,14 @@
 
 /* Control estricto para que el logo no se desborde */
 .logo-imagen {
-    height: 38px !important;
+    height: px !important;
     width: auto !important;
     max-width: 100%;
 }
 
 /* Línea divisoria del footer */
 .linea-divisora {
-    border-color: #1c2541 !important;
+    border-color: #95abee !important;
     opacity: 0.5;
 }
 
