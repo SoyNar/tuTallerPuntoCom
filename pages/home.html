@@ -22,10 +22,11 @@
     <!-- Estilos personalizados para pequeños detalles no soportados en Bootstrap -->
     <link rel="stylesheet" href="../css/main.css" />
     <link rel="stylesheet" href="../css/toast.css" />
+    <script type="module" src="/js/pages/talleres.js"></script>
   </head>
   <body>
     <main>
-      <!-- 1. SECCIÓN HERO (Encabezado principal) -->
+      <!-- Encabezado principal-->
       <section class="py-5">
         <div class="container">
           <div class="row align-items-center g-4">
@@ -47,11 +48,15 @@
                 </button>
               </div>
             </div>
-            <!-- Columna de imagen / ilustración de guía -->
+            <!-- Columna de imagen  -->
             <div class="col-12 col-lg-6">
               <div class="card p-5 text-center bg-light border-0">
                 <div class="card-body py-5">
-                  <i class="bi bi-robot fs-1 mb-2 d-block"></i>
+                  <img
+                    src="/assets/img/chispa-mascota_2.png"
+                    alt="imagene de Chispita"
+                  />
+                  <!-- <i class="bi bi-robot fs-1 mb-2 d-block"></i> -->
                   <p class="mb-0 text-muted">Chispita, tu guía en el taller</p>
                 </div>
               </div>
@@ -60,146 +65,25 @@
         </div>
       </section>
 
-      <!-- 2. SECCIÓN TALLERES DESTACADOS -->
+      <!-- Seccion de talleres-->
+
       <section class="py-5">
         <div class="container">
-          <!-- Cabecera de la sección con título y enlace -->
+          <!-- Cabecera de la sección -->
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold fs-3 mb-0">Talleres destacados</h2>
             <a href="#" class="text-decoration-none">Ver catálogo</a>
           </div>
 
-          <!-- Tarjetas de talleres en fila responsiva -->
-          <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
-            <!-- Taller 1 -->
-            <div class="col">
-              <div class="card h-100 shadow-sm">
-                <!-- Imagen placeholder -->
-                <div
-                  class="card-img-top bg-light border-bottom d-flex align-items-center justify-content-center"
-                  style="height: 180px"
-                >
-                  <span class="text-muted small">Foto del taller</span>
-                </div>
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-2"
-                  >
-                    <h3 class="card-title h6 fw-bold mb-0">Taller El Pistón</h3>
-                    <span class="badge bg-primary">Abierto</span>
-                  </div>
-                  <p class="card-text small text-body-secondary mb-3">
-                    <i class="bi bi-star-fill text-warning"></i> 4.8 &bull; 1.2
-                    km
-                  </p>
-                  <!-- Etiquetas de servicios -->
-                  <div class="mb-3">
-                    <span class="badge bg-light text-dark border me-1"
-                      >Aceite</span
-                    >
-                    <span class="badge bg-light text-dark border">Frenos</span>
-                  </div>
-                  <!-- Botones de acción -->
-                  <div class="d-flex gap-2">
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary btn-sm w-50"
-                    >
-                      Cotizar
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm w-50">
-                      Agendar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Taller 2 -->
-            <div class="col">
-              <div class="card h-100 shadow-sm">
-                <div
-                  class="card-img-top bg-light border-bottom d-flex align-items-center justify-content-center"
-                  style="height: 180px"
-                >
-                  <span class="text-muted small">Foto del taller</span>
-                </div>
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-2"
-                  >
-                    <h3 class="card-title h6 fw-bold mb-0">Taller El Pistón</h3>
-                    <span class="badge bg-primary">Abierto</span>
-                  </div>
-                  <p class="card-text small text-body-secondary mb-3">
-                    <i class="bi bi-star-fill text-warning"></i> 4.8 &bull; 1.2
-                    km
-                  </p>
-                  <div class="mb-3">
-                    <span class="badge bg-light text-dark border me-1"
-                      >Aceite</span
-                    >
-                    <span class="badge bg-light text-dark border">Frenos</span>
-                  </div>
-                  <div class="d-flex gap-2">
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary btn-sm w-50"
-                    >
-                      Cotizar
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm w-50">
-                      Agendar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Taller 3 -->
-            <div class="col">
-              <div class="card h-100 shadow-sm">
-                <div
-                  class="card-img-top bg-light border-bottom d-flex align-items-center justify-content-center"
-                  style="height: 180px"
-                >
-                  <span class="text-muted small">Foto del taller</span>
-                </div>
-                <div class="card-body">
-                  <div
-                    class="d-flex justify-content-between align-items-start mb-2"
-                  >
-                    <h3 class="card-title h6 fw-bold mb-0">Taller El Pistón</h3>
-                    <span class="badge bg-primary">Abierto</span>
-                  </div>
-                  <p class="card-text small text-body-secondary mb-3">
-                    <i class="bi bi-star-fill text-warning"></i> 4.8 &bull; 1.2
-                    km
-                  </p>
-                  <div class="mb-3">
-                    <span class="badge bg-light text-dark border me-1"
-                      >Aceite</span
-                    >
-                    <span class="badge bg-light text-dark border">Frenos</span>
-                  </div>
-                  <div class="d-flex gap-2">
-                    <button
-                      type="button"
-                      class="btn btn-outline-secondary btn-sm w-50"
-                    >
-                      Cotizar
-                    </button>
-                    <button type="button" class="btn btn-primary btn-sm w-50">
-                      Agendar
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
+          <!-- Contenedor dinámico de talleres (Aquí se renderizarán mediante JS) -->
+          <div
+            class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4"
+            id="contenedor-talleres"
+          >
+            <!-- Las tarjetas se insertarán dinámicamente desde JavaScript -->
           </div>
         </div>
       </section>
-
       <!-- 3. SECCIÓN ¿CÓMO FUNCIONA? (Tu código original integrado y ordenado) -->
       <section class="py-5">
         <div class="container">
