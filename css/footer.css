@@ -1,0 +1,27 @@
+/* Color de fondo oscuro personalizado */
+.bg-azul-oscuro {
+    background-color: #0b132b !important;
+}
+
+/* Color naranja de la marca */
+.texto-naranja {
+    color: #ff6b35 !important;
+}
+
+/* Control estricto para que el logo no se desborde */
+.logo-imagen {
+    height: 38px !important;
+    width: auto !important;
+    max-width: 100%;
+}
+
+/* Línea divisoria del footer */
+.linea-divisora {
+    border-color: #1c2541 !important;
+    opacity: 0.5;
+}
+
+/* Efecto hover en los enlaces */
+.enlace-footer:hover {
+    color: #ffffff !important;
+}
