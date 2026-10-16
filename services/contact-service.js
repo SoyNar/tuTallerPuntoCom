@@ -1,3 +1,5 @@
+import { showToast } from "../js/utils/toast-modal.js";
+
 document.getElementById('form-contacto').addEventListener('submit', async (e) => {
     e.preventDefault();
     const  form = e.target;
@@ -13,10 +15,10 @@ document.getElementById('form-contacto').addEventListener('submit', async (e) =>
        showToast('¡Mensaje enviado! Te responderemos pronto.', 'success');
             form.reset();
         }else {
-            showToast("hubo problema al enviar mensaje intenta en otro momento");
+            showToast("hubo problema al enviar mensaje intenta en otro momento",'error');
         }
     }catch {
-        showToast("error de conextion");
+        showToast("error de conextion",'error');
     } finally{
         botton.disabled = false;
     }

@@ -3,7 +3,7 @@
    ========================================================================== */
 :root {
   /* Marca */
-  --color-primary: #2F6BFF;
+    --color-primary: #2F6BFF;
   --color-accent: #FF6A2B;
   --color-navy: #0B1B3A;
 
@@ -20,6 +20,10 @@
   --color-success: #2F6BFF;
   --color-error: #E5484D;
 
+  /* success toast */
+  --color-success-toast:#27F549;
+
+
   /* Tipografía */
   --font-base: 'Manrope', system-ui, sans-serif;
 
@@ -27,6 +31,8 @@
   --bs-body-font-family: var(--font-base);
   --bs-border-color: var(--color-bg-soft);
 }
+
+
 
 /* ==========================================================================
    2. BASE (elementos HTML)
