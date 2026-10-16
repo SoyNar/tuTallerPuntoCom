@@ -1,0 +1,80 @@
+/* ==========================================================================
+   ESTILOS ESPECÍFICOS DE HOME (Reutilizando variables de main.css)
+   ========================================================================== */
+
+/* Hero y fondos personalizados */
+.hero-section {
+  background-color: var(--color-bg-soft);
+}
+
+.text-primary-custom {
+  color: var(--color-primary);
+}
+
+#contenedor-chispita {
+  background-color: var(--color-primary);
+}
+
+/* Botones personalizados con tokens de marca */
+.btn-accent-custom {
+  background-color: var(--color-accent);
+  color: var(--color-surface);
+  border: none;
+}
+
+.btn-accent-custom:hover {
+  background-color: #e55b1f; /* Tono ligeramente más oscuro para hover */
+  color: var(--color-surface);
+}
+
+.btn-outline-custom {
+  background-color: var(--color-surface);
+  color: var(--color-navy);
+  border: 1px solid var(--color-border);
+}
+
+.btn-outline-custom:hover {
+  background-color: var(--color-bg-soft);
+  color: var(--color-navy);
+  border-color: var(--color-primary);
+}
+
+/* Enlaces específicos */
+.link-catalog {
+  color: var(--color-primary);
+}
+
+.link-catalog:hover {
+  color: var(--color-navy);
+}
+
+/* Footer / CTA section oscuro */
+.bg-footer-custom {
+  background-color: var(--color-navy);
+}
+
+/* Estilos para las tarjetas generadas dinámicamente desde JS (Talleres) */
+.taller-card {
+  border: 1px solid var(--color-border) !important;
+  border-radius: 1rem !important;
+  background-color: var(--color-surface);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease;
+}
+
+.taller-card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 0.5rem 1rem rgba(11, 27, 58, 0.08) !important;
+}
+
+.taller-badge-abierto {
+  background-color: var(--color-primary) !important;
+  color: var(--color-surface);
+}
+
+.taller-badge-servicio {
+  background-color: var(--color-bg-soft) !important;
+  color: var(--color-navy) !important;
+  border: 1px solid var(--color-border) !important;
+}
