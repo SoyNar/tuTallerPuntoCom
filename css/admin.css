@@ -1,0 +1,52 @@
+h3, h4, h5, h6, th, .form-select {
+  color: var(--color-navy) !important;
+}
+
+.decorador-activos {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #21a374, #27f549);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-pendientes {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #ff6a2b, #ff6a2b);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-agenda {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #2f6bff, #0b1b3a);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-naranja {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #e5484d, #ff6a2b);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.input-group-text, .form-control, .form-select{
+    background-color: var(--color-bg-section);
+}
+
+.form-select {
+    background-color: var(--color-bg-section);
+}
+
+.table-header, th, .bg-table-img{
+    background-color: var(--color-bg-soft) !important;
+}
+
