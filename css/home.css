@@ -46,7 +46,7 @@
 
 /* Footer / CTA section oscuro */
 .bg-footer-custom {
-  background-color: var(--color-navy);
+  background-color: var(--color-primary);
 }
 
 /* Estilos para las tarjetas generadas dinámicamente desde JS (Talleres) */

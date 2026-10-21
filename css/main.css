@@ -26,6 +26,9 @@
   /* Tipografía */
   --font-base: "Manrope", system-ui, sans-serif;
 
+  /* Espaciado de páginas (NUEVO) */
+  --space-section: 3rem;
+
   /* Overrides de variables de Bootstrap */
   --bs-body-font-family: var(--font-base);
   --bs-border-color: var(--color-bg-soft);
@@ -45,10 +48,37 @@ h2 {
 
 /* ==========================================================================
    3. LAYOUT (estructura de página)
+   Usado igual en TODAS las páginas: about, contact, etc.
    ========================================================================== */
-header {
+
+/* Antes era `header { ... }` y afectaba a cualquier <header> del sitio.
+   Ahora solo aplica al encabezado de página. */
+.page-header {
   background-color: var(--color-bg-soft);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-section);
 }
+
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Cada bloque de contenido, mismo espacio arriba y abajo */
+.page-section {
+  padding-block: var(--space-section);
+}
+
+/* Si el navbar es position: fixed, descomenta y ajusta la altura:
+main { padding-top: 72px; }
+*/
 
 /* ==========================================================================
    4. COMPONENTES
