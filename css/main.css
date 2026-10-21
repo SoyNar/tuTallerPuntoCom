@@ -3,28 +3,28 @@
    ========================================================================== */
 :root {
   /* Marca */
-  --color-primary: #2F6BFF;
-  --color-accent: #FF6A2B;
-  --color-navy: #0B1B3A;
+  --color-primary: #2f6bff;
+  --color-accent: #ff6a2b;
+  --color-navy: #0b1b3a;
 
   /* Fondos */
-  --color-bg-soft: #EAF1FF;
-  --color-bg-section: #F3F6FC;
-  --color-surface: #FFFFFF;
+  --color-bg-soft: #eaf1ff;
+  --color-bg-section: #f3f6fc;
+  --color-surface: #ffffff;
 
   /* Texto y bordes */
-  --color-text-secondary: #6B7694;
-  --color-border: #E3E8F5;
+  --color-text-secondary: #6b7694;
+  --color-border: #e3e8f5;
 
   /* Estados */
-  --color-success: #2F6BFF;
-  --color-error: #E5484D;
+  --color-success: #2f6bff;
+  --color-error: #e5484d;
 
   /* success toast */
-  --color-success-toast: #27F549;
+  --color-success-toast: #27f549;
 
   /* Tipografía */
-  --font-base: 'Manrope', system-ui, sans-serif;
+  --font-base: "Manrope", system-ui, sans-serif;
 
   /* Espaciado de páginas (NUEVO) */
   --space-section: 3rem;
@@ -33,7 +33,6 @@
   --bs-body-font-family: var(--font-base);
   --bs-border-color: var(--color-bg-soft);
 }
-
 
 /* ==========================================================================
    2. BASE (elementos HTML)
@@ -46,7 +45,6 @@ h1,
 h2 {
   color: var(--color-navy);
 }
-
 
 /* ==========================================================================
    3. LAYOUT (estructura de página)
@@ -82,7 +80,6 @@ h2 {
 main { padding-top: 72px; }
 */
 
-
 /* ==========================================================================
    4. COMPONENTES
    ========================================================================== */
@@ -90,27 +87,39 @@ main { padding-top: 72px; }
   background-color: var(--color-bg-soft);
   color: var(--color-primary);
 }
-
-.flip-card { perspective: 1000px; }
+.flip-card {
+  perspective: 1000px;
+}
 
 .flip-card-inner {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
 
-.flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
 
-.flip-card-face { backface-visibility: hidden; }
+.flip-card-face {
+  backface-visibility: hidden;
+}
 
-.flip-card-back { transform: rotateY(180deg); }
-
+.flip-card-back {
+  transform: rotateY(180deg);
+}
 
 /* ==========================================================================
    5. ANIMACIONES
    ========================================================================== */
 @keyframes fade-in {
-  from { opacity: 0; transform: scale(0.8) translateY(50px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 @supports (animation-timeline: view()) {
