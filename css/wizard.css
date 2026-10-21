@@ -1,0 +1,65 @@
+/* ===== Wizard "Agregar taller" ===== */
+.wizard-content {
+  --wizard-color: #1f6feb;        /* paso activo / completado */
+  --wizard-color-off: #d0d7de;    /* paso pendiente */
+  border-radius: 1rem;
+}
+
+/* Stepper */
+.wizard-stepper {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 1rem 1.5rem 0;
+  counter-reset: paso;
+}
+
+.wizard-step {
+  flex: 1;
+  position: relative;
+  text-align: center;
+  counter-increment: paso;
+}
+
+/* El punto numerado */
+.wizard-step::before {
+  content: counter(paso);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 1.75rem;
+  height: 1.75rem;
+  border-radius: 50%;
+  background: var(--wizard-color-off);
+  color: #fff;
+  font-size: 0.8rem;
+  font-weight: 700;
+  position: relative;
+  z-index: 1;
+}
+
+/* La línea que une un punto con el siguiente */
+.wizard-step:not(:last-child)::after {
+  content: "";
+  position: absolute;
+  top: 0.85rem;
+  left: 50%;
+  width: 100%;
+  height: 2px;
+  background: var(--wizard-color-off);
+}
+
+/* Estados */
+.wizard-step.active::before,
+.wizard-step.completed::before {
+  background: var(--wizard-color);
+}
+
+.wizard-step.completed:not(:last-child)::after {
+  background: var(--wizard-color);
+}
+
+/* Pie con los botones */
+.wizard-footer {
+  justify-content: space-between;
+}

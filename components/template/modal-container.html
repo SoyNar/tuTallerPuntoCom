@@ -1,0 +1,39 @@
+
+<!-- modal boostrap para agregar un taller -->
+<div class="modal fade" id="modalTaller" tabindex="-1"
+     aria-labelledby="modalTallerTitulo" aria-hidden="true"
+     data-bs-backdrop="static">
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content wizard-content">
+
+      <!-- Cabecera -->
+      <div class="modal-header wizard-header">
+        <h5 class="modal-title" id="modalTallerTitulo">Agregar taller</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                aria-label="Cerrar"></button>
+      </div>
+
+      <!-- Stepper (los 6 pasos) -->
+      <ol class="wizard-stepper" id="wizardStepper">
+        <li class="wizard-step active" data-paso="0"></li>
+        <li class="wizard-step" data-paso="1"></li>
+        <li class="wizard-step" data-paso="2"></li>
+        <li class="wizard-step" data-paso="3"></li>
+        <li class="wizard-step" data-paso="4"></li>
+        <li class="wizard-step" data-paso="5"></li>
+      </ol>
+
+      <!-- Aquí se inyectan paso1.html ... paso6.html -->
+      <div class="modal-body" id="wizardBody"></div>
+
+      <!-- Botones -->
+      <div class="modal-footer wizard-footer">
+        <button type="button" id="btnAtras"
+                class="btn btn-outline-secondary">Atrás</button>
+        <button type="button" id="btnSiguiente"
+                class="btn btn-warning">Siguiente</button>
+      </div>
+
+    </div>
+  </div>
+</div>
