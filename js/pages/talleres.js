@@ -10,7 +10,7 @@ const talleresDeEjemplo = [
     imagen: "",
   },
   {
-    id: 3,
+    id: 2,
     nombre: "Taller Central",
     estado: "Cerrado",
     calificacion: 4.5,
