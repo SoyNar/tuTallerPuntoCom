@@ -1,0 +1,40 @@
+
+<h6 class="wizard-titulo">2. Ubicación</h6>
+<p class="wizard-subtitulo">Toca el mapa para ubicar el taller. Se guardan las coordenadas.</p>
+
+<div class="row g-3 mb-3">
+  <div class="col-12 col-md-7">
+    <label for="taller-direccion" class="form-label small fw-semibold">Dirección</label>
+    <input type="text" class="form-control wizard-input" id="taller-direccion"
+           name="direccion" placeholder="Cra 70 # 45-10" required>
+  </div>
+  <div class="col-12 col-md-5">
+    <label for="taller-ciudad" class="form-label small fw-semibold">Ciudad</label>
+    <select class="form-select wizard-input" id="taller-ciudad" name="ciudad" required>
+      <option value="medellin" selected>Medellín</option>
+      <option value="bello">Bello</option>
+      <option value="envigado">Envigado</option>
+      <option value="itagui">Itagüí</option>
+    </select>
+  </div>
+</div>
+
+<!-- Aquí irá el mapa real; por ahora es un contenedor con altura fija -->
+<div id="mapa-taller" class="wizard-mapa mb-3">
+  <span class="wizard-mapa-hint">
+    <i class="bi bi-geo-alt-fill"></i> Toca para mover el pin
+  </span>
+</div>
+
+<div class="row g-3">
+  <div class="col-6">
+    <label for="taller-latitud" class="form-label small fw-semibold">Latitud</label>
+    <input type="text" class="form-control wizard-input" id="taller-latitud"
+           name="latitud" value="6.24420" readonly>
+  </div>
+  <div class="col-6">
+    <label for="taller-longitud" class="form-label small fw-semibold">Longitud</label>
+    <input type="text" class="form-control wizard-input" id="taller-longitud"
+           name="longitud" value="-75.58100" readonly>
+  </div>
+</div>

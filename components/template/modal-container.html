@@ -3,8 +3,12 @@
 <div class="modal fade" id="modalTaller" tabindex="-1"
      aria-labelledby="modalTallerTitulo" aria-hidden="true"
      data-bs-backdrop="static">
+
+
   <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
-    <div class="modal-content wizard-content">
+
+
+    <form  id="formTaller" class="modal-content wizard-content" novalidate>
 
       <!-- Cabecera -->
       <div class="modal-header wizard-header">
@@ -29,11 +33,11 @@
       <!-- Botones -->
       <div class="modal-footer wizard-footer">
         <button type="button" id="btnAtras"
-                class="btn btn-outline-secondary">Atrás</button>
+                class="btn btn-outline-secondary btn-sm "> <i class="bi bi-arrow-left"></i> Atrás</button>
         <button type="button" id="btnSiguiente"
-                class="btn btn-warning">Siguiente</button>
+                class="btn btn-sm btn-tt-accent px-4 rounded-3">Siguiente</button>
       </div>
 
-    </div>
+    </form>
   </div>
 </div>

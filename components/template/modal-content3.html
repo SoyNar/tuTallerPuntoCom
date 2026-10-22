@@ -1,0 +1,52 @@
+<h6 class="wizard-titulo">3. Horarios y servicios</h6>
+<p class="wizard-subtitulo">Días y horas de atención, y los servicios que ofrece el taller.</p>
+
+<!-- Días -->
+<p class="form-label small fw-semibold mb-2">Días de atención</p>
+<div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Días de atención">
+  <input type="checkbox" class="btn-check" id="dia-lunes" name="dias" value="lunes" checked>
+  <label class="btn wizard-dia" for="dia-lunes" title="Lunes">L</label>
+
+  <input type="checkbox" class="btn-check" id="dia-martes" name="dias" value="martes" checked>
+  <label class="btn wizard-dia" for="dia-martes" title="Martes">M</label>
+
+  <input type="checkbox" class="btn-check" id="dia-miercoles" name="dias" value="miercoles" checked>
+  <label class="btn wizard-dia" for="dia-miercoles" title="Miércoles">X</label>
+
+  <input type="checkbox" class="btn-check" id="dia-jueves" name="dias" value="jueves" checked>
+  <label class="btn wizard-dia" for="dia-jueves" title="Jueves">J</label>
+
+  <input type="checkbox" class="btn-check" id="dia-viernes" name="dias" value="viernes" checked>
+  <label class="btn wizard-dia" for="dia-viernes" title="Viernes">V</label>
+
+  <input type="checkbox" class="btn-check" id="dia-sabado" name="dias" value="sabado">
+  <label class="btn wizard-dia" for="dia-sabado" title="Sábado">S</label>
+
+  <input type="checkbox" class="btn-check" id="dia-domingo" name="dias" value="domingo">
+  <label class="btn wizard-dia" for="dia-domingo" title="Domingo">D</label>
+</div>
+
+<!-- Horas -->
+<div class="row g-3 mb-4">
+  <div class="col-6">
+    <label for="hora-apertura" class="form-label small fw-semibold">Abre</label>
+    <input type="time" class="form-control wizard-input" id="hora-apertura"
+           name="apertura" value="08:00" required>
+  </div>
+  <div class="col-6">
+    <label for="hora-cierre" class="form-label small fw-semibold">Cierra</label>
+    <input type="time" class="form-control wizard-input" id="hora-cierre"
+           name="cierre" value="18:00" required>
+  </div>
+</div>
+
+<!-- Servicios -->
+<p class="form-label small fw-semibold mb-2">Servicios</p>
+<div class="d-flex flex-wrap gap-2" role="group" aria-label="Servicios">
+  <input type="checkbox" class="btn-check" id="srv-aceite" name="servicios" value="cambio-aceite">
+  <label class="btn wizard-chip" for="srv-aceite">Cambio de aceite</label>
+
+  <input type="checkbox" class="btn-check" id="srv-frenos" name="servicios" value="frenos">
+  <label class="btn wizard-chip" for="srv-frenos">Frenos</label>
+
+  <input
