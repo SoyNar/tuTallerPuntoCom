@@ -1,0 +1,26 @@
+/* Contenedor principal con medidas fijas tipo modal flotante */
+.contenedor-modal-principal {
+    width: 100%;
+    max-width: 680px;
+    height: 85vh;
+}
+
+/* Efecto hover suave para la zona de carga de archivos */
+.zona-carga-archivos {
+    transition: background-color 0.2s ease;
+}
+
+.zona-carga-archivos:hover {
+    background-color: rgba(13, 110, 253, 0.15) !important;
+}
+
+/* Color personalizado para el botón Siguiente de la imagen */
+.btn-naranja {
+    background-color: #ff6b18;
+    border-color: #ff6b18;
+}
+
+.btn-naranja:hover {
+    background-color: #e55a0f;
+    border-color: #e55a0f;
+}
