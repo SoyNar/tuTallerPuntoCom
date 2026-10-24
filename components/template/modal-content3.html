@@ -3,27 +3,8 @@
 
 <!-- Días -->
 <p class="form-label small fw-semibold mb-2">Días de atención</p>
-<div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Días de atención">
-  <input type="checkbox" class="btn-check" id="dia-lunes" name="dias" value="lunes" checked>
-  <label class="btn wizard-dia" for="dia-lunes" title="Lunes">L</label>
-
-  <input type="checkbox" class="btn-check" id="dia-martes" name="dias" value="martes" checked>
-  <label class="btn wizard-dia" for="dia-martes" title="Martes">M</label>
-
-  <input type="checkbox" class="btn-check" id="dia-miercoles" name="dias" value="miercoles" checked>
-  <label class="btn wizard-dia" for="dia-miercoles" title="Miércoles">X</label>
-
-  <input type="checkbox" class="btn-check" id="dia-jueves" name="dias" value="jueves" checked>
-  <label class="btn wizard-dia" for="dia-jueves" title="Jueves">J</label>
-
-  <input type="checkbox" class="btn-check" id="dia-viernes" name="dias" value="viernes" checked>
-  <label class="btn wizard-dia" for="dia-viernes" title="Viernes">V</label>
-
-  <input type="checkbox" class="btn-check" id="dia-sabado" name="dias" value="sabado">
-  <label class="btn wizard-dia" for="dia-sabado" title="Sábado">S</label>
-
-  <input type="checkbox" class="btn-check" id="dia-domingo" name="dias" value="domingo">
-  <label class="btn wizard-dia" for="dia-domingo" title="Domingo">D</label>
+<div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Días de atención" id="diasAtencion">
+  
 </div>
 
 <!-- Horas -->
@@ -41,12 +22,6 @@
 </div>
 
 <!-- Servicios -->
-<p class="form-label small fw-semibold mb-2">Servicios</p>
-<div class="d-flex flex-wrap gap-2" role="group" aria-label="Servicios">
-  <input type="checkbox" class="btn-check" id="srv-aceite" name="servicios" value="cambio-aceite">
-  <label class="btn wizard-chip" for="srv-aceite">Cambio de aceite</label>
-
-  <input type="checkbox" class="btn-check" id="srv-frenos" name="servicios" value="frenos">
-  <label class="btn wizard-chip" for="srv-frenos">Frenos</label>
-
-  <input
+<p class="form-label small fw-semibold mb-2" id="serviciosLabel">Servicios</p>
+<div id="serviciosTaller" class="d-flex flex-wrap gap-2"
+     role="group" aria-labelledby="serviciosLabel"></div>
