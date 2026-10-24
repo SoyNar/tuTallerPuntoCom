@@ -1,0 +1,25 @@
+<h2 class="wizard-titulo">5. Fotos y estado</h2>
+<p class="wizard-subtitulo">Una foto de portada y el estado de verificación.</p>
+
+<!-- Zona de carga -->
+<label for="tallerFotos" class="wizard-upload mb-4">
+  <div class="fs-4 mb-2">🖼️</div>
+  <p class="mb-1 small">Arrastra fotos aquí o <span class="text-primary fw-semibold">toca para subirlas</span></p>
+  <span class="text-muted wizard-upload-nota">JPG o PNG, máximo 5 MB</span>
+  <input type="file" id="tallerFotos" name="fotos" class="d-none"
+         accept="image/png, image/jpeg" multiple>
+</label>
+
+<!-- Estado -->
+<div class="mb-3">
+  <label class="form-label fw-bold small d-block">Estado</label>
+
+  <input type="radio" class="btn-check" name="estado" id="estPendiente" value="pendiente" checked>
+  <label class="wizard-chip" for="estPendiente">Pendiente</label>
+
+  <input type="radio" class="btn-check" name="estado" id="estActivo" value="activo">
+  <label class="wizard-chip" for="estActivo">Activo</label>
+
+  <input type="radio" class="btn-check" name="estado" id="estSuspendido" value="suspendido">
+  <label class="wizard-chip" for="estSuspendido">Suspendido</label>
+</div>

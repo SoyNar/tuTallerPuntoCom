@@ -1,0 +1,41 @@
+/* ===== Textos dentro de cada paso ===== */
+.wizard-titulo { font-weight: 800; font-size: 1.1rem; margin-bottom: .25rem; }
+.wizard-subtitulo { color: #6c757d; font-size: .85rem; margin-bottom: 1rem; }
+
+/* Botones de día (cuadrados) */
+.wizard-dia {
+  width: 2.75rem;
+  height: 2.75rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  font-weight: 700;
+  font-size: .8rem;
+  border: 1px solid var(--wizard-color-off);
+  border-radius: .6rem;
+  background: #fff;
+  color: #212529;
+}
+
+/* Chips de servicios (píldoras) */
+.wizard-chip {
+  border: 1px solid var(--wizard-color-off);
+  border-radius: 50rem;
+  background: #fff;
+  color: #212529;
+  font-weight: 600;
+  font-size: .8rem;
+  padding: .45rem 1rem;
+}
+
+/* Estado seleccionado (para ambos) */
+.btn-check:checked + .wizard-dia,
+.btn-check:checked + .wizard-chip {
+  background: var(--wizard-color);
+  border-color: var(--wizard-color);
+  color: #fff;
+}
+
+/* Inputs con fondo suave como en el diseño */
+.wizard-input { background: #f6f8fc; border-radius: .6rem; padding: .6rem .75rem; }

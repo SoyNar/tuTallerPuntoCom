@@ -1,0 +1,18 @@
+/* ===== Zona de carga de fotos (paso 5) ===== */
+.wizard-upload {
+  display: block;
+  width: 100%;
+  padding: 2.5rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  background: #f6f8fc;
+  border: 2px dashed #b6d0fb;
+  border-radius: 1rem;
+  transition: background .15s, border-color .15s;
+}
+.wizard-upload:hover,
+.wizard-upload.dragover {
+  background: #eaf1fd;
+  border-color: var(--wizard-color);
+}
+.wizard-upload-nota { font-size: .72rem; }
