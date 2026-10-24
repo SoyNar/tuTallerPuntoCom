@@ -39,3 +39,12 @@
 
 /* Inputs con fondo suave como en el diseño */
 .wizard-input { background: #f6f8fc; border-radius: .6rem; padding: .6rem .75rem; }
+
+.alerta-validacion { width: 100%; }
+
+/* Grupo de botones inválido: resalta los botones, no el contenedor */
+  .grupo-invalido { animation: sacudir .3s; }
+  @keyframes sacudir {
+    25% { transform: translateX(-4px); }
+    75% { transform: translateX(4px); }
+  }
