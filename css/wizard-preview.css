@@ -1,0 +1,15 @@
+/* ===== Vista previa  ===== */
+.wizard-preview { background: #f6f8fc; }
+
+.wizard-preview-portada {
+  height: 8.75rem;
+  background: var(--wizard-color);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+.wizard-preview-portada img { height: 100%; width: auto; object-fit: contain; }
+
+.wizard-check { color: #8b949e; }
+.wizard-check.ok { color: #198754; font-weight: 700; }

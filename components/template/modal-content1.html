@@ -1,112 +1,40 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar taller - Paso 1</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos específicos mínimos -->
-    <link href="../../css/modal-content1.css" rel="stylesheet">
-</head>
-<body class="bg-dark bg-opacity-75 min-vh-100 d-flex align-items-center justify-content-center p-3">
+<h2 class="wizard-titulo">1. Datos del taller</h2>
+<p class="wizard-subtitulo">Información básica y de contacto.</p>
 
-    <!-- Contenedor Principal con Bootstrap Fluid y Flexbox -->
-    <div class="container-fluid contenedor-modal-principal p-0 bg-white rounded-4 shadow-lg overflow-hidden d-flex flex-column">
+<div class="mb-3">
+  <label for="tallerNombre" class="form-label fw-bold small">Nombre del taller</label>
+  <input type="text" id="tallerNombre" name="nombre"
+         class="form-control wizard-input" placeholder="Ej: Taller El Pistón" required>
+</div>
 
-        <!-- 1. Encabezado Fijo -->
-        <div class="bg-primary bg-opacity-10 px-4 py-3 border-bottom flex-shrink-0">
-            <div class="row align-items-center">
-                <div class="col-10">
-                    <span class="text-muted text-uppercase fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Administración > Talleres > <strong>Nuevo</strong></span>
-                    <h1 class="h5 fw-bold text-dark mb-1 mt-1">Agregar taller</h1>
-                    <p class="text-secondary mb-0" style="font-size: 12px;">Completa los datos paso a paso. Al final verás cómo lo ven los usuarios.</p>
-                </div>
-                <div class="col-2 text-end d-flex flex-column align-items-end justify-content-center">
-                    <span class="text-primary fw-bold mb-1" style="font-size: 11px;">Paso 1 de 6</span>
-                    <button type="button" class="btn-close" aria-label="Cerrar"></button>
-                </div>
-            </div>
-        </div>
+<div class="row mb-3">
+  <div class="col-md-6 mb-3 mb-md-0">
+    <label for="tallerNit" class="form-label fw-bold small">NIT o RUT</label>
+    <input type="text" id="tallerNit" name="nit"
+           class="form-control wizard-input" placeholder="900.123.456-7" required>
+  </div>
+  <div class="col-md-6">
+    <label for="tallerTelefono" class="form-label fw-bold small">Teléfono / WhatsApp</label>
+    <input type="tel" id="tallerTelefono" name="telefono"
+           class="form-control wizard-input" placeholder="300 123 4567" required>
+  </div>
+</div>
 
-        <!-- 2. Barra de Pasos / Stepper -->
-        <div class="px-4 py-3 border-bottom bg-white flex-shrink-0">
-            <div class="row text-center position-relative justify-content-between align-items-center">
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">1</div>
-                    <div class="text-dark fw-bold" style="font-size: 11px;">Datos</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">2</div>
-                    <div class="text-muted" style="font-size: 11px;">Ubicación</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">3</div>
-                    <div class="text-muted" style="font-size: 11px;">Horarios</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">4</div>
-                    <div class="text-muted" style="font-size: 11px;">Servicios</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">5</div>
-                    <div class="text-muted" style="font-size: 11px;">Fotos y estado</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">6</div>
-                    <div class="text-muted" style="font-size: 11px;">Vista previa</div>
-                </div>
-            </div>
-        </div>
+<div class="mb-3">
+  <label for="tallerCorreo" class="form-label fw-bold small">Correo</label>
+  <input type="email" id="tallerCorreo" name="correo"
+         class="form-control wizard-input" placeholder="contacto@taller.com" required>
+</div>
 
-        <!-- 3. Cuerpo del Formulario (Con scroll interno fluido) -->
-        <div class="p-4 flex-grow-1 overflow-auto">
-            <h2 class="h6 fw-bold text-dark mb-1">1. Datos del taller</h2>
-            <p class="text-secondary mb-3" style="font-size: 12px;">Información básica y de contacto.</p>
+<div class="mb-3">
+  <label class="form-label fw-bold small d-block">Tipo de vehículos</label>
 
-            <form>
-                <div class="mb-3">
-                    <label class="form-label fw-bold text-dark" style="font-size: 12px;">Nombre del taller</label>
-                    <input type="text" class="form-control form-control-sm py-2 bg-primary bg-opacity-10" placeholder="Ej: Taller El Pistón">
-                </div>
+  <input type="radio" class="btn-check" name="tipoVehiculos" id="vehCarros" value="carros" checked>
+  <label class="wizard-chip" for="vehCarros">Carros</label>
 
-                <div class="row mb-3">
-                    <div class="col-md-6 mb-3 mb-md-0">
-                        <label class="form-label fw-bold text-dark" style="font-size: 12px;">NIT o RUT</label>
-                        <input type="text" class="form-control form-control-sm py-2 bg-primary bg-opacity-10" placeholder="900.123.456-7">
-                    </div>
-                    <div class="col-md-6">
-                        <label class="form-label fw-bold text-dark" style="font-size: 12px;">Teléfono / WhatsApp</label>
-                        <input type="text" class="form-control form-control-sm py-2 bg-primary bg-opacity-10" placeholder="300 123 4567">
-                    </div>
-                </div>
+  <input type="radio" class="btn-check" name="tipoVehiculos" id="vehMotos" value="motos">
+  <label class="wizard-chip" for="vehMotos">Motos</label>
 
-                <div class="mb-3">
-                    <label class="form-label fw-bold text-dark" style="font-size: 12px;">Correo</label>
-                    <input type="email" class="form-control form-control-sm py-2 bg-primary bg-opacity-10" placeholder="contacto@taller.com">
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label fw-bold text-dark" style="font-size: 12px;">Tipo de vehículos</label>
-                    <div class="d-flex gap-2">
-                        <button type="button" class="btn btn-primary btn-sm px-4 rounded-pill shadow-sm">Carros</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Motos</button>
-                        <button type="button" class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Ambos</button>
-                    </div>
-                </div>
-            </form>
-        </div>
-
-        <!-- 4. Pie de página Fijo -->
-        <div class="p-3 px-4 bg-white border-top d-flex justify-content-between align-items-center flex-shrink-0">
-            <button type="button" class="btn btn-outline-secondary px-4 py-2 btn-sm rounded-3">Cancelar</button>
-            <button type="button" id="boton-siguiente" class="btn btn-naranja px-4 py-2 btn-sm fw-bold text-white shadow-sm rounded-3">Siguiente</button>
-        </div>
-
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/pages/modal-content1.js"></script>
-</body>
-</html>
+  <input type="radio" class="btn-check" name="tipoVehiculos" id="vehAmbos" value="ambos">
+  <label class="wizard-chip" for="vehAmbos">Ambos</label>
+</div>

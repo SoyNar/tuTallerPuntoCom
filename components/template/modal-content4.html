@@ -1,97 +1,25 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agregar taller - Paso 5</title>
-    <!-- Bootstrap 5 CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-    <!-- Estilos específicos mínimos -->
-    <link href="../../css/modal-content4.css" rel="stylesheet">
-</head>
-<body class="bg-dark bg-opacity-75 min-vh-100 d-flex align-items-center justify-content-center p-3">
+<h2 class="wizard-titulo">5. Fotos y estado</h2>
+<p class="wizard-subtitulo">Una foto de portada y el estado de verificación.</p>
 
-    <!-- Contenedor Principal con Bootstrap Fluid y Flexbox -->
-    <div class="container-fluid contenedor-modal-principal p-0 bg-white rounded-4 shadow-lg overflow-hidden d-flex flex-column">
+<!-- Zona de carga -->
+<label for="tallerFotos" class="wizard-upload mb-4">
+  <div class="fs-4 mb-2">🖼️</div>
+  <p class="mb-1 small">Arrastra fotos aquí o <span class="text-primary fw-semibold">toca para subirlas</span></p>
+  <span class="text-muted wizard-upload-nota">JPG o PNG, máximo 5 MB</span>
+  <input type="file" id="tallerFotos" name="fotos" class="d-none"
+         accept="image/png, image/jpeg" multiple>
+</label>
 
-        <!-- 1. Encabezado Fijo -->
-        <div class="bg-primary bg-opacity-10 px-4 py-3 border-bottom flex-shrink-0">
-            <div class="row align-items-center">
-                <div class="col-10">
-                    <span class="text-muted text-uppercase fw-bold" style="font-size: 10px; letter-spacing: 0.5px;">Administración > Talleres > <strong>Nuevo</strong></span>
-                    <h1 class="h5 fw-bold text-dark mb-1 mt-1">Agregar taller</h1>
-                    <p class="text-secondary mb-0" style="font-size: 12px;">Completa los datos paso a paso. Al final verás cómo lo ven los usuarios.</p>
-                </div>
-                <div class="col-2 text-end d-flex flex-column align-items-end justify-content-center">
-                    <span class="text-primary fw-bold mb-1" style="font-size: 11px;">Paso 5 de 6</span>
-                    <button type="button" class="btn-close" aria-label="Cerrar"></button>
-                </div>
-            </div>
-        </div>
+<!-- Estado -->
+<div class="mb-3">
+  <label class="form-label fw-bold small d-block">Estado</label>
 
-        <!-- 2. Barra de Pasos / Stepper (Con los primeros 4 pasos check y el 5 activo) -->
-        <div class="px-4 py-3 border-bottom bg-white flex-shrink-0">
-            <div class="row text-center position-relative justify-content-between align-items-center">
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">✓</div>
-                    <div class="text-secondary" style="font-size: 11px;">Datos</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">✓</div>
-                    <div class="text-secondary" style="font-size: 11px;">Ubicación</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">✓</div>
-                    <div class="text-secondary" style="font-size: 11px;">Horarios</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">✓</div>
-                    <div class="text-secondary" style="font-size: 11px;">Servicios</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-bold mb-1 shadow-sm mx-auto" style="width: 26px; height: 26px; font-size: 11px;">5</div>
-                    <div class="text-dark fw-bold" style="font-size: 11px;">Fotos y estado</div>
-                </div>
-                <div class="col position-relative z-2">
-                    <div class="rounded-circle bg-white border border-secondary text-secondary d-inline-flex align-items-center justify-content-center fw-bold mb-1 mx-auto" style="width: 26px; height: 26px; font-size: 11px;">6</div>
-                    <div class="text-muted" style="font-size: 11px;">Vista previa</div>
-                </div>
-            </div>
-        </div>
+  <input type="radio" class="btn-check" name="estado" id="estPendiente" value="pendiente" checked>
+  <label class="wizard-chip" for="estPendiente">Pendiente</label>
 
-        <!-- 3. Cuerpo del Formulario (Con scroll interno fluido) -->
-        <div class="p-4 flex-grow-1 overflow-auto">
-            <h2 class="h6 fw-bold text-dark mb-1">5. Fotos y estado</h2>
-            <p class="text-secondary mb-3" style="font-size: 12px;">Una foto de portada y el estado de verificación.</p>
+  <input type="radio" class="btn-check" name="estado" id="estActivo" value="activo">
+  <label class="wizard-chip" for="estActivo">Activo</label>
 
-            <!-- Zona de Carga de Archivos (Estilo caja punteada con Bootstrap) -->
-            <div class="zona-carga-archivos border border-2 border-primary-subtle rounded-4 p-5 text-center bg-primary bg-opacity-10 mb-4 cursor-pointer">
-                <div class="mb-2 fs-4">🖼️</div>
-                <p class="text-dark mb-1" style="font-size: 13px;">Arrastra fotos aquí o <span class="text-primary fw-medium">toca para subirlas</span></p>
-                <span class="text-muted" style="font-size: 11px;">JPG o PNG, máximo 5 MB</span>
-            </div>
-
-            <!-- Selección de Estado -->
-            <div class="mb-3">
-                <label class="form-label fw-bold text-dark mb-2" style="font-size: 12px;">Estado</label>
-                <div class="d-flex gap-2">
-                    <button type="button" class="btn btn-primary btn-sm px-4 rounded-pill shadow-sm">Pendiente</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Activo</button>
-                    <button type="button" class="btn btn-outline-secondary btn-sm px-4 rounded-pill">Suspendido</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. Pie de página Fijo -->
-        <div class="p-3 px-4 bg-white border-top d-flex justify-content-between align-items-center flex-shrink-0">
-            <button type="button" id="boton-atras" class="btn btn-outline-secondary px-4 py-2 btn-sm rounded-3">← Atrás</button>
-            <button type="button" id="boton-siguiente" class="btn btn-naranja px-4 py-2 btn-sm fw-bold text-white shadow-sm rounded-3">Siguiente</button>
-        </div>
-
-    </div>
-
-    <!-- Bootstrap JS -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="../../js/pages/modal-content4.js"></script>
-</body>
-</html>
+  <input type="radio" class="btn-check" name="estado" id="estSuspendido" value="suspendido">
+  <label class="wizard-chip" for="estSuspendido">Suspendido</label>
+</div>
