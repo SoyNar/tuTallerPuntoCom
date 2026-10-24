@@ -3,19 +3,80 @@
   height: min(26rem, 60vh);  /* ajusta 26rem al paso más alto (el del mapa) */
   overflow-y: auto;
 }
+
 /* ===== Wizard "Agregar taller" ===== */
 .wizard-content {
   --wizard-color: #1f6feb;        /* paso activo / completado */
   --wizard-color-off: #d0d7de;    /* paso pendiente */
+  --wizard-top-bg: #eaf1fd;       /* fondo azul claro del encabezado */
   border-radius: 1rem;
+  overflow: hidden;               /* recorta el fondo en las esquinas redondeadas */
 }
 
-/* Stepper */
+/* ===== Bloque superior con fondo (cabecera + stepper) ===== */
+.wizard-top {
+  background: var(--wizard-top-bg);
+  padding: 1rem 1.5rem 1.1rem;
+  border-bottom: 1px solid #dbe5f7;
+}
+
+.wizard-top-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.wizard-breadcrumb {
+  font-size: .72rem;
+  color: #6c757d;
+  margin-bottom: .35rem;
+}
+.wizard-breadcrumb strong { color: #212529; }
+
+.wizard-top-title {
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.wizard-top-sub {
+  font-size: .78rem;
+  color: #6c757d;
+  margin: .2rem 0 0;
+}
+
+.wizard-top-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.wizard-paso-texto {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--wizard-color);
+  white-space: nowrap;
+}
+
+/* Botón cerrar en cuadro blanco */
+.wizard-close {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  opacity: 1;
+  background-color: #fff;
+  background-size: .65rem;
+  border: 1px solid var(--wizard-color-off);
+  border-radius: .6rem;
+}
+
+/* ===== Stepper ===== */
 .wizard-stepper {
   display: flex;
   list-style: none;
-  margin: 0;
-  padding: 1rem 1.5rem 0;
+  margin: 1rem 0 0;
+  padding: 0;                     /* el padding ya lo da .wizard-top */
   counter-reset: paso;
 }
 
@@ -24,20 +85,27 @@
   position: relative;
   text-align: center;
   counter-increment: paso;
+  font-size: .68rem;
+  font-weight: 600;
+  color: #8b949e;                 /* etiqueta pendiente */
 }
+
+.wizard-step.active,
+.wizard-step.completed { color: #212529; }
 
 /* El punto numerado */
 .wizard-step::before {
   content: counter(paso);
-  display: inline-flex;
+  display: flex;                  /* la etiqueta queda debajo del punto */
   align-items: center;
   justify-content: center;
   width: 1.75rem;
   height: 1.75rem;
+  margin: 0 auto .3rem;
   border-radius: 50%;
   background: var(--wizard-color-off);
   color: #fff;
-  font-size: 0.8rem;
+  font-size: .8rem;
   font-weight: 700;
   position: relative;
   z-index: 1;
@@ -47,7 +115,7 @@
 .wizard-step:not(:last-child)::after {
   content: "";
   position: absolute;
-  top: 0.85rem;
+  top: .85rem;
   left: 50%;
   width: 100%;
   height: 2px;
@@ -64,11 +132,12 @@
   background: var(--wizard-color);
 }
 
-/* Pie con los botones */
+/* ===== Pie con los botones ===== */
 .wizard-footer {
   justify-content: space-between;
 }
 
+/* ===== Textos dentro de cada paso ===== */
 .wizard-titulo { font-weight: 800; font-size: 1.1rem; margin-bottom: .25rem; }
 .wizard-subtitulo { color: #6c757d; font-size: .85rem; margin-bottom: 1rem; }
 
@@ -110,9 +179,10 @@
 /* Inputs con fondo suave como en el diseño */
 .wizard-input { background: #f6f8fc; border-radius: .6rem; padding: .6rem .75rem; }
 
+/* ===== Mapa ===== */
 .wizard-mapa {
   position: relative;
-  height: 9rem;                 /* altura fija: el mapa no empuja el layout */
+  height: 9rem;                   /* altura fija: el mapa no empuja el layout */
   border: 1px solid var(--wizard-color-off);
   border-radius: .6rem;
   background: #eef2fb;
@@ -123,7 +193,7 @@
   position: absolute;
   left: .6rem;
   bottom: .6rem;
-  z-index: 500;                 /* por encima de las capas del mapa */
+  z-index: 500;                   /* por encima de las capas del mapa */
   background: #0f172a;
   color: #fff;
   font-size: .7rem;
