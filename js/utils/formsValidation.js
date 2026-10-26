@@ -9,7 +9,7 @@ function returnAlertaPersonalizada(mensaje){
 	<small class="d-block mt-1" style="color: var(--color-accent); font-size: 0.75rem;"><i class="bi bi-exclamation-triangle-fill"></i> ${mensaje}</small>`
 }
 
-function generaAlerta(esValido, input, mensaje) {
+ export function generaAlerta(esValido, input, mensaje) {
 	const padre = input.closest('div');
 	let alerta = padre.querySelector('.alerta-validacion');
 

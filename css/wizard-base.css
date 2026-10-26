@@ -1,0 +1,21 @@
+/* Tamaño fijo del modal: no cambia entre pasos */
+#wizardBody {
+  height: min(26rem, 60vh);  /* ajusta 26rem al paso más alto (el del mapa) */
+  overflow-y: auto;
+}
+
+/* ===== Wizard "Agregar taller" ===== */
+.wizard-content {
+  --wizard-color: #1f6feb;        /* paso activo / completado */
+  --wizard-color-off: #d0d7de;    /* paso pendiente */
+  --wizard-top-bg: #eaf1fd;       /* fondo azul claro del encabezado */
+  border-radius: 1rem;
+  overflow: hidden;               /* recorta el fondo en las esquinas redondeadas */
+}
+
+/* ===== Pie con los botones ===== */
+.wizard-footer {
+  justify-content: space-between;
+  background: #f6f8fc;
+  border-top: 1px solid #dbe5f7;
+}

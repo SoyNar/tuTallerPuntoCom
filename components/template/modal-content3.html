@@ -1,0 +1,27 @@
+<h6 class="wizard-titulo">3. Horarios y servicios</h6>
+<p class="wizard-subtitulo">Días y horas de atención, y los servicios que ofrece el taller.</p>
+
+<!-- Días -->
+<p class="form-label small fw-semibold mb-2">Días de atención</p>
+<div class="d-flex flex-wrap gap-2 mb-3" role="group" aria-label="Días de atención" id="diasAtencion">
+  
+</div>
+
+<!-- Horas -->
+<div class="row g-3 mb-4">
+  <div class="col-6">
+    <label for="hora-apertura" class="form-label small fw-semibold">Abre</label>
+    <input type="time" class="form-control wizard-input" id="hora-apertura"
+           name="apertura" value="08:00" required>
+  </div>
+  <div class="col-6">
+    <label for="hora-cierre" class="form-label small fw-semibold">Cierra</label>
+    <input type="time" class="form-control wizard-input" id="hora-cierre"
+           name="cierre" value="18:00" required>
+  </div>
+</div>
+
+<!-- Servicios -->
+<p class="form-label small fw-semibold mb-2" id="serviciosLabel">Servicios</p>
+<div id="serviciosTaller" class="d-flex flex-wrap gap-2"
+     role="group" aria-labelledby="serviciosLabel"></div>

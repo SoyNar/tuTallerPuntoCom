@@ -1,0 +1,36 @@
+/* ===== Vista previa (paso 5) ===== */
+.wizard-preview { background: #f6f8fc; }
+
+.wizard-preview-portada {
+  height: 8.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: #fff;               /* sin azul; el mismo blanco que el fondo del paso */
+  border: 1px solid #dbe5f7;
+}
+.wizard-preview-portada img { height: 100%; width: auto; object-fit: contain; }
+
+/* Cuando es una foto subida, llena todo el recuadro */
+.wizard-preview-portada img.es-foto { width: 100%; object-fit: cover; }
+
+.wizard-check { color: #8b949e; line-height: 1.4; }
+.wizard-check.ok { color: #198754; font-weight: 700; }
+
+.wizard-valor { overflow-wrap: anywhere; color: #212529; font-weight: 600; }
+.wizard-valor.vacio { color: #8b949e; font-weight: 400; font-style: italic; }
+
+.wizard-preview-portada {
+  height: 8.75rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  background: var(--wizard-color);     /* azul cuando no hay foto */
+}
+.wizard-preview-portada img { height: 100%; width: auto; object-fit: contain; }
+
+/* Con foto subida: sin azul y la imagen llena el recuadro */
+.wizard-preview-portada.con-foto { background: transparent; }
+.wizard-preview-portada.con-foto img { width: 100%; object-fit: cover; }

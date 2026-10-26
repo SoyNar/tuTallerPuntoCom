@@ -1,190 +1,264 @@
 <!doctype html>
 <html lang="es">
-
-<head>
+  <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Contáctenos - TuTaller</title>
-    <!-- Bootstrap CSS CDN -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" />
-    <!--Fuente de Bootstrap-->
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
-    <!--Iconos de Bootstrap-->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-    <!-- Estilos personalizados para pequeños detalles no soportados en Bootstrap -->
+    <meta
+      name="description"
+      content="Escríbenos y te responderemos lo antes posible."
+    />
+    <title>Contáctenos · TuTaller</title>
+
+    <!-- Orden igual en todas las páginas: Bootstrap, iconos, fuente, main, navbar, CSS de la página -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+    <link rel="stylesheet" href="../css/toast.css" />
     <link rel="stylesheet" href="../css/contact.css" />
-    <link rel="stylesheet" href="../css/toast.css">
-    <!-- Scripts propios de la pagina contacto -->
+
+    <!-- Scripts propios de la página contacto -->
     <script type="module" src="../js/pages/contact.js"></script>
-</head>
+  </head>
 
-<body class="bg-light">
-    <!-- === SECCIÓN PRINCIPAL  === -->
-    <div class="contenedor-pagina container-lg py-5">
-        <!-- Miga de pan / Breadcrumb -->
-        <nav aria-label="breadcrumb">
-            <ol class="breadcrumb mb-2 small text-muted">
-                <li class="breadcrumb-item">
-                    <a href="#" class="text-decoration-none text-muted">Inicio</a>
-                </li>
-                <li class="breadcrumb-item active" aria-current="page">
-                    Contáctanos
-                </li>
-            </ol>
-        </nav>
+  <body>
+    <nav-bar></nav-bar>
 
-        <!-- Título principal -->
-        <div class="mb-5">
-            <h1 class="fw-bold text-dark display-6">Contáctanos</h1>
-            <p class="text-muted">
-                Escríbenos y te responderemos lo antes posible.
-            </p>
+    <main>
+      <!-- ============ TÍTULO DE PÁGINA ============ -->
+      <header class="page-header">
+        <div class="container">
+          <h1>Contáctanos</h1>
+          <p>Escríbenos y te responderemos lo antes posible.</p>
         </div>
+      </header>
 
-        <!-- Fila principal que divide las tarjetas de información y el formulario -->
-        <div class="row g-4">
-            <!-- Columna de contactos === -->
-
+      <!-- ============ CONTENIDO ============ -->
+      <section class="page-section">
+        <div class="container">
+          <div class="row g-4">
+            <!-- Columna de contactos -->
             <div class="columna-info col-12 col-lg-4">
-                <div class="d-flex flex-column gap-3">
-                    <!-- Tarjeta 1: Correo -->
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
-                                style="width: 50px; height: 50px">
-                                <i class="bi bi-envelope fs-5"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block fs-7">Correo</small>
-                                <strong class="text-dark">contacto@tutaller.com</strong>
-                            </div>
-                        </div>
+              <div class="d-flex flex-column gap-3">
+                <!-- Correo -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <div class="d-flex align-items-center gap-3">
+                    <div
+                      class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
+                      style="width: 50px; height: 50px"
+                    >
+                      <i class="bi bi-envelope fs-5"></i>
                     </div>
-
-                    <!-- Tarjeta 2: Teléfono -->
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
-                                style="width: 50px; height: 50px">
-                                <i class="bi bi-telephone fs-5"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block fs-7">Teléfono</small>
-                                <strong class="text-dark">+57 300 000 0000</strong>
-                            </div>
-                        </div>
+                    <div>
+                      <small class="text-body-secondary d-block">Correo</small>
+                      <strong>contacto@tutaller.com</strong>
                     </div>
-
-                    <!-- Tarjeta 3: WhatsApp -->
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
-                                style="width: 50px; height: 50px">
-                                <i class="bi bi-whatsapp fs-5"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block fs-7">WhatsApp</small>
-                                <strong class="text-dark">+57 300 000 0000</strong>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Tarjeta 4: Horario -->
-                    <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
-                        <div class="d-flex align-items-center gap-3">
-                            <div class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
-                                style="width: 50px; height: 50px">
-                                <i class="bi bi-clock fs-5"></i>
-                            </div>
-                            <div>
-                                <small class="text-muted d-block fs-7">Horario</small>
-                                <strong class="text-dark">Lunes a sábado, 8:00 am a 6:00 pm</strong>
-                            </div>
-                        </div>
-                    </div>
+                  </div>
                 </div>
+
+                <!-- Teléfono -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <div class="d-flex align-items-center gap-3">
+                    <div
+                      class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
+                      style="width: 50px; height: 50px"
+                    >
+                      <i class="bi bi-telephone fs-5"></i>
+                    </div>
+                    <div>
+                      <small class="text-body-secondary d-block"
+                        >Teléfono</small
+                      >
+                      <strong>+57 300 000 0000</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- WhatsApp -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <div class="d-flex align-items-center gap-3">
+                    <div
+                      class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
+                      style="width: 50px; height: 50px"
+                    >
+                      <i class="bi bi-whatsapp fs-5"></i>
+                    </div>
+                    <div>
+                      <small class="text-body-secondary d-block"
+                        >WhatsApp</small
+                      >
+                      <strong>+57 300 000 0000</strong>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Horario -->
+                <div class="card border-0 shadow-sm rounded-4 p-3 bg-white">
+                  <div class="d-flex align-items-center gap-3">
+                    <div
+                      class="rounded-circle bg-light p-3 d-flex align-items-center justify-content-center"
+                      style="width: 50px; height: 50px"
+                    >
+                      <i class="bi bi-clock fs-5"></i>
+                    </div>
+                    <div>
+                      <small class="text-body-secondary d-block">Horario</small>
+                      <strong>Lunes a sábado, 8:00 am a 6:00 pm</strong>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Columna derecha - formulario de contacto-->
+            <!-- Columna derecha - formulario -->
             <div class="columna-formulario col-12 col-lg-8">
-                <div class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white">
-                    <h3 class="fw-bold text-dark mb-4 h4">Envíanos un mensaje</h3>
+              <div
+                class="card border-0 shadow-sm rounded-4 p-4 p-md-5 bg-white"
+              >
+                <h2 class="fw-bold mb-4 h4">Envíanos un mensaje</h2>
 
-                    <form id="form-contacto" action="https://formspree.io/f/xnpjlvla" method="POST">
-                        <div class="row g-3">
-                            <!-- Campo: Nombre completo -->
-                            <div class="col-12 col-md-6">
-                                <label for="campo-nombre" class="form-label small fw-semibold text-secondary">Nombre
-                                    completo</label>
-                                <input type="text" class="form-control py-2 rounded-3" id="campo-nombre"
-                                    placeholder="Tu nombre" name="nombre" />
-                            </div>
+                <form
+                  id="form-contacto"
+                  action="https://formspree.io/f/xnpjlvla"
+                  method="POST"
+                >
+                  <div class="row g-3">
+                    <!-- Nombre completo -->
+                    <div class="col-12 col-md-6">
+                      <label
+                        for="campo-nombre"
+                        class="form-label small fw-semibold text-secondary"
+                        >Nombre completo</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control py-2 rounded-3"
+                        id="campo-nombre"
+                        placeholder="Tu nombre"
+                        name="nombre"
+                      />
+                    </div>
 
-                            <!-- Campo: Correo electrónico -->
-                            <div class="col-12 col-md-6">
-                                <label for="campo-email" class="form-label small fw-semibold text-secondary">Correo
-                                    electrónico</label>
-                                <input type="email" class="form-control py-2 rounded-3" id="campo-email"
-                                    placeholder="ejemplo@correo.com"  name="email"/>
-                            </div>
+                    <!-- Correo electrónico -->
+                    <div class="col-12 col-md-6">
+                      <label
+                        for="campo-email"
+                        class="form-label small fw-semibold text-secondary"
+                        >Correo electrónico</label
+                      >
+                      <input
+                        type="email"
+                        class="form-control py-2 rounded-3"
+                        id="campo-email"
+                        placeholder="ejemplo@correo.com"
+                        name="email"
+                      />
+                    </div>
 
-                            <!-- Campo: Asunto -->
-                            <div class="col-12 col-md-6">
-                                <label for="campo-asunto"
-                                    class="form-label small fw-semibold text-secondary">Asunto</label>
-                                <select class="form-select py-2 rounded-3 text-muted" id="campo-asunto" name="asunto">
-                                    <option selected disabled>Selecciona un asunto</option>
-                                    <option value="cotizacion">Cotización</option>
-                                    <option value="soporte">Soporte técnico</option>
-                                    <option value="otro">Otro</option>
-                                </select>
-                            </div>
+                    <!-- Asunto -->
+                    <div class="col-12 col-md-6">
+                      <label
+                        for="campo-asunto"
+                        class="form-label small fw-semibold text-secondary"
+                        >Asunto</label
+                      >
+                      <select
+                        class="form-select py-2 rounded-3 text-muted"
+                        id="campo-asunto"
+                        name="asunto"
+                      >
+                        <option selected disabled>Selecciona un asunto</option>
+                        <option value="cotizacion">Cotización</option>
+                        <option value="soporte">Soporte técnico</option>
+                        <option value="otro">Otro</option>
+                      </select>
+                    </div>
 
-                            <!-- Campo: Teléfono -->
-                            <div class="col-12 col-md-6">
-                                <label for="campo-telefono"
-                                    class="form-label small fw-semibold text-secondary">Teléfono</label>
-                                <input type="tel" class="form-control py-2 rounded-3" id="campo-telefono"
-                                    placeholder="+57 301 000 0000" name="telefono" />
-                            </div>
+                    <!-- Teléfono -->
+                    <div class="col-12 col-md-6">
+                      <label
+                        for="campo-telefono"
+                        class="form-label small fw-semibold text-secondary"
+                        >Teléfono</label
+                      >
+                      <input
+                        type="tel"
+                        class="form-control py-2 rounded-3"
+                        id="campo-telefono"
+                        placeholder="+57 301 000 0000"
+                        name="telefono"
+                      />
+                    </div>
 
-                            <!-- Campo: Mensaje -->
-                            <div class="col-12">
-                                <label for="campo-mensaje"
-                                    class="form-label small fw-semibold text-secondary">Mensaje</label>
-                                <textarea class="form-control rounded-3" id="campo-mensaje" rows="4"
-                                    placeholder="Escribe tu mensaje..." name="mensaje"></textarea>
-                                <p class="text-muted">
-                                    <span id='caracteres' class="fw-bold">1000</span> caracteres restantes. 
-                                </p>
-                            </div>
+                    <!-- Mensaje -->
+                    <div class="col-12">
+                      <label
+                        for="campo-mensaje"
+                        class="form-label small fw-semibold text-secondary"
+                        >Mensaje</label
+                      >
+                      <textarea
+                        class="form-control rounded-3"
+                        id="campo-mensaje"
+                        rows="4"
+                        placeholder="Escribe tu mensaje..."
+                        name="mensaje"
+                      ></textarea>
+                      <p class="text-body-secondary mt-2 mb-0">
+                        <span id="caracteres" class="fw-bold">1000</span>
+                        caracteres restantes.
+                      </p>
+                    </div>
 
-                            <!-- Botón Enviar mensaje -->
-                            <div class="col-12 mt-4">
-                                <button type="submit" class="btn text-white rounded-3 px-4 py-2 fw-semibold">
-                                    Enviar mensaje
-                                </button>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+                    <!-- Botón enviar -->
+                    <div class="col-12 mt-4">
+                      <button
+                        type="submit"
+                        class="btn text-white rounded-3 px-4 py-2 fw-semibold"
+                      >
+                        Enviar mensaje
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
             </div>
+          </div>
         </div>
+      </section>
 
-        <!-- Seccion 'donde estamos'-->
-        <div class="seccion-mapa mt-5 pt-4">
-            <h3 class="fw-bold text-dark mb-4 h4">Dónde estamos</h3>
-            <div class="card border border-primary-subtle bg-light rounded-4 p-5 text-center d-flex align-items-center justify-content-center"
-                style="min-height: 250px">
-                <span class="text-muted small">Mapa de ubicación del taller</span>
-            </div>
+      <!-- ============ DÓNDE ESTAMOS ============ -->
+      <section class="page-section pt-0">
+        <div class="container seccion-mapa">
+          <h2 class="fw-bold mb-4 h4">Dónde estamos</h2>
+          <div
+            class="card border border-primary-subtle bg-light rounded-4 p-5 text-center d-flex align-items-center justify-content-center"
+            style="min-height: 250px"
+          >
+            <span class="text-body-secondary small"
+              >Mapa de ubicación del taller</span
+            >
+          </div>
         </div>
-    </div>
-    <!-- Bootstrap JS Bundle -->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-         <script    type="module" src="../services/contact-service.js"></script>
+      </section>
+    </main>
+    <tu-footer></tu-footer>
 
-</body>
-
+    <!-- Bootstrap JS Bundle (misma versión que las demás páginas) -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../services/contact-service.js"></script>
+    <script type="module" src="../components/navbar.js"></script>
+    <script type="module" src="../components/footer.js"></script>
+  </body>
 </html>
