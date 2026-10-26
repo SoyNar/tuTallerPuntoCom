@@ -12,3 +12,10 @@ const legible = (valor) => {
   const texto = String(valor ?? "").replace(/-/g, " ");
   return texto.charAt(0).toUpperCase() + texto.slice(1);
 };
+
+// Elimin minusculas y tildes para mejorar la busqueda
+const normalizar = (t) =>
+  String(t ?? "")
+    .toLowerCase()
+    .normalize("NFD")
+    .replace(/[\u0300-\u036f]/g, "");
