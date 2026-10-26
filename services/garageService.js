@@ -1,7 +1,7 @@
 import {
     talleresMock,
     talleresMap
-} from "../data/garageMock";
+} from "../data/garageMock.js";
 
 // Consultar todos los talleres
 export async function fetchTalleres() {
