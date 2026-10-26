@@ -7,7 +7,7 @@ class TuFooter extends HTMLElement {
                     <div class="row gy-4 mb-4">
                         <div class="col-12 col-lg-4 mb-3 mb-lg-0">
                             <div class="d-flex align-items-center mb-3">
-                                <img src="../assets/icons/chispa.png" alt="chispa">
+                                <img src="../assets/icons/chispa-mascota 3.svg" alt="chispa">
                                 <img src="../assets/icons/letra-logo.png" alt="Logo TuTaller" class="me-2 logo-imagen">
                             </div>
                             <p class="pe-lg-5 mb-0  small lh-base">
