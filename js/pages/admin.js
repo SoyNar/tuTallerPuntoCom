@@ -68,3 +68,22 @@ function filtrar(lista) {
     );
   });
 }
+
+// obtiene los talleres y los pasa por la funcion de filtrar y si esta vacio muestra un mensaje
+function renderizarTabla() {
+  const lista = filtrar(obtenerTalleres());
+
+  tbody.innerHTML = lista.length
+    ? lista.map(filaHTML).join("")
+    : `<tr><td colspan="6" class="text-center text-secondary py-5">
+         No hay talleres para mostrar.
+       </td></tr>`;
+}
+
+// Eventos
+buscador.addEventListener("input", renderizarTabla);
+filtroEstado.addEventListener("change", renderizarTabla);
+document.addEventListener("taller:guardado", renderizarTabla);
+
+renderizarTabla();
+console.log(JSON.stringify(obtenerTalleres(), null, 2));
