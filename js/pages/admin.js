@@ -53,3 +53,18 @@ function filaHTML(t) {
       <td class="text-end"><a href="#" class="text-decoration-none fw-medium">Editar</a></td>
     </tr>`;
 }
+
+// Buscador (nombre, NIT, dirección, ciudad) + filtro de estado
+function filtrar(lista) {
+  const texto = normalizar(buscador.value.trim());
+  const estado = filtroEstado.value;
+
+  return lista.filter((t) => {
+    const contenido = normalizar(
+      `${t.nombre} ${t.nit} ${t.direccion} ${t.ciudad}`,
+    );
+    return (
+      (!texto || contenido.includes(texto)) && (!estado || t.estado === estado)
+    );
+  });
+}
