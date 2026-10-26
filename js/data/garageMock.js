@@ -38,7 +38,7 @@ export const talleresMock = [
         ciudad: "Medellín",
         coordenadas: { lat: 6.214070, lng: -75.573234 },
         horarios: {
-            dias: "Lunes a viernes",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "07:30",
             cierre: "17:30"
         },
@@ -57,7 +57,7 @@ export const talleresMock = [
         ciudad: "Cali",
         coordenadas: { lat: 3.437587, lng: -76.530549 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "17:00"
         },
@@ -76,7 +76,7 @@ export const talleresMock = [
         ciudad: "Barranquilla",
         coordenadas: { lat: 10.985534, lng: -74.790074 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "18:00"
         },
@@ -95,7 +95,7 @@ export const talleresMock = [
         ciudad: "Bogota",
         coordenadas: { lat: 4.656206, lng: -74.100477 },
         horarios: {
-            dias: "Lunes a viernes",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "16:00"
         },
@@ -114,7 +114,7 @@ export const talleresMock = [
         ciudad: "Bucaramanga",
         coordenadas: { lat: 7.118403, lng: -73.122644 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "07:00",
             cierre: "17:00"
         },
@@ -133,7 +133,7 @@ export const talleresMock = [
         ciudad: "Medellin",
         coordenadas: { lat: 6.246880, lng: -75.602378 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "18:00"
         },
@@ -152,7 +152,7 @@ export const talleresMock = [
         ciudad: "Cali",
         coordenadas: { lat: 3.423399, lng: -76.530556 },
         horarios: {
-            dias: "Lunes a viernes",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "17:00"
         },
@@ -171,7 +171,7 @@ export const talleresMock = [
         ciudad: "Barranquilla",
         coordenadas: { lat: 10.986989, lng: -74.803959 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:30",
             cierre: "17:30"
         },
@@ -190,7 +190,7 @@ export const talleresMock = [
         ciudad: "Bogota",
         coordenadas: { lat: 4.641485, lng: -74.101749 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "07:30",
             cierre: "17:30"
         },
