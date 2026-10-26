@@ -1,36 +1,5 @@
-// datos ejemplos de un taller
-const talleresDeEjemplo = [
-  {
-    id: 1,
-    nombre: "Taller El Pistón",
-    estado: "Abierto",
-    calificacion: 4.8,
-    distancia: "1.2 km",
-    servicios: ["Aceite", "Frenos"],
-    imagen: "",
-  },
-  {
-    id: 2,
-    nombre: "Taller Central",
-    estado: "Cerrado",
-    calificacion: 4.5,
-    distancia: "2.5 km",
-    servicios: ["Alineación", "Suspensión"],
-    imagen: "",
-  },
-  {
-    id: 3,
-    nombre: "Taller Central",
-    estado: "Abierto",
-    calificacion: 4.5,
-    distancia: "2.5 km",
-    servicios: ["Alineación", "Suspensión"],
-    imagen: "",
-  },
-];
-
 // Función para renderizar las tarjetas en el HTML
-function renderizarTalleres(lista) {
+export function renderizarTalleres(lista) {
   const contenedor = document.getElementById("contenedor-talleres");
   contenedor.innerHTML = ""; // Limpia el contenedor previo
 
@@ -84,20 +53,3 @@ function renderizarTalleres(lista) {
     contenedor.appendChild(col);
   });
 }
-
-// Ejemplo de llamada consumiendo una API
-async function obtenerTalleresDesdeAPI() {
-  try {
-    // Reemplaza esta URL por la endpoint real de tu API cuando la tengas
-    // const respuesta = await fetch("https://api.tutaller.com/talleres");
-    // const listaTalleres = await respuesta.json();
-
-    // Por el momento simulamos la carga con el array de prueba:
-    renderizarTalleres(talleresDeEjemplo);
-  } catch (error) {
-    console.error("Error al obtener los talleres:", error);
-  }
-}
-
-// Ejecutar la carga al cargar el DOM
-document.addEventListener("DOMContentLoaded", obtenerTalleresDesdeAPI);
