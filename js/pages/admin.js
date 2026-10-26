@@ -19,3 +19,8 @@ const normalizar = (t) =>
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+
+// Captura de elementos (buscador, filtro de estados y la tabla)
+const tbody = document.getElementById("filas-tabla");
+const buscador = document.getElementById("buscar-taller");
+const filtroEstado = document.getElementById("filtro-estado");
