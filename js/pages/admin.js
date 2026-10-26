@@ -6,3 +6,9 @@ const ESTADOS = {
   pendiente: { texto: "Pendiente", clase: "bg-warning text-warning-emphasis" },
   suspendido: { texto: "Suspendido", clase: "bg-danger text-danger" },
 };
+
+// Limpia los valores de servicios ("cambio-aceite" -> "Cambio aceite)
+const legible = (valor) => {
+  const texto = String(valor ?? "").replace(/-/g, " ");
+  return texto.charAt(0).toUpperCase() + texto.slice(1);
+};
