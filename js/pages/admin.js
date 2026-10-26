@@ -1,1 +1,1 @@
-import { obtenerTalleres } from "../../services/talleres-service";
+import { obtenerTalleres } from "../../services/talleres-service.js";
