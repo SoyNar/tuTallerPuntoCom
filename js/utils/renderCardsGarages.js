@@ -1,3 +1,5 @@
+import { estaAbiertoElTaller } from "./scheduleCalculator.js";
+
 // Función para renderizar las tarjetas en el HTML
 export function renderizarTalleres(lista) {
   const contenedor = document.getElementById("contenedor-talleres");
@@ -14,6 +16,8 @@ export function renderizarTalleres(lista) {
           `<span class="badge bg-light text-dark border me-1">${servicio}</span>`,
       )
       .join("");
+    
+    const horarioHabilitado = estaAbiertoElTaller(taller.horarios.apertura, taller.horarios.cierre, taller.horarios.dias)
 
     col.innerHTML = `
       <div class="card h-100 shadow-sm">
@@ -28,10 +32,10 @@ export function renderizarTalleres(lista) {
         <div class="card-body">
           <div class="d-flex justify-content-between align-items-start mb-2">
             <h3 class="card-title h6 fw-bold mb-0">${taller.nombre}</h3>
-            <span class="badge ${taller.estado === "Abierto" ? "bg-primary" : "bg-secondary"}">${taller.estado}</span>
+            <span class="badge ${ horarioHabilitado ? "bg-primary" : "bg-secondary"}">${horarioHabilitado ? "Abierto" : "Cerrado"}</span>
           </div>
           <p class="card-text small text-body-secondary mb-3">
-            <i class="bi bi-star-fill text-warning"></i> ${taller.calificacion} &bull; ${taller.distancia}
+            ${taller.ciudad} - ${taller.direccion}
           </p>
           <!-- Etiquetas de servicios -->
           <div class="mb-3">
@@ -39,7 +43,7 @@ export function renderizarTalleres(lista) {
           </div>
           <!-- Botones de acción con dataset para asociar el ID -->
           <div class="d-flex gap-2">
-            <button type="button" class="btn btn-outline-secondary btn-sm w-50 btn-cotizar" data-taller-id="${taller.id}">
+            <button type="button" class="btn btn-outline-secondary btn-sm w-50 btn-cotizar fw-bold" data-taller-id="${taller.id}">
               Cotizar
             </button>
             <button type="button" class="btn btn-primary btn-sm w-50 btn-agendar" data-taller-id="${taller.id}">

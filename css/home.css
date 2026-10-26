@@ -12,27 +12,27 @@
 }
 
 /* Botones personalizados con tokens de marca */
-.btn-accent-custom {
-  background-color: var(--color-accent);
-  color: var(--color-surface);
+.btn-agendar {
+  background-color: var(--color-accent) !important;
+  color: var(--color-surface) !important;
   border: none;
 }
 
-.btn-accent-custom:hover {
-  background-color: #e55b1f;
-  color: var(--color-surface);
+.btn-agendar:hover {
+  background-color: #e55b1f !important;
+  color: var(--color-surface) !important;
 }
 
-.btn-outline-custom {
+.btn-agendar{
   background-color: var(--color-surface);
   color: var(--color-navy);
   border: 1px solid var(--color-border);
 }
 
-.btn-outline-custom:hover {
-  background-color: var(--color-bg-soft);
-  color: var(--color-navy);
-  border-color: var(--color-primary);
+.btn-agendar:hover {
+  background-color: var(--color-bg-soft) !important;
+  color: var(--color-navy) !important;
+  border-color: var(--color-primary) !important;
 }
 
 /* Enlaces específicos */
