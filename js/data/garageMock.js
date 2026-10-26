@@ -1,32 +1,4 @@
-export class Taller {
-    constructor({
-        id,
-        nombre,
-        nit,
-        telefono,
-        correo,
-        direccion,
-        ciudad,
-        coordenadas,
-        horarios,
-        servicios,
-        foto,
-        estado
-    }) {
-        this.id = id;
-        this.nombre = nombre;
-        this.nit = nit;
-        this.telefono = telefono;
-        this.correo = correo;
-        this.direccion = direccion;
-        this.ciudad = ciudad;
-        this.coordenadas = coordenadas;
-        this.horarios = horarios;
-        this.servicios = servicios;
-        this.foto = foto;
-        this.estado = estado;
-    }
-}
+import { Taller } from "../models/garage.js";
 
 //servicios que vamos a manejar
 export const serviciosDisponibles = [
@@ -227,35 +199,3 @@ export const talleresMock = [
         estado: "pendiente"
     })
 ];
-
-export async function fetchTalleres() {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return [...talleresMock];
-}
-
-// filtrar los talleres por estado-activo
-export async function fetchTalleresActivos() {
-    const talleres = await fetchTalleres();
-
-    return talleres.filter(taller => taller.estado === "activo");
-}
-
-// filtrar los talleres por ciudad
-export async function buscarTalleresPorCiudad(ciudad) {
-    const talleres = await fetchTalleres();
-
-    return talleres.filter(
-        taller => taller.ciudad.toLowerCase() === ciudad.trim().toLowerCase()
-    );
-}
-
-// filtrar los talleres por servicias
-export async function buscarTalleresPorServicio(servicio) {
-    const talleres = await fetchTalleres();
-
-    return talleres.filter(taller =>
-        taller.servicios.some(
-            item => item.toLowerCase() === servicio.trim().toLowerCase()
-        )
-    );
-}
