@@ -12,8 +12,8 @@ export function obtenerTalleres(){
 
 export function guardarTaller(taller)
 {
-    const talleres = obtenerTalleres(datosForm);
-    const nuevo = normalizarTaller(datosForm);
+    const talleres = obtenerTalleres();
+    const nuevo = normalizarTaller(taller);
     talleres.push(nuevo);
     try{
     localStorage.setItem(KEY,JSON.stringify(talleres));
@@ -27,7 +27,7 @@ export function guardarTaller(taller)
 }
 
 export function mergeTalleres(){
-    return[... talleresMock, ...obtenerTalleres().map(t => new Taller(t))];
+    return[... talleresMock.map(t => ({...t, esBase: true})), ...obtenerTalleres().map(t => new Taller(t))];
 }
 
 function normalizarTaller(f) {
@@ -46,6 +46,11 @@ function normalizarTaller(f) {
     servicios: f.servicios,
     foto: f.foto,
   };
+}
+
+export function eliminarTaller(id) {
+  const restantes = obtenerTalleres().filter(t => t.id !== Number(id));
+  localStorage.setItem(KEY, JSON.stringify(restantes));
 }
 
 
