@@ -114,7 +114,7 @@
       <!-- ============ TALLERES ============ -->
       <section class="container p-4 bg-white">
         <!-- Filtrado -->
-        <div class="row g-3 mb-4">
+        <div class="row g-3 mb-4" id="filtros-talleres">
           <div class="col-12 col-md-6 col-lg-5">
             <div class="input-group">
               <span class="input-group-text border-end-0 text-secondary">
@@ -124,12 +124,13 @@
                 type="text"
                 class="form-control border-start-0 ps-0"
                 id="buscar-taller"
+                data-filtro="texto"
                 placeholder="Buscar taller o barrio"
               />
             </div>
           </div>
           <div class="col-12 col-md-4 col-lg-3">
-            <select class="form-select" id="filtro-estado">
+            <select class="form-select" id="filtro-estado" data-filtro="estado">
               <option value="" selected>Todos los estados</option>
               <option value="activo">Activo</option>
               <option value="pendiente">Pendiente</option>
@@ -163,6 +164,12 @@
             </tbody>
           </table>
         </div>
+        <div class="d-flex justify-content-between align-items-center mt-3">
+  <small id="info-pagina" class="text-secondary"></small>
+  <nav aria-label="Paginación de talleres" class="mt-4">
+  <ul class="pagination mb-0" id="paginacion"></ul>
+</nav>
+</div>
       </section>
       <div id="modalContainer"></div>
     </main>

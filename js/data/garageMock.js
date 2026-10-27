@@ -24,7 +24,7 @@ export const talleresMock = [
             cierre: "18:00"
         },
         servicios: ["Electrónica y equipamiento del vehículo"],
-        foto: "pendiente",
+        foto: "https://images.pexels.com/photos/4116231/pexels-photo-4116231.jpeg",
         estado: "activo"
     }),
 
@@ -43,7 +43,7 @@ export const talleresMock = [
             cierre: "17:30"
         },
         servicios: ["Electrónica y equipamiento del vehículo"],
-        foto: "assets/talleres/taller-2.jpg",
+        foto: "https://images.pexels.com/photos/4489729/pexels-photo-4489729.jpeg",
         estado: "pendiente"
     }),
 
@@ -62,7 +62,7 @@ export const talleresMock = [
             cierre: "17:00"
         },
         servicios: ["Electrónica y equipamiento del vehículo"],
-        foto: "assets/talleres/taller-3.jpg",
+        foto: "https://images.pexels.com/photos/7564861/pexels-photo-7564861.jpeg",
         estado: "pendiente"
     }),
 
@@ -81,7 +81,7 @@ export const talleresMock = [
             cierre: "18:00"
         },
         servicios: ["Mecánica general"],
-        foto: "assets/talleres/taller-4.jpg",
+        foto: "https://images.pexels.com/photos/36737257/pexels-photo-36737257.jpeg",
         estado: "pendiente"
     }),
 
@@ -100,7 +100,7 @@ export const talleresMock = [
             cierre: "16:00"
         },
         servicios: ["Mecánica general"],
-        foto: "assets/talleres/taller-5.jpg",
+        foto: "https://images.pexels.com/photos/4489718/pexels-photo-4489718.jpeg",
         estado: "pendiente"
     }),
 
@@ -119,7 +119,7 @@ export const talleresMock = [
             cierre: "17:00"
         },
         servicios: ["Mecánica general"],
-        foto: "assets/talleres/taller-6.jpg",
+        foto: "https://images.pexels.com/photos/6720530/pexels-photo-6720530.jpeg",
         estado: "pendiente"
     }),
 
@@ -138,7 +138,7 @@ export const talleresMock = [
             cierre: "18:00"
         },
         servicios: ["Mecánica general"],
-        foto: "assets/talleres/taller-7.jpg",
+        foto: "https://images.pexels.com/photos/4481945/pexels-photo-4481945.jpeg",
         estado: "pendiente"
     }),
 
@@ -157,7 +157,7 @@ export const talleresMock = [
             cierre: "17:00"
         },
         servicios: ["Latonería y pintura"],
-        foto: "assets/talleres/taller-8.jpg",
+        foto: "https://images.pexels.com/photos/11890956/pexels-photo-11890956.jpeg",
         estado: "pendiente"
     }),
 
@@ -176,7 +176,7 @@ export const talleresMock = [
             cierre: "17:30"
         },
         servicios: ["Latonería y pintura"],
-        foto: "assets/talleres/taller-9.jpg",
+        foto: "https://images.pexels.com/photos/39823759/pexels-photo-39823759.jpeg",
         estado: "pendiente"
     }),
 
@@ -195,7 +195,7 @@ export const talleresMock = [
             cierre: "17:30"
         },
         servicios: ["Latonería y pintura"],
-        foto: "assets/talleres/taller-10.jpg",
+        foto: "https://images.pexels.com/photos/29181492/pexels-photo-29181492.jpeg",
         estado: "pendiente"
     })
 ];

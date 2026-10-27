@@ -50,3 +50,37 @@ h3, h4, h5, h6, th, .form-select {
     background-color: var(--color-bg-soft) !important;
 }
 
+.pagination {
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.pagination .page-item:not(:first-child) .page-link {
+  margin-left: 0; /* quita el -1px que une los botones en Bootstrap */
+}
+
+.pagination .page-link {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d6e0f5;
+  border-radius: 50% !important;
+  background: #fff;
+  color: #0b1b3f;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.pagination .page-link:hover {
+  background: #eef3ff;
+}
+
+.pagination .page-item.active .page-link {
+  background: #2f6bff;
+  border-color: #2f6bff;
+  color: #fff;
+}
