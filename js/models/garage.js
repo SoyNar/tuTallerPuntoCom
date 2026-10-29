@@ -10,6 +10,7 @@ export class Taller {
         coordenadas,
         horarios,
         servicios,
+        tipoVehiculos,
         foto,
         estado
     }) {
@@ -23,6 +24,7 @@ export class Taller {
         this.coordenadas = coordenadas;
         this.horarios = horarios;
         this.servicios = servicios;
+        this.tipoVehiculos = tipoVehiculos ?? [];
         this.foto = foto;
         this.estado = estado;
     }
