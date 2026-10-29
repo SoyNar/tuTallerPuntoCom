@@ -1,17 +1,19 @@
 import {
-    talleresMock,
-    talleresMap
-} from "../data/garageMock.js";
+    mergeTalleres
+} from "../services/talleres-service.js";
+
+
 
 // Consultar todos los talleres
 export async function fetchTalleres() {
     await new Promise(resolve => setTimeout(resolve, 300));
-    return [...talleresMock];
+    return [...mergeTalleres()];
 }
 
 // Buscar un taller por su id
 export async function fetchTallerPorId(id) {
-    return talleresMap.get(id);
+    const talleres = await fetchTalleres();
+    return talleres.get(id);
 }
 
 // Filtrar los talleres por estado activo

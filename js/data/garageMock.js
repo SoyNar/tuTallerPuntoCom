@@ -19,7 +19,7 @@ export const talleresMock = [
         ciudad: "Bogotá",
         coordenadas: { lat: 4.668502, lng: -74.060751 },
         horarios: {
-            dias: "Lunes a sábado",
+            dias:  ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "18:00"
         },
