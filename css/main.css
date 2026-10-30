@@ -135,3 +135,49 @@ main { padding-top: 72px; }
     animation: none;
   }
 }
+
+/* Botón principal (naranja) */
+.btn-accent-custom {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-accent);
+  --bs-btn-border-color: var(--color-accent);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e85a1c;
+  --bs-btn-hover-border-color: #e85a1c;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #d95218;
+  --bs-btn-active-border-color: #d95218;
+  --bs-btn-focus-shadow-rgb: 255, 106, 43;
+  --bs-btn-border-radius: 0.75rem;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+}
+
+/* Botón secundario (borde) */
+.btn-outline-custom {
+  --bs-btn-color: var(--color-navy);
+  --bs-btn-bg: var(--color-surface);
+  --bs-btn-border-color: var(--color-border);
+  --bs-btn-hover-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-bg-soft);
+  --bs-btn-hover-border-color: var(--color-primary);
+  --bs-btn-active-color: var(--color-primary);
+  --bs-btn-active-bg: var(--color-bg-soft);
+  --bs-btn-active-border-color: var(--color-primary);
+  --bs-btn-border-radius: 0.75rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+}
+
+/* Las tarjetas del catálogo usan btn-tt-accent: mismo estilo que el principal */
+.btn-tt-accent {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-accent);
+  --bs-btn-border-color: var(--color-accent);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e85a1c;
+  --bs-btn-hover-border-color: #e85a1c;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #d95218;
+  --bs-btn-active-border-color: #d95218;
+}
