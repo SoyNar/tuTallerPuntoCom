@@ -1,0 +1,86 @@
+h3, h4, h5, h6, th, .form-select {
+  color: var(--color-navy) !important;
+}
+
+.decorador-activos {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #21a374, #27f549);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-pendientes {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #ff6a2b, #ff6a2b);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-agenda {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #2f6bff, #0b1b3a);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.decorador-naranja {
+    width: 60px;
+    height: 5px;
+    background: linear-gradient(to bottom, #e5484d, #ff6a2b);
+    border-radius: 50px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15);
+    margin-bottom: 20px;
+}
+
+.input-group-text, .form-control, .form-select{
+    background-color: var(--color-bg-section);
+}
+
+.form-select {
+    background-color: var(--color-bg-section);
+}
+
+.table-header, th, .bg-table-img{
+    background-color: var(--color-bg-soft) !important;
+}
+
+.pagination {
+  justify-content: center;
+  gap: 0.5rem;
+}
+
+.pagination .page-item:not(:first-child) .page-link {
+  margin-left: 0; /* quita el -1px que une los botones en Bootstrap */
+}
+
+.pagination .page-link {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #d6e0f5;
+  border-radius: 50% !important;
+  background: #fff;
+  color: #0b1b3f;
+  font-size: 0.75rem;
+  font-weight: 500;
+  box-shadow: none;
+}
+
+.pagination .page-link:hover {
+  background: #eef3ff;
+}
+
+.pagination .page-item.active .page-link {
+  background: #2f6bff;
+  border-color: #2f6bff;
+  color: #fff;
+}

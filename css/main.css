@@ -3,36 +3,36 @@
    ========================================================================== */
 :root {
   /* Marca */
-    --color-primary: #2F6BFF;
-  --color-accent: #FF6A2B;
-  --color-navy: #0B1B3A;
+  --color-primary: #2f6bff;
+  --color-accent: #ff6a2b;
+  --color-navy: #0b1b3a;
 
   /* Fondos */
-  --color-bg-soft: #EAF1FF;
-  --color-bg-section: #F3F6FC;
-  --color-surface: #FFFFFF;
+  --color-bg-soft: #eaf1ff;
+  --color-bg-section: #f3f6fc;
+  --color-surface: #ffffff;
 
   /* Texto y bordes */
-  --color-text-secondary: #6B7694;
-  --color-border: #E3E8F5;
+  --color-text-secondary: #6b7694;
+  --color-border: #e3e8f5;
 
   /* Estados */
-  --color-success: #2F6BFF;
-  --color-error: #E5484D;
+  --color-success: #2f6bff;
+  --color-error: #e5484d;
 
   /* success toast */
-  --color-success-toast:#27F549;
-
+  --color-success-toast: #27f549;
 
   /* Tipografía */
-  --font-base: 'Manrope', system-ui, sans-serif;
+  --font-base: "Manrope", system-ui, sans-serif;
+
+  /* Espaciado de páginas (NUEVO) */
+  --space-section: 3rem;
 
   /* Overrides de variables de Bootstrap */
   --bs-body-font-family: var(--font-base);
   --bs-border-color: var(--color-bg-soft);
 }
-
-
 
 /* ==========================================================================
    2. BASE (elementos HTML)
@@ -48,10 +48,37 @@ h2 {
 
 /* ==========================================================================
    3. LAYOUT (estructura de página)
+   Usado igual en TODAS las páginas: about, contact, etc.
    ========================================================================== */
-header {
+
+/* Antes era `header { ... }` y afectaba a cualquier <header> del sitio.
+   Ahora solo aplica al encabezado de página. */
+.page-header {
   background-color: var(--color-bg-soft);
+  border-bottom: 1px solid var(--color-border);
+  padding-block: var(--space-section);
 }
+
+.page-header h1 {
+  font-size: clamp(2rem, 4vw, 2.5rem);
+  font-weight: 800;
+  margin-bottom: 0.5rem;
+}
+
+.page-header p {
+  font-size: 1.25rem;
+  color: var(--color-text-secondary);
+  margin: 0;
+}
+
+/* Cada bloque de contenido, mismo espacio arriba y abajo */
+.page-section {
+  padding-block: var(--space-section);
+}
+
+/* Si el navbar es position: fixed, descomenta y ajusta la altura:
+main { padding-top: 72px; }
+*/
 
 /* ==========================================================================
    4. COMPONENTES
@@ -60,25 +87,39 @@ header {
   background-color: var(--color-bg-soft);
   color: var(--color-primary);
 }
-.flip-card { perspective: 1000px; }
+.flip-card {
+  perspective: 1000px;
+}
 
 .flip-card-inner {
   transform-style: preserve-3d;
   transition: transform 0.6s ease;
 }
 
-.flip-card.is-flipped .flip-card-inner { transform: rotateY(180deg); }
+.flip-card.is-flipped .flip-card-inner {
+  transform: rotateY(180deg);
+}
 
-.flip-card-face { backface-visibility: hidden; }
+.flip-card-face {
+  backface-visibility: hidden;
+}
 
-.flip-card-back { transform: rotateY(180deg); }
+.flip-card-back {
+  transform: rotateY(180deg);
+}
 
 /* ==========================================================================
    5. ANIMACIONES
    ========================================================================== */
 @keyframes fade-in {
-  from { opacity: 0; transform: scale(0.8) translateY(50px); }
-  to   { opacity: 1; transform: scale(1) translateY(0); }
+  from {
+    opacity: 0;
+    transform: scale(0.8) translateY(50px);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
 }
 
 @supports (animation-timeline: view()) {
@@ -93,4 +134,50 @@ header {
   h2 {
     animation: none;
   }
+}
+
+/* Botón principal (naranja) */
+.btn-accent-custom {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-accent);
+  --bs-btn-border-color: var(--color-accent);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e85a1c;
+  --bs-btn-hover-border-color: #e85a1c;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #d95218;
+  --bs-btn-active-border-color: #d95218;
+  --bs-btn-focus-shadow-rgb: 255, 106, 43;
+  --bs-btn-border-radius: 0.75rem;
+  font-weight: 700;
+  padding: 0.6rem 1.25rem;
+}
+
+/* Botón secundario (borde) */
+.btn-outline-custom {
+  --bs-btn-color: var(--color-navy);
+  --bs-btn-bg: var(--color-surface);
+  --bs-btn-border-color: var(--color-border);
+  --bs-btn-hover-color: var(--color-primary);
+  --bs-btn-hover-bg: var(--color-bg-soft);
+  --bs-btn-hover-border-color: var(--color-primary);
+  --bs-btn-active-color: var(--color-primary);
+  --bs-btn-active-bg: var(--color-bg-soft);
+  --bs-btn-active-border-color: var(--color-primary);
+  --bs-btn-border-radius: 0.75rem;
+  font-weight: 600;
+  padding: 0.6rem 1.25rem;
+}
+
+/* Las tarjetas del catálogo usan btn-tt-accent: mismo estilo que el principal */
+.btn-tt-accent {
+  --bs-btn-color: #fff;
+  --bs-btn-bg: var(--color-accent);
+  --bs-btn-border-color: var(--color-accent);
+  --bs-btn-hover-color: #fff;
+  --bs-btn-hover-bg: #e85a1c;
+  --bs-btn-hover-border-color: #e85a1c;
+  --bs-btn-active-color: #fff;
+  --bs-btn-active-bg: #d95218;
+  --bs-btn-active-border-color: #d95218;
 }

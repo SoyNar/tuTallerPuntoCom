@@ -1,0 +1,22 @@
+/* ===== Mapa (paso 2) ===== */
+.wizard-mapa {
+  position: relative;
+  height: 9rem;                   /* altura fija: el mapa no empuja el layout */
+  border: 1px solid var(--wizard-color-off);
+  border-radius: .6rem;
+  background: #eef2fb;
+  overflow: hidden;
+}
+
+.wizard-mapa-hint {
+  position: absolute;
+  left: .6rem;
+  bottom: .6rem;
+  z-index: 500;                   /* por encima de las capas del mapa */
+  background: #0f172a;
+  color: #fff;
+  font-size: .7rem;
+  font-weight: 600;
+  padding: .3rem .65rem;
+  border-radius: 50rem;
+}

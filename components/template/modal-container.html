@@ -1,0 +1,59 @@
+<!-- modal boostrap para agregar un taller -->
+<div class="modal fade" id="modalTaller" tabindex="-1"
+     aria-labelledby="modalTallerTitulo" aria-hidden="true"
+     data-bs-backdrop="static">
+
+
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+
+
+    <form  id="formTaller" class="modal-content wizard-content" novalidate>
+
+      <!-- Bloque superior con fondo (cabecera + stepper) -->
+      <div class="wizard-top">
+
+        <!-- Cabecera -->
+        <div class="wizard-top-head wizard-header">
+          <div>
+            <nav class="wizard-breadcrumb">
+              Administración › Talleres › <strong>Nuevo</strong>
+            </nav>
+            <h5 class="modal-title wizard-top-title" id="modalTallerTitulo">Agregar taller</h5>
+            <p class="wizard-top-sub">
+              Completa los datos paso a paso. Al final verás cómo se verá en los resultados.
+            </p>
+          </div>
+
+          <div class="wizard-top-actions">
+            <span class="wizard-paso-texto" id="wizardPasoTexto">Paso 1 de 5</span>
+            <button type="button" class="btn-close wizard-close" data-bs-dismiss="modal"
+                    aria-label="Cerrar"></button>
+          </div>
+        </div>
+
+      
+
+      </div>
+        <!-- Stepper (los  pasos) -->
+        <ol class="wizard-stepper" id="wizardStepper">
+          <li class="wizard-step active" data-paso="0">Datos</li>
+          <li class="wizard-step" data-paso="1">Ubicación</li>
+          <li class="wizard-step" data-paso="2">Horarios y Servicios</li>
+          <li class="wizard-step" data-paso="3">Fotos y estado</li>
+          <li class="wizard-step" data-paso="4">Vista previa</li>
+        </ol>
+
+      <!-- Aquí se inyectan paso1.html ... paso6.html -->
+      <div class="modal-body" id="wizardBody"></div>
+
+      <!-- Botones -->
+      <div class="modal-footer wizard-footer">
+        <button type="button" id="btnAtras"
+                class="btn btn-outline-secondary btn-sm "> <i class="bi bi-arrow-left"></i> Atrás</button>
+        <button type="button" id="btnSiguiente"
+                class="btn btn-sm btn-tt-accent px-4 rounded-3">Siguiente</button>
+      </div>
+
+    </form>
+  </div>
+</div>

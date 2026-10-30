@@ -1,0 +1,26 @@
+/* encabezado y fondos personalizados */
+.hero-section {
+  background-color: var(--color-bg-soft);
+}
+
+.text-primary-custom {
+  color: var(--color-primary);
+}
+
+#contenedor-chispita {
+  background-color: var(--color-primary);
+}
+
+/* Enlaces específicos */
+.link-catalog {
+  color: var(--color-primary);
+}
+
+.link-catalog:hover {
+  color: var(--color-navy);
+}
+
+/* Footer / CTA section oscuro */
+.bg-footer-custom {
+  background-color: var(--color-primary);
+}

@@ -1,0 +1,57 @@
+/* ===== Bloque superior con fondo (solo cabecera) ===== */
+.wizard-top {
+  background: var(--wizard-top-bg);
+  padding: 1rem 1.5rem 1.1rem;
+  border-bottom: 1px solid #dbe5f7;
+}
+
+.wizard-top-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 1rem;
+}
+
+.wizard-breadcrumb {
+  font-size: .72rem;
+  color: #6c757d;
+  margin-bottom: .35rem;
+}
+.wizard-breadcrumb strong { color: #212529; }
+
+.wizard-top-title {
+  font-weight: 800;
+  font-size: 1.25rem;
+  margin: 0;
+}
+
+.wizard-top-sub {
+  font-size: .78rem;
+  color: #6c757d;
+  margin: .2rem 0 0;
+}
+
+.wizard-top-actions {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+}
+
+.wizard-paso-texto {
+  font-size: .75rem;
+  font-weight: 600;
+  color: var(--wizard-color);
+  white-space: nowrap;
+}
+
+/* Botón cerrar en cuadro blanco */
+.wizard-close {
+  width: 2rem;
+  height: 2rem;
+  padding: 0;
+  opacity: 1;
+  background-color: #fff;
+  background-size: .65rem;
+  border: 1px solid var(--wizard-color-off);
+  border-radius: .6rem;
+}
