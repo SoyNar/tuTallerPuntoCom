@@ -9,6 +9,7 @@ import {
   validateGroup,
 } from "../../js/utils/GeneralValidatorForm.js";
 import { clearCover, fillPreview, initPhotos } from "./preview.js";
+import { showToast } from "../../js/utils/toast-modal.js";
 
 /**
  * wizard.js: lógica del modal "Agregar taller" con formulario de pasos.
@@ -172,14 +173,16 @@ async function guardar() {
 
   try {
     await guardarTaller(await recogerDatos());
-
+    document.dispatchEvent(new CustomEvent("taller:guardado"));
     bootstrap.Modal.getInstance(document.getElementById("modalTaller")).hide();
     document.getElementById("formTaller").reset();
     clearCover();
     limpiarValidaciones();
+    showToast("taller crear exitosamente", 'success');
     mostrarPaso(0);
   } catch (error) {
     console.error(error);
+    showToast("Error al eliminar un taller",'error');
   } finally {
     btn.disabled = false;
   }

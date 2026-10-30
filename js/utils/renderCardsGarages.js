@@ -1,5 +1,7 @@
 import { estaAbiertoElTaller } from "./scheduleCalculator.js";
 
+const FOTO_DEFECTO = "../assets/img/chispa-mascota-3.png"
+
 // Función para renderizar las tarjetas en el HTML
 export function renderizarTalleres(lista) {
   const contenedor = document.getElementById("contenedor-talleres");
@@ -7,18 +9,21 @@ export function renderizarTalleres(lista) {
 
   lista.forEach((taller) => {
     const col = document.createElement("div");
+    const foto = taller.foto || FOTO_DEFECTO;
     // Clases
     col.className = "col col-12 col-md-6 col-lg-4";
+    if (!taller.horarios) console.warn("Taller sin horarios:", taller);
+
 
     // Generamos los badges de servicios dinámicamente
-    const badgesServicios = taller.servicios
+    const badgesServicios = taller.servicios ?? []
       .map(
         (servicio) =>
           `<span class="badge bg-light text-dark border me-1">${servicio}</span>`,
-      )
-      .join("");
-    
-    const horarioHabilitado = estaAbiertoElTaller(taller.horarios.apertura, taller.horarios.cierre, taller.horarios.dias)
+      ).join("");
+        const { apertura, cierre, dias } = taller.horarios ?? {};
+    const horarioHabilitado =  apertura &&  cierre  ? estaAbiertoElTaller(apertura,cierre,dias) : false
+
 
     col.innerHTML = 
     `<div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
@@ -28,8 +33,9 @@ export function renderizarTalleres(lista) {
                   style="height: 160px; background-color: #e2e8f0"
                   >
                   <img
-                  src="${taller.foto}"
-                  alt="Taller El Pistón"
+                  src="${foto}"
+                  alt="${taller.nombre}"
+                  loading="lazy" decoding="async"
                   class="w-100 h-100"
                   style="object-fit: cover"
                   />

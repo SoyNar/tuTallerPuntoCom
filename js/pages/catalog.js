@@ -1,11 +1,12 @@
 import { renderizarTalleres } from "../utils/renderCardsGarages.js";
-import { fetchTalleres } from "../../services/garageService.js";
 import {
   llenarSelect,
   crearFiltros,
   filtrarLista,
   normalizar,
 } from "../utils/filtros.js";
+import { mergeTalleres } from "../../services/talleres-service.js";
+import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 
 const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");
@@ -73,8 +74,9 @@ const filtros = crearFiltros({
 });
 
 async function obtenerTalleres() {
+  mostrarCargando("Cargando Talleres...")
   try {
-    talleresDisponibles = await fetchTalleres();
+    talleresDisponibles = await mergeTalleres();
 
     const servicios = obtenerOpcionesUnicas(talleresDisponibles, "servicios");
     const ciudades = obtenerOpcionesUnicas(talleresDisponibles, "ciudad");
@@ -87,6 +89,8 @@ async function obtenerTalleres() {
     renderizarTalleres(filtrarLista(talleresDisponibles, filtros.valores(), reglas));
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
+  }finally{
+    ocultarCargando()
   }
 }
 
