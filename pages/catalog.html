@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Consulta los talleres asociados, sus servicios, ubicación y calificación."
+    />
+    <title>Catálogo de talleres · TuTaller</title>
+
+    <!-- Orden igual en todas las páginas: Bootstrap, iconos, fuente, main, navbar, footer -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="../css/main.css" />
+    <link rel="stylesheet" href="../css/navbar.css" />
+    <link rel="stylesheet" href="../css/footer.css" />
+
+    <script type="module" src="../js/pages/catalog.js"></script>
+  </head>
+
+  <body>
+
+    <nav-bar></nav-bar>
+
+    <main>
+      <mis-citas-modal></mis-citas-modal>
+      
+      <!-- ============ TÍTULO DE PÁGINA ============ -->
+      <header class="page-header">
+        <div class="container">
+          <h1>Catálogo de talleres</h1>
+          <p>
+            Consulta los talleres asociados, sus servicios, ubicación y
+            calificación.
+          </p>
+        </div>
+      </header>
+
+      <!-- ============ FILTROS DE BÚSQUEDA ============ -->
+      <section class="container p-4">
+        <div class="container">
+          <div id="filtros-talleres" class="card border-0 shadow-sm p-3 rounded-4 bg-white">
+            <div class="row g-3 align-items-end">
+              <div class="col-12 col-md-4">
+                <label class="form-label text-muted fw-semibold small"
+                  >Buscar</label
+                >
+                <input
+                  type="text"
+                  id="inptBuscar"
+                  data-filtro="texto"
+                  class="form-control form-control-sm rounded-3"
+                  placeholder="Buscar por taller o servicio..."
+                />
+              </div>
+              <div class="col-12 col-sm-4 col-md-3">
+                <label class="form-label text-muted fw-semibold small"
+                  >Servicio</label
+                >
+                <select id="servicioSelect" data-filtro="servicio" class="form-select form-select-sm rounded-3">
+                  
+                </select>
+              </div>
+              <div class="col-12 col-md-2 col-md-2">
+                <label class="form-label text-muted fw-semibold small"
+                  >Ciudad</label
+                >
+                <select id="ciudadSelect" data-filtro="ciudad" class="form-select form-select-sm rounded-3">
+                  
+                </select>
+              </div>
+              <div class="col-12 col-sm-4 col-md-3">
+                <label class="form-label text-muted fw-semibold small"
+                  >Vehículo</label
+                >
+                <select id="vehiculoSelect" data-filtro="vehiculo" class="form-select form-select-sm rounded-3">
+                  
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ============ TALLERES ============ -->
+      <section class="container p-3">
+        <div class="container">
+          <div class="d-flex justify-content-between align-items-start mb-4">
+            <h2 class="h5 fw-bold mb-0">Talleres encontrados</h2>
+            <div class="small fw-semibold">
+              <span class="text-muted">Ordenar: </span>
+              <span>Mejor calificados</span>
+            </div>
+          </div>
+
+          <div class="row g-4" id="contenedor-talleres">
+            
+          <!-- PAGINACIÓN -->
+          <nav aria-label="Paginación del catálogo" class="mt-4">
+            <ul class="pagination mb-0" id="paginacion"></ul>
+          </nav>
+        </div>
+      </section>
+    </main>
+
+    <!-- ============ FOOTER ============ -->
+    <tu-footer></tu-footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="../components/navbar.js"></script>
+    <script type="module" src="../components/footer.js"></script>
+    <script type="module" src="../components/js/modalCitas.js"></script>
+  </body>
+</html>
