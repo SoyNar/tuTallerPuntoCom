@@ -5,20 +5,45 @@
       <!-- <span><span class="brand-tu">Tu</span><span class="brand-taller">Taller</span></span> -->
     </a>
 
-    <button class="navbar-toggler" type="button"
-            data-bs-toggle="collapse" data-bs-target="#navPrincipal"
-            aria-controls="navPrincipal" aria-expanded="false"
-            aria-label="Abrir menú">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+    <button
+    type="button"
+    class="btn btn-sm btn-tt-outline rounded-3 p-2"
+    data-bs-toggle="modal"
+    data-bs-target="#modalAgendas"
+    aria-label="Abrir agenda"
+    title="Mi agenda">
+    <i class="bi bi-calendar-check fs-5"></i>
+  </button>
 
     <div class="collapse navbar-collapse" id="navPrincipal">
       <ul class="navbar-nav mx-auto gap-lg-4" data-nav-links></ul>
 
-      <div class="nav-acciones d-flex gap-2 py-3 py-lg-0">
-        <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">Iniciar sesión</a>
-        <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">Registrarme</a>
-      </div>
+      <div class="nav-acciones d-flex align-items-center gap-2 py-3 py-lg-0">
+<div class="nav-acciones d-flex align-items-center gap-2 py-3 py-lg-0">
+
+  <!-- BOTÓN DE LA AGENDA MODIFICADO PARA COMPONENTE MODAL -->
+  <button
+    type="button"
+    class="btn btn-sm btn-tt-outline rounded-3 p-2"
+    data-bs-toggle="modal"
+    data-bs-target="#modalAgendas"
+    aria-label="Abrir agenda"
+    title="Mi agenda"
+  >
+    <i class="bi bi-calendar-check fs-5"></i>
+  </button>
+
+  <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">
+    Iniciar sesión
+  </a>
+
+  <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">
+    Registrarme
+  </a>
+
+</div>
+ 
+</div>
     </div>
   </div>
 </nav>
