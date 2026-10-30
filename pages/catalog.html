@@ -23,7 +23,6 @@
       rel="stylesheet"
     />
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/catalog.css" />
     <link rel="stylesheet" href="../css/navbar.css" />
     <link rel="stylesheet" href="../css/footer.css" />
 
@@ -46,50 +45,45 @@
       </header>
 
       <!-- ============ FILTROS DE BÚSQUEDA ============ -->
-      <section class="page-section">
+      <section class="container p-4">
         <div class="container">
-          <div class="card border-0 shadow-sm p-3 rounded-4 bg-white">
+          <div id="filtros-talleres" class="card border-0 shadow-sm p-3 rounded-4 bg-white">
             <div class="row g-3 align-items-end">
-              <div class="col-12 col-md-3">
+              <div class="col-12 col-md-4">
                 <label class="form-label text-muted fw-semibold small"
                   >Buscar</label
                 >
                 <input
                   type="text"
+                  id="inptBuscar"
+                  data-filtro="texto"
                   class="form-control form-control-sm rounded-3"
                   placeholder="Buscar por taller o servicio..."
                 />
               </div>
-              <div class="col-12 col-sm-4 col-md-2">
+              <div class="col-12 col-sm-4 col-md-3">
                 <label class="form-label text-muted fw-semibold small"
                   >Servicio</label
                 >
-                <select class="form-select form-select-sm rounded-3">
-                  <option selected>Todos</option>
+                <select id="servicioSelect" data-filtro="servicio" class="form-select form-select-sm rounded-3">
+                  
                 </select>
               </div>
-              <div class="col-12 col-sm-4 col-md-2">
+              <div class="col-12 col-md-2 col-md-2">
                 <label class="form-label text-muted fw-semibold small"
-                  >Calificación</label
+                  >Ciudad</label
                 >
-                <select class="form-select form-select-sm rounded-3">
-                  <option selected>Todas</option>
+                <select id="ciudadSelect" data-filtro="ciudad" class="form-select form-select-sm rounded-3">
+                  
                 </select>
               </div>
               <div class="col-12 col-sm-4 col-md-3">
                 <label class="form-label text-muted fw-semibold small"
                   >Vehículo</label
                 >
-                <select class="form-select form-select-sm rounded-3">
-                  <option selected>Todos</option>
+                <select id="vehiculoSelect" data-filtro="vehiculo" class="form-select form-select-sm rounded-3">
+                  
                 </select>
-              </div>
-              <div class="col-12 col-md-2">
-                <button
-                  class="btn btn-tt-accent btn-sm w-100 fw-semibold rounded-3 py-2"
-                >
-                  Buscar
-                </button>
               </div>
             </div>
           </div>
@@ -97,9 +91,9 @@
       </section>
 
       <!-- ============ TALLERES ============ -->
-      <section class="page-section">
+      <section class="container p-3">
         <div class="container">
-          <div class="d-flex justify-content-between align-items-center mb-3">
+          <div class="d-flex justify-content-between align-items-start mb-4">
             <h2 class="h5 fw-bold mb-0">Talleres encontrados</h2>
             <div class="small fw-semibold">
               <span class="text-muted">Ordenar: </span>
@@ -107,7 +101,7 @@
             </div>
           </div>
 
-          <div class="row g-2" id="contenedor-talleres">
+          <div class="row g-4" id="contenedor-talleres">
             
           <!-- PAGINACIÓN -->
           <nav aria-label="Paginación del catálogo" class="mt-4">

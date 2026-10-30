@@ -11,30 +11,6 @@
   background-color: var(--color-primary);
 }
 
-/* Botones personalizados con tokens de marca */
-.btn-agendar {
-  background-color: var(--color-accent) !important;
-  color: var(--color-surface) !important;
-  border: none;
-}
-
-.btn-agendar:hover {
-  background-color: #e55b1f !important;
-  color: var(--color-surface) !important;
-}
-
-.btn-agendar{
-  background-color: var(--color-surface);
-  color: var(--color-navy);
-  border: 1px solid var(--color-border);
-}
-
-.btn-agendar:hover {
-  background-color: var(--color-bg-soft) !important;
-  color: var(--color-navy) !important;
-  border-color: var(--color-primary) !important;
-}
-
 /* Enlaces específicos */
 .link-catalog {
   color: var(--color-primary);
@@ -47,30 +23,4 @@
 /* Footer / CTA section oscuro */
 .bg-footer-custom {
   background-color: var(--color-primary);
-}
-
-/* Estilos para las tarjetas generadas dinámicamente desde JS (Talleres) */
-.taller-card {
-  border: 1px solid var(--color-border) !important;
-  border-radius: 1rem !important;
-  background-color: var(--color-surface);
-  transition:
-    transform 0.2s ease,
-    box-shadow 0.2s ease;
-}
-
-.taller-card:hover {
-  transform: translateY(-3px);
-  box-shadow: 0 0.5rem 1rem rgba(11, 27, 58, 0.08) !important;
-}
-
-.taller-badge-abierto {
-  background-color: var(--color-primary) !important;
-  color: var(--color-surface);
-}
-
-.taller-badge-servicio {
-  background-color: var(--color-bg-soft) !important;
-  color: var(--color-navy) !important;
-  border: 1px solid var(--color-border) !important;
 }

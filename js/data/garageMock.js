@@ -21,9 +21,10 @@ export const talleresMock = [
         horarios: {
             dias:  ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
-            cierre: "18:00"
+            cierre: "20:00"
         },
-        servicios: ["Electrónica y equipamiento del vehículo"],
+        servicios: ["Electrónica", "Equipamiento"],
+        tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/4116231/pexels-photo-4116231.jpeg",
         estado: "activo"
     }),
@@ -42,7 +43,8 @@ export const talleresMock = [
             apertura: "07:30",
             cierre: "17:30"
         },
-        servicios: ["Electrónica y equipamiento del vehículo"],
+        servicios: ["Electrónica", "Frenos"],
+        tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4489729/pexels-photo-4489729.jpeg",
         estado: "pendiente"
     }),
@@ -61,7 +63,8 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "17:00"
         },
-        servicios: ["Electrónica y equipamiento del vehículo"],
+        servicios: ["Lujos", "Aceite"],
+        tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/7564861/pexels-photo-7564861.jpeg",
         estado: "pendiente"
     }),
@@ -81,6 +84,7 @@ export const talleresMock = [
             cierre: "18:00"
         },
         servicios: ["Mecánica general"],
+        tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/36737257/pexels-photo-36737257.jpeg",
         estado: "pendiente"
     }),
@@ -92,7 +96,7 @@ export const talleresMock = [
         telefono: "3001234511",
         correo: "sincromotortaller@gmail.com",
         direccion: "Carrera 67b #45-95",
-        ciudad: "Bogota",
+        ciudad: "Bogotá",
         coordenadas: { lat: 4.656206, lng: -74.100477 },
         horarios: {
             dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
@@ -100,6 +104,7 @@ export const talleresMock = [
             cierre: "16:00"
         },
         servicios: ["Mecánica general"],
+        tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4489718/pexels-photo-4489718.jpeg",
         estado: "pendiente"
     }),
@@ -118,7 +123,8 @@ export const talleresMock = [
             apertura: "07:00",
             cierre: "17:00"
         },
-        servicios: ["Mecánica general"],
+        servicios: ["Mecánica general", "Clutch"],
+        tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/6720530/pexels-photo-6720530.jpeg",
         estado: "pendiente"
     }),
@@ -130,14 +136,15 @@ export const talleresMock = [
         telefono: "3001234513",
         correo: "pistontaller@gmail.com",
         direccion: "Calle 40 # 80D - 69",
-        ciudad: "Medellin",
+        ciudad: "Medellín",
         coordenadas: { lat: 6.246880, lng: -75.602378 },
         horarios: {
             dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "08:00",
             cierre: "18:00"
         },
-        servicios: ["Mecánica general"],
+        servicios: ["Motor"],
+        tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4481945/pexels-photo-4481945.jpeg",
         estado: "pendiente"
     }),
@@ -156,7 +163,8 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "17:00"
         },
-        servicios: ["Latonería y pintura"],
+        servicios: ["Latonería", "pintura"],
+        tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/11890956/pexels-photo-11890956.jpeg",
         estado: "pendiente"
     }),
@@ -175,7 +183,8 @@ export const talleresMock = [
             apertura: "08:30",
             cierre: "17:30"
         },
-        servicios: ["Latonería y pintura"],
+        servicios: ["Latonería", "pintura"],
+        tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/39823759/pexels-photo-39823759.jpeg",
         estado: "pendiente"
     }),
@@ -187,14 +196,15 @@ export const talleresMock = [
         telefono: "3001234516",
         correo: "restacar@gmail.com",
         direccion: "Carrera 56 # 22B-2",
-        ciudad: "Bogota",
+        ciudad: "Bogotá",
         coordenadas: { lat: 4.641485, lng: -74.101749 },
         horarios: {
             dias: ["Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"],
             apertura: "07:30",
             cierre: "17:30"
         },
-        servicios: ["Latonería y pintura"],
+        servicios: ["Latonería", "pintura"],
+        tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/29181492/pexels-photo-29181492.jpeg",
         estado: "pendiente"
     })
