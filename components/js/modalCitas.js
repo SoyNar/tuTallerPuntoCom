@@ -72,6 +72,21 @@ class MisCitasModal extends HTMLElement {
         </div>
       </div>
     `;
+
+    // escuchar click global para abrir modal
+    document.addEventListener('click', (e) => {
+      const btn = e.target.closest('#btnAbrirAgenda');
+      if(btn){
+        e.preventDefault();
+        e.stopPropagation();
+
+        const modalEl = document.querySelector('#modalAgendas');
+        if(modalEl){
+          const modalInstance = bootstrap.Modal.getOrCreateInstance(modalEl,{});
+          modalInstance.show()
+        }
+      }
+    })
   }
 }
 

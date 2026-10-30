@@ -1,4 +1,5 @@
 import { LINKS } from "./link-const.js";
+import "../components/js/modalCitas.js"
 
     const BASE_PATH =  new URL('../', import.meta.url);
     const abs = (path) => new URL(path,BASE_PATH)
@@ -12,6 +13,12 @@ export class Navbar extends HTMLElement {
      if(!res.ok)
         { throw new Error(`HTTP ${res.status}`)}
         this.innerHTML = await res.text();
+
+        // inyectar modal agenda dinamicamente
+        if(!document.querySelector('mis-citas-modal')){
+            const modalComponent = document.createElement('mis-citas-modal');
+            this.appendChild(modalComponent);
+        }
       
 
     } catch (err){
@@ -21,6 +28,12 @@ export class Navbar extends HTMLElement {
     }
     this.resolvePaths();
     this.render()
+    }
+
+    updateBagde()
+    {
+         
+
     }
 
     resolvePaths(){
