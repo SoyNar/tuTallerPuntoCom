@@ -1,8 +1,10 @@
 import { renderizarTalleres } from "../utils/renderCardsGarages.js";
 import { fetchTalleres } from "../../services/garageService.js";
+import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 
 
 async function obtenerTalleres() {
+    // mostrarCargando("Cargando su Solicitud...");
   try {
     const talleres = await fetchTalleres().then(talleres => talleres.slice(0,3))
     //Devuelve solo tres talleres
@@ -14,6 +16,8 @@ async function obtenerTalleres() {
     renderizarTalleres(talleres);
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
+  }finally{
+    ocultarCargando();
   }
 }
 
