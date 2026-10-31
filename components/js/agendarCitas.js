@@ -24,10 +24,9 @@ class AgendarCitaModal extends HTMLElement {
                 <div class="d-flex align-items-center gap-3   rounded-4 p-3" style="background-color: var(--color-bg-soft);">
                   <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-white border rounded-3 text-secondary small" style="width:44px;height:44px">Foto</div>
                   <div class="flex-grow-1">
-                    <div class="fw-bold">Taller El Pistón</div>
-                    <div class="small text-secondary"><span class="text-warning">★</span> 4.8 · 1.2 km · Abierto</div>
+                    <div class="fw-bold" id="citaTallerNombre">Taller</div>
+                    <div class="small text-secondary" id="citaTallerInfo"></div>
                   </div>
-                  <a href="#" class="small fw-semibold text-decoration-none">Cambiar</a>
                 </div>
 
                 <!-- Servicio -->
@@ -52,16 +51,16 @@ class AgendarCitaModal extends HTMLElement {
                 <div class="row g-3">
                   <div class="col-12 col-sm-6">
                     <label for="fecha" class="form-label small fw-medium">Fecha</label>
-                    <input type="date" id="fecha" class="form-control" value="2026-10-10">
+                    <input type="date" id="fecha" class="form-control" required>
                   </div>
                   <div class="col-12 col-sm-6">
                     <label for="hora" class="form-label small fw-medium">Hora</label>
                     <select id="hora" class="form-select">
-                      <option>08:00 am</option>
-                      <option>09:00 am</option>
-                      <option selected>10:30 am</option>
-                      <option>02:00 pm</option>
-                      <option>04:00 pm</option>
+                      <option value="08:00">08:00 am</option>
+                      <option value="09:00">09:00 am</option>
+                      <option value="10:30" selected>10:30 am</option>
+                      <option value="14:00">02:00 pm</option>
+                      <option value="16:00">04:00 pm</option>
                     </select>
                   </div>
                 </div>
