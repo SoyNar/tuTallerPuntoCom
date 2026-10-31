@@ -106,6 +106,22 @@ class AgendarCitaModal extends HTMLElement {
       .slice(0, 10);
     fecha.min = hoy;
     fecha.value = hoy;
+
+    // Mostrar la fecha agradabe para el usuario
+    const actualizarResumen = () => {
+      if (!fecha.value) return;
+      const [y, m, d] = fecha.value.split("-").map(Number);
+      this.querySelector("#resFecha").textContent = new Date(
+        y,
+        m - 1,
+        d,
+      ).toLocaleDateString("es-CO", {
+        weekday: "long",
+        day: "numeric",
+        month: "long",
+      });
+      this.querySelector("#resHora").textContent = hora.selectedOptions[0].text;
+    };
   }
 }
 
