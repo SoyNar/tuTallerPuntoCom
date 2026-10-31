@@ -15,3 +15,15 @@ export function citasOrdenadas() {
     `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`),
   );
 }
+
+// guardar una nueva cita y agregarla al localStorage
+export function guardarCita(datos) {
+  const nueva = { id: Date.now(), estado: "pendiente", ...datos };
+  const citas = obtenerCitas();
+
+  citas.push(nueva);
+  localStorage.setItem(KEY, JSON.stringify(citas));
+  document.dispatchEvent(new CustomEvent("cita:guardada", { detail: nueva }));
+
+  return nueva;
+}
