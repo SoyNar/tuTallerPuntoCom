@@ -2,7 +2,7 @@ import { LINKS } from "./link-const.js";
 import "../components/js/modalCitas.js"
 import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
 // window.guardarCita = guardarCita; 
-window.cancelarCita = cancelarCita;
+// window.cancelarCita = cancelarCita;
 
     const BASE_PATH =  new URL('../', import.meta.url);
     const abs = (path) => new URL(path,BASE_PATH)
