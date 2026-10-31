@@ -8,3 +8,10 @@ export function obtenerCitas() {
     return [];
   }
 }
+
+// Ordena de las mas antigua a la mas reciente por su fecha y hora
+export function citasOrdenadas() {
+  return obtenerCitas().sort((a, b) =>
+    `${a.fecha} ${a.hora}`.localeCompare(`${b.fecha} ${b.hora}`),
+  );
+}
