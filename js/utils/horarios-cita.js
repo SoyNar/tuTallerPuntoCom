@@ -9,3 +9,10 @@ const aMinutos = (hhmm) => {
 // Obtener fecha actual (hora local)
 export const fechaLocal = (d = new Date()) =>
   `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`;
+
+// calcula la fecha de mañana - se utiliza en la validacion del formulario de reserva
+export function fechaManana() {
+  const d = new Date();
+  d.setDate(d.getDate() + 1);
+  return fechaLocal(d);
+}
