@@ -58,7 +58,6 @@ export function renderizarTalleres(lista) {
             >
               Cotizar
             </button>
-            <!-- CORRECCIÓN AQUÍ: Agregada la clase btn-agendar y data-taller-id -->
             <button
               type="button"
               class="btn btn-tt-accent btn-sm w-50 fw-semibold rounded-3 py-2 btn-agendar"
