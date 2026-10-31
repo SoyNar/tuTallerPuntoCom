@@ -16,3 +16,13 @@ export function fechaManana() {
   d.setDate(d.getDate() + 1);
   return fechaLocal(d);
 }
+
+// Transforma formato de fecha a un texto mas legible
+export function fechaLegible(iso) {
+  const [y, m, d] = iso.split("-").map(Number);
+  return new Date(y, m - 1, d).toLocaleDateString("es-CO", {
+    weekday: "long",
+    day: "numeric",
+    month: "long",
+  });
+}
