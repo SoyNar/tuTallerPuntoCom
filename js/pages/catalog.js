@@ -12,6 +12,7 @@ const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");
 const ciudadSelect = document.getElementById("ciudadSelect");
 const vehiculoSelect = document.getElementById("vehiculoSelect");
+const contenedorTalleres = document.getElementById("contenedor-talleres");
 
 let talleresDisponibles = [];
 
@@ -74,7 +75,7 @@ const filtros = crearFiltros({
 });
 
 async function obtenerTalleres() {
-  mostrarCargando("Cargando Talleres...")
+  mostrarCargando("Cargando Talleres...");
   try {
     talleresDisponibles = await mergeTalleres();
 
@@ -89,9 +90,26 @@ async function obtenerTalleres() {
     renderizarTalleres(filtrarLista(talleresDisponibles, filtros.valores(), reglas));
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
-  }finally{
-    ocultarCargando()
+  } finally {
+    ocultarCargando();
   }
 }
+
+/**
+ * abrir el modal de agendar cita
+ * aqui mismo se usan los datos de talleresDisponibles para llenar los datos en el modal
+ */
+contenedorTalleres.addEventListener("click", (e) => {
+  const btnAgendar = e.target.closest(".btn-agendar");
+  
+  if (btnAgendar) {
+    const modalElement = document.getElementById("modalCita");
+    
+    if (window.bootstrap && window.bootstrap.Modal) {
+      const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+      modalInstance.show();
+    }
+  }
+});
 
 document.addEventListener("DOMContentLoaded", obtenerTalleres);
