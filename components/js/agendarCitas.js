@@ -1,3 +1,5 @@
+import { guardarCita } from "../../services/citas-service.js";
+
 class AgendarCitaModal extends HTMLElement {
   connectedCallback() {
     this.innerHTML = `
