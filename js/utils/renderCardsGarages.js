@@ -9,7 +9,7 @@ export function renderizarTalleres(lista) {
   lista.forEach((taller) => {
     const col = document.createElement("div");
     const foto = taller.foto || FOTO_DEFECTO;
-    
+
     col.className = "col col-12 col-md-6 col-lg-4";
     if (!taller.horarios) console.warn("Taller sin horarios:", taller);
 
@@ -17,10 +17,12 @@ export function renderizarTalleres(lista) {
       .map(
         (servicio) =>
           `<span class="badge bg-light text-dark border me-1">${servicio}</span>`,
-      ).join("");
+      )
+      .join("");
 
     const { apertura, cierre, dias } = taller.horarios ?? {};
-    const horarioHabilitado = apertura && cierre ? estaAbiertoElTaller(apertura, cierre, dias) : false;
+    const horarioHabilitado =
+      apertura && cierre ? estaAbiertoElTaller(apertura, cierre, dias) : false;
 
     col.innerHTML = `
       <div class="card h-100 border-0 shadow-sm rounded-4 overflow-hidden">
@@ -62,6 +64,7 @@ export function renderizarTalleres(lista) {
               type="button"
               class="btn btn-tt-accent btn-sm w-50 fw-semibold rounded-3 py-2 btn-agendar"
               data-taller-id="${taller.id}"
+              data-taller-nombre="${taller.nombre}"
             >
               Agendar
             </button>
