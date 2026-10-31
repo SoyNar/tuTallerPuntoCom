@@ -122,6 +122,28 @@ class AgendarCitaModal extends HTMLElement {
       });
       this.querySelector("#resHora").textContent = hora.selectedOptions[0].text;
     };
+
+    fecha.addEventListener("change", actualizarResumen);
+    hora.addEventListener("change", actualizarResumen);
+    actualizarResumen();
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+      if (!fecha.value) return;
+
+      const modalEl = this.querySelector("#modalCita");
+      guardarCita({
+        tallerId: Number(modalEl.dataset.tallerId),
+        tallerNombre: this.querySelector("#citaTallerNombre").textContent,
+        servicio: this.querySelector("#servicio").value,
+        vehiculo: this.querySelector("#vehiculo").value,
+        fecha: fecha.value,
+        hora: hora.value,
+        horaTexto: hora.selectedOptions[0].text,
+      });
+
+      bootstrap.Modal.getInstance(modalEl)?.hide();
+    });
   }
 }
 
