@@ -1,5 +1,6 @@
 const  KEY = "citas";
 const  ESTADO_CONFIRMADA = "confirmada";
+const ESTADO_CANCELADA = "cancelada";
 
 
 /**
@@ -95,7 +96,26 @@ export  async function contarCitasActivas() {
    }
 
 
-
-export async function cancelarCita(){
+/**
+ * Cancela una cita: cambia su estado a "cancelada" (no la borra, queda en el historial).
+ * Dispara "citas:changed" al terminar.
+ *
+ * @param {number|string} id id de la cita
+ * @returns {Promise<Object|null>} la cita actualizada, o null si no existe o no se pudo guardar
+ */
+export async function cancelarCita(id){
+    const citas = await obtenerCitas();
+    const cita  = citas.find((c) => c.id === Number(id))
+    if(!cita) return null;
+    cita.estado = ESTADO_CANCELADA;
+    try{
+        localStorage.setItem(KEY,JSON.stringify(citas));
+    }catch(e){
+        console.error("No se pudo cancelar la cita");
+        return null;
+    }
+    window.dispatchEvent(new Event("citas:changed"))
+    return cita;
     //disparar evento citas:changed
+
 }
