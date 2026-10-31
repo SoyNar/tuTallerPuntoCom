@@ -47,6 +47,7 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
   for (const clave of new Set(fd.keys())) {
     datos[clave] = MULTIPLES.includes(clave) ? fd.getAll(clave) : fd.get(clave);
   }
+  datos.servicios = fd.getAll('servicios').map(Number);
 
   const foto = fd.get('fotos');
   datos.foto = foto instanceof File && foto.size > 0 ? await comprimirImagen(foto) : null;

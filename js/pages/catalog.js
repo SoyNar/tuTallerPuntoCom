@@ -7,6 +7,8 @@ import {
 } from "../utils/filtros.js";
 import { mergeTalleres } from "../../services/talleres-service.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
+import { serviciosCatalogo } from "../data/serviciosCatalogo.js";
+import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
 
 const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");
@@ -34,8 +36,12 @@ const reglas = {
   },
   
   servicio: (taller, valor) =>
-    (taller?.servicios ?? []).some((servicio) =>
-      normalizar(servicio).includes(normalizar(valor)),
+   obtenerServiciosTaller(taller).some((info) => 
+    
+       normalizar(info.nombre).includes(normalizar(valor)) ||
+      normalizar(info.categoria).includes(normalizar(valor))
+
+    
     ),
 
   ciudad: (taller, valor) => normalizar(taller?.ciudad ?? "") === normalizar(valor),
@@ -74,12 +80,13 @@ const filtros = crearFiltros({
   },
 });
 
+
 async function obtenerTalleres() {
   mostrarCargando("Cargando Talleres...");
   try {
     talleresDisponibles = await mergeTalleres();
 
-    const servicios = obtenerOpcionesUnicas(talleresDisponibles, "servicios");
+    const servicios = [...new Set(serviciosCatalogo.map((s) => s.categoria ))]
     const ciudades = obtenerOpcionesUnicas(talleresDisponibles, "ciudad");
     const vehiculos = obtenerOpcionesUnicas(talleresDisponibles, "tipoVehiculos");
 
