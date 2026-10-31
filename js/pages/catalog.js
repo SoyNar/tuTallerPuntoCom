@@ -32,14 +32,15 @@ const reglas = {
 
     return normalizar(buscador).includes(normalizar(valor));
   },
-  
+
   servicio: (taller, valor) =>
     (taller?.servicios ?? []).some((servicio) =>
       normalizar(servicio).includes(normalizar(valor)),
     ),
 
-  ciudad: (taller, valor) => normalizar(taller?.ciudad ?? "") === normalizar(valor),
-  
+  ciudad: (taller, valor) =>
+    normalizar(taller?.ciudad ?? "") === normalizar(valor),
+
   vehiculo: (taller, valor) => {
     const tipos = Array.isArray(taller?.tipoVehiculos)
       ? taller.tipoVehiculos
@@ -70,7 +71,9 @@ const filtros = crearFiltros({
   contenedor,
   modo: "vivo",
   alCambiar: () => {
-    renderizarTalleres(filtrarLista(talleresDisponibles, filtros.valores(), reglas));
+    renderizarTalleres(
+      filtrarLista(talleresDisponibles, filtros.valores(), reglas),
+    );
   },
 });
 
@@ -81,13 +84,22 @@ async function obtenerTalleres() {
 
     const servicios = obtenerOpcionesUnicas(talleresDisponibles, "servicios");
     const ciudades = obtenerOpcionesUnicas(talleresDisponibles, "ciudad");
-    const vehiculos = obtenerOpcionesUnicas(talleresDisponibles, "tipoVehiculos");
+    const vehiculos = obtenerOpcionesUnicas(
+      talleresDisponibles,
+      "tipoVehiculos",
+    );
 
     llenarSelect(servicioSelect, servicios, "Todos");
     llenarSelect(ciudadSelect, ciudades, "Todas");
-    llenarSelect(vehiculoSelect, vehiculos.length ? vehiculos : ["Automóvil", "Moto"], "Todos");
+    llenarSelect(
+      vehiculoSelect,
+      vehiculos.length ? vehiculos : ["Automóvil", "Moto"],
+      "Todos",
+    );
 
-    renderizarTalleres(filtrarLista(talleresDisponibles, filtros.valores(), reglas));
+    renderizarTalleres(
+      filtrarLista(talleresDisponibles, filtros.valores(), reglas),
+    );
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
   } finally {
@@ -99,17 +111,33 @@ async function obtenerTalleres() {
  * abrir el modal de agendar cita
  * aqui mismo se usan los datos de talleresDisponibles para llenar los datos en el modal
  */
+// contenedorTalleres.addEventListener("click", (e) => {
+//   const btnAgendar = e.target.closest(".btn-agendar");
+
+//   if (btnAgendar) {
+//     const modalElement = document.getElementById("modalCita");
+
+//     if (window.bootstrap && window.bootstrap.Modal) {
+//       const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
+//       modalInstance.show();
+//     }
+//   }
+// });
 contenedorTalleres.addEventListener("click", (e) => {
   const btnAgendar = e.target.closest(".btn-agendar");
-  
+
   if (btnAgendar) {
-    const modalElement = document.getElementById("modalCita");
-    
-    if (window.bootstrap && window.bootstrap.Modal) {
-      const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
-      modalInstance.show();
+    // 1. Extraemos el id y el nombre que guardamos en el botón
+    const id = btnAgendar.dataset.tallerId;
+    const nombre = btnAgendar.dataset.tallerNombre;
+
+    // 2. Buscamos tu componente web personalizado en la página
+    const modalComponent = document.querySelector("agendar-cita-modal");
+
+    // 3. Le pasamos los datos a tu componente llamando a su método abrir
+    if (modalComponent) {
+      modalComponent.abrir({ id, nombre });
     }
   }
 });
-
 document.addEventListener("DOMContentLoaded", obtenerTalleres);
