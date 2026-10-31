@@ -95,6 +95,17 @@ class AgendarCitaModal extends HTMLElement {
         </div>
       </div>
     `;
+
+    const form = this.querySelector("#formCita");
+    const fecha = this.querySelector("#fecha");
+    const hora = this.querySelector("#hora");
+
+    // fecha de hoy en hora local: no permite agendar en el pasado
+    const hoy = new Date(Date.now() - new Date().getTimezoneOffset() * 60000)
+      .toISOString()
+      .slice(0, 10);
+    fecha.min = hoy;
+    fecha.value = hoy;
   }
 }
 
