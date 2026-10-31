@@ -7,6 +7,8 @@ import {
 } from "../utils/filtros.js";
 import { mergeTalleres } from "../../services/talleres-service.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
+import { serviciosCatalogo } from "../data/serviciosCatalogo.js";
+import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
 
 const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");
@@ -34,8 +36,12 @@ const reglas = {
   },
   
   servicio: (taller, valor) =>
-    (taller?.servicios ?? []).some((servicio) =>
-      normalizar(servicio).includes(normalizar(valor)),
+   obtenerServiciosTaller(taller).some((info) => 
+    
+       normalizar(info.nombre).includes(normalizar(valor)) ||
+      normalizar(info.categoria).includes(normalizar(valor))
+
+    
     ),
 
   ciudad: (taller, valor) => normalizar(taller?.ciudad ?? "") === normalizar(valor),
@@ -74,12 +80,13 @@ const filtros = crearFiltros({
   },
 });
 
+
 async function obtenerTalleres() {
   mostrarCargando("Cargando Talleres...");
   try {
     talleresDisponibles = await mergeTalleres();
 
-    const servicios = obtenerOpcionesUnicas(talleresDisponibles, "servicios");
+    const servicios = [...new Set(serviciosCatalogo.map((s) => s.categoria ))]
     const ciudades = obtenerOpcionesUnicas(talleresDisponibles, "ciudad");
     const vehiculos = obtenerOpcionesUnicas(talleresDisponibles, "tipoVehiculos");
 
@@ -94,6 +101,44 @@ async function obtenerTalleres() {
     ocultarCargando();
   }
 }
+const formatoCOP = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+});
+
+function poner(modal, selector, texto) {
+  const el = modal.querySelector(selector);
+  if (!el) return console.warn("No existe", selector);
+  el.textContent = texto;
+}
+
+function llenarModalCita(modal, taller) {
+  modal.dataset.tallerId = taller.id;
+
+  poner(modal, "#citaTallerNombre", taller.nombre);
+
+  const foto = modal.querySelector("#citaTallerFoto");
+  if (foto && taller.foto) {
+    foto.src = taller.foto;
+    foto.alt = taller.nombre;
+  }
+
+  const servicios = obtenerServiciosTaller(taller);
+  const select = modal.querySelector("#servicio");
+  select.innerHTML = servicios
+    .map((s) => `<option value="${s.id}">${s.nombre}</option>`)
+    .join("");
+  select.disabled = servicios.length === 0;
+
+  const actualizarCosto = () => {
+    const servicio = servicios.find((s) => s.id === Number(select.value));
+    poner(modal, "#resPrecio", servicio ? formatoCOP.format(servicio.precio) : "—");
+  };
+
+  select.onchange = actualizarCosto;
+  actualizarCosto();
+}
 
 /**
  * abrir el modal de agendar cita
@@ -101,15 +146,17 @@ async function obtenerTalleres() {
  */
 contenedorTalleres.addEventListener("click", (e) => {
   const btnAgendar = e.target.closest(".btn-agendar");
+  if(!btnAgendar) return;
+  const taller = talleresDisponibles.find((t)=> t.id === Number(btnAgendar.dataset.tallerId))
+  if(!taller) return;
   
-  if (btnAgendar) {
+  
     const modalElement = document.getElementById("modalCita");
-    
-    if (window.bootstrap && window.bootstrap.Modal) {
+      llenarModalCita(modalElement,taller);
       const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
       modalInstance.show();
-    }
-  }
+    
+  
 });
 
 document.addEventListener("DOMContentLoaded", obtenerTalleres);
