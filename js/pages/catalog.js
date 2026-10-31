@@ -101,6 +101,44 @@ async function obtenerTalleres() {
     ocultarCargando();
   }
 }
+const formatoCOP = new Intl.NumberFormat("es-CO", {
+  style: "currency",
+  currency: "COP",
+  maximumFractionDigits: 0,
+});
+
+function poner(modal, selector, texto) {
+  const el = modal.querySelector(selector);
+  if (!el) return console.warn("No existe", selector);
+  el.textContent = texto;
+}
+
+function llenarModalCita(modal, taller) {
+  modal.dataset.tallerId = taller.id;
+
+  poner(modal, "#citaTallerNombre", taller.nombre);
+
+  const foto = modal.querySelector("#citaTallerFoto");
+  if (foto && taller.foto) {
+    foto.src = taller.foto;
+    foto.alt = taller.nombre;
+  }
+
+  const servicios = obtenerServiciosTaller(taller);
+  const select = modal.querySelector("#servicio");
+  select.innerHTML = servicios
+    .map((s) => `<option value="${s.id}">${s.nombre}</option>`)
+    .join("");
+  select.disabled = servicios.length === 0;
+
+  const actualizarCosto = () => {
+    const servicio = servicios.find((s) => s.id === Number(select.value));
+    poner(modal, "#resPrecio", servicio ? formatoCOP.format(servicio.precio) : "—");
+  };
+
+  select.onchange = actualizarCosto;
+  actualizarCosto();
+}
 
 /**
  * abrir el modal de agendar cita
@@ -108,15 +146,17 @@ async function obtenerTalleres() {
  */
 contenedorTalleres.addEventListener("click", (e) => {
   const btnAgendar = e.target.closest(".btn-agendar");
+  if(!btnAgendar) return;
+  const taller = talleresDisponibles.find((t)=> t.id === Number(btnAgendar.dataset.tallerId))
+  if(!taller) return;
   
-  if (btnAgendar) {
+  
     const modalElement = document.getElementById("modalCita");
-    
-    if (window.bootstrap && window.bootstrap.Modal) {
+      llenarModalCita(modalElement,taller);
       const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
       modalInstance.show();
-    }
-  }
+    
+  
 });
 
 document.addEventListener("DOMContentLoaded", obtenerTalleres);

@@ -20,9 +20,8 @@ class AgendarCitaModal extends HTMLElement {
 
                 <!-- Taller -->
                 <div class="d-flex align-items-center gap-3   rounded-4 p-3" style="background-color: var(--color-bg-soft);">
-                  <div class="d-flex align-items-center justify-content-center flex-shrink-0 bg-white border rounded-3 text-secondary small" style="width:44px;height:44px">Foto</div>
-                  <div class="flex-grow-1">
-                    <div class="fw-bold">Taller El Pistón</div>
+<img id="citaTallerFoto" src="" alt="" class="flex-shrink-0 rounded-3 border" style="width:44px;height:44px;object-fit:cover">                  <div class="flex-grow-1">
+                    <div class="fw-bold" id="citaTallerNombre">Taller El Pistón</div>
                     <div class="small text-secondary"><span class="text-warning">★</span> 4.8 · 1.2 km · Abierto</div>
                   </div>
                   <a href="#" class="small fw-semibold text-decoration-none">Cambiar</a>
