@@ -26,3 +26,20 @@ export function fechaLegible(iso) {
     month: "long",
   });
 }
+
+//Si la fecha es hoy, deshabilita las horas anteriores a la actual.
+//si la hora elegida quedó deshabilitada, selecciona la primera disponible.
+export function bloquearHorasPasadas(selectHora, fecha) {
+  const ahora = new Date();
+  const esHoy = fecha === fechaLocal(ahora);
+  const minutosAhora = ahora.getHours() * 60 + ahora.getMinutes();
+
+  for (const op of selectHora.options) {
+    op.disabled = esHoy && aMinutos(op.value) < minutosAhora;
+  }
+
+  const libre = [...selectHora.options].find((op) => !op.disabled);
+  if (libre && selectHora.selectedOptions[0].disabled)
+    selectHora.value = libre.value;
+  return Boolean(libre);
+}
