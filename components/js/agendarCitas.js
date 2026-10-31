@@ -20,4 +20,11 @@ class AgendarCitaModal extends HTMLElement {
 
     this.reiniciar();
   }
+
+  abrir({ id, nombre }) {
+    this.modalEl.dataset.tallerId = id;
+    this.querySelector("#citaTallerNombre").textContent = nombre;
+    this.reiniciar();
+    abrirModalConLoader(this.modalEl);
+  }
 }
