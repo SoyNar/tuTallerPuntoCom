@@ -23,7 +23,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "20:00"
         },
-        servicios: ["Electrónica", "Equipamiento"],
+        servicios: [1],
         tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/4116231/pexels-photo-4116231.jpeg",
         estado: "activo"
@@ -43,7 +43,7 @@ export const talleresMock = [
             apertura: "07:30",
             cierre: "17:30"
         },
-        servicios: ["Electrónica", "Frenos"],
+        servicios: [1,2],
         tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4489729/pexels-photo-4489729.jpeg",
         estado: "pendiente"
@@ -63,7 +63,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "17:00"
         },
-        servicios: ["Lujos", "Aceite"],
+        servicios: [1,3],
         tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/7564861/pexels-photo-7564861.jpeg",
         estado: "pendiente"
@@ -83,7 +83,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "18:00"
         },
-        servicios: ["Mecánica general"],
+        servicios: [1.3],
         tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/36737257/pexels-photo-36737257.jpeg",
         estado: "pendiente"
@@ -103,7 +103,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "16:00"
         },
-        servicios: ["Mecánica general"],
+        servicios: [1,3],
         tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4489718/pexels-photo-4489718.jpeg",
         estado: "pendiente"
@@ -123,7 +123,7 @@ export const talleresMock = [
             apertura: "07:00",
             cierre: "17:00"
         },
-        servicios: ["Mecánica general", "Clutch"],
+        servicios: [2,1],
         tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/6720530/pexels-photo-6720530.jpeg",
         estado: "pendiente"
@@ -143,7 +143,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "18:00"
         },
-        servicios: ["Motor"],
+        servicios: [2,1],
         tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/4481945/pexels-photo-4481945.jpeg",
         estado: "pendiente"
@@ -163,7 +163,7 @@ export const talleresMock = [
             apertura: "08:00",
             cierre: "17:00"
         },
-        servicios: ["Latonería", "pintura"],
+        servicios: [3,1],
         tipoVehiculos: ["Automóvil", "Moto"],
         foto: "https://images.pexels.com/photos/11890956/pexels-photo-11890956.jpeg",
         estado: "pendiente"
@@ -183,7 +183,7 @@ export const talleresMock = [
             apertura: "08:30",
             cierre: "17:30"
         },
-        servicios: ["Latonería", "pintura"],
+        servicios: [2,3],
         tipoVehiculos: ["Moto"],
         foto: "https://images.pexels.com/photos/39823759/pexels-photo-39823759.jpeg",
         estado: "pendiente"
@@ -203,7 +203,7 @@ export const talleresMock = [
             apertura: "07:30",
             cierre: "17:30"
         },
-        servicios: ["Latonería", "pintura"],
+        servicios: [3,1],
         tipoVehiculos: ["Automóvil"],
         foto: "https://images.pexels.com/photos/29181492/pexels-photo-29181492.jpeg",
         estado: "pendiente"
