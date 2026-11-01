@@ -7,7 +7,7 @@
       name="description"
       content="Conoce el proyecto y el propósito detrás de TuTaller."
     />
-    <title>Sobre nosotros · TuTaller</title>
+    <title>Admin · TuTaller</title>
 
     <!-- Orden igual en todas las páginas: Bootstrap, iconos, fuente, main, navbar, CSS de la página -->
     <link
@@ -27,17 +27,10 @@
       href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.css"
     />
     <link rel="stylesheet" href="../css/main.css" />
-    <link rel="stylesheet" href="../css/admin.css" />
-    <link rel="stylesheet" href="../css/navbar.css" />
-    <link rel="stylesheet" href="../css/footer.css" />
-    <!-- <link rel="stylesheet" href="../css/wizard.css"> -->
-    <link rel="stylesheet" href="../css/wizard-base.css" />
-    <link rel="stylesheet" href="../css/wizard-header.css" />
-    <link rel="stylesheet" href="../css/wizard-campos.css" />
-    <link rel="stylesheet" href="../css/wizard-fotos.css" />
-    <link rel="stylesheet" href="../css/wizard-preview.css" />
-    <link rel="stylesheet" href="../css/wizard-mapa.css" />
-    <link rel="stylesheet" href="../css/wizard-stepper.css" />
+    <link rel="stylesheet" href="../css/admin.css">
+
+    <link rel="stylesheet" href="../css/wizard.css">
+    
   </head>
 
   <body>
@@ -165,11 +158,11 @@
           </table>
         </div>
         <div class="d-flex justify-content-between align-items-center mt-3">
-  <small id="info-pagina" class="text-secondary"></small>
-  <nav aria-label="Paginación de talleres" class="mt-4">
-  <ul class="pagination mb-0" id="paginacion"></ul>
-</nav>
-</div>
+          <small id="info-pagina" class="text-secondary"></small>
+          <nav aria-label="Paginación de talleres" class="mt-4">
+            <ul class="pagination mb-0" id="paginacion"></ul>
+          </nav>
+        </div>
       </section>
       <div id="modalContainer"></div>
     </main>
@@ -180,8 +173,8 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.js"></script>
     <script type="module" src="../js/pages/admin.js"></script>
-    <script type="module" src="../components/navbar.js"></script>
-    <script type="module" src="../components/footer.js"></script>
+    <script type="module" src="../js/components.js"></script>
+   
     <script type="module" src="../components/js/wizard.js"></script>
   </body>
 </html>

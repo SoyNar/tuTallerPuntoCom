@@ -1,3 +1,5 @@
+import { serviciosCatalogo } from "../../js/data/catalogos.js";
+
 /**
  * Pinta un grupo de checkboxes con estilo de botón.
  * @param {string} boxId  id del contenedor
@@ -26,11 +28,10 @@ export const DAYS = [
   { value: 'domingo',   label: 'D', title: 'Domingo' },
 ];
 
-export const SERVICES = [
-  { value: 'cambio-aceite', label: 'Cambio de aceite', active:true },
-  { value: 'frenos',        label: 'Frenos' },
+export const SERVICES =  serviciosCatalogo.map((s) => (
+  { value: s.id, label: s.nombre }));
  
-];
+
 
 export const STATUS = [
     {value:'pendiente', label: 'Pendiente', active: true},

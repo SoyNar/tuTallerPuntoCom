@@ -1,9 +1,15 @@
 import { LINKS } from "./link-const.js";
+import "../components/js/modalCitas.js"
+import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
+// window.guardarCita = guardarCita; 
+// window.cancelarCita = cancelarCita;
 
     const BASE_PATH =  new URL('../', import.meta.url);
     const abs = (path) => new URL(path,BASE_PATH)
 
 export class Navbar extends HTMLElement {
+
+    onCitasChange = () => this.updateBagde();
 
 
    async connectedCallback(){
@@ -12,6 +18,12 @@ export class Navbar extends HTMLElement {
      if(!res.ok)
         { throw new Error(`HTTP ${res.status}`)}
         this.innerHTML = await res.text();
+
+        // inyectar modal agenda dinamicamente
+        if(!document.querySelector('mis-citas-modal')){
+            const modalComponent = document.createElement('mis-citas-modal');
+            this.appendChild(modalComponent);
+        }
       
 
     } catch (err){
@@ -21,7 +33,41 @@ export class Navbar extends HTMLElement {
     }
     this.resolvePaths();
     this.render()
+    await this.updateBagde();
+    this.escuchasCambios()
+    
     }
+
+    /**
+     * Metodo que actualiza el bagde de la navbar (Boton de citas agendadas)
+     * @returns 
+     */
+     async updateBagde()
+    {
+     const bagdeCitas = this.querySelector('[data-badge-citas]');   
+     const bagdeNumero = this.querySelector('[data-badge-numero]');
+    if(!bagdeCitas || !bagdeNumero ) return; 
+    const total = await contarCitasActivas();
+    bagdeNumero.textContent = total;
+    console.log("Número de citas", total);
+    bagdeCitas.classList.toggle('d-none', total=== 0);
+    }
+
+
+    disconnectedCallback() {
+  window.removeEventListener("citas:modificadas", this.onCitasChange);
+  window.removeEventListener("storage", this.onCitasChange);
+}
+
+    /**
+     * MEtodop para escuchar cambios de la agenda de citas
+     */
+    escuchasCambios(){
+        window.addEventListener("citas:modificadas", this.onCitasChange);
+        window.addEventListener("storage", this.onCitasChange)
+    }
+
+  
 
     resolvePaths(){
         this.querySelectorAll('[data-href]').forEach( el => {
