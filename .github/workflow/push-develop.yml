@@ -1,0 +1,17 @@
+name: Aviso push a develop
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Avisar a Teams
+        env:
+          WEBHOOK: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ACTOR: ${{ github.actor }}
+          MSG: ${{ github.event.head_commit.message }}
+        run: |
+          jq -n --arg t " Push a develop por $ACTOR: $MSG. Hagan pull antes de programar." \
+            '{text: $t}' | curl -X POST "$WEBHOOK" -H "Content-Type: application/json" -d @-
