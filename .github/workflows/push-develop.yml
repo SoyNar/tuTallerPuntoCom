@@ -1,4 +1,4 @@
-name: Aviso push a develop
+name: Aviso push a develop (frontend)
 
 on:
   push:
@@ -17,7 +17,7 @@ jobs:
           URL: ${{ github.event.head_commit.url }}
         run: |
           jq -n \
-            --arg titulo "🚀 Push a develop en $REPO" \
+            --arg titulo " FRONTEND: push a develop en $REPO" \
             --arg detalle "Por $ACTOR: $MSG" \
             --arg url "$URL" '{
               type: "message",
@@ -30,7 +30,7 @@ jobs:
                   body: [
                     { type: "TextBlock", text: $titulo, weight: "Bolder", size: "Medium", wrap: true },
                     { type: "TextBlock", text: $detalle, wrap: true },
-                    { type: "TextBlock", text: "Hagan pull de develop antes de programar.", wrap: true }
+                    { type: "TextBlock", text: "Hagan pull de la develop del FRONTEND antes de programar.", wrap: true }
                   ],
                   actions: [
                     { type: "Action.OpenUrl", title: "Ver commit", url: $url }
