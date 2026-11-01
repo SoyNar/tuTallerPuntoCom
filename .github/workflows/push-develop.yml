@@ -17,8 +17,9 @@ jobs:
           URL: ${{ github.event.head_commit.url }}
         run: |
           jq -n \
-            --arg titulo " FRONTEND: push a develop en $REPO" \
-            --arg detalle "Por $ACTOR: $MSG" \
+            --arg actor "$ACTOR" \
+            --arg msg "$MSG" \
+            --arg repo "$REPO" \
             --arg url "$URL" '{
               type: "message",
               attachments: [{
@@ -27,10 +28,32 @@ jobs:
                   "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
                   type: "AdaptiveCard",
                   version: "1.4",
+                  msteams: { width: "Full" },
                   body: [
-                    { type: "TextBlock", text: $titulo, weight: "Bolder", size: "Medium", wrap: true },
-                    { type: "TextBlock", text: $detalle, wrap: true },
-                    { type: "TextBlock", text: "Hagan pull de la develop del FRONTEND antes de programar.", wrap: true }
+                    {
+                      type: "Container",
+                      style: "accent",
+                      bleed: true,
+                      items: [
+                        { type: "TextBlock", text: " FRONTEND · Nuevo push a develop", weight: "Bolder", size: "Large", wrap: true }
+                      ]
+                    },
+                    {
+                      type: "FactSet",
+                      facts: [
+                        { title: "Autor", value: $actor },
+                        { title: "Repo", value: $repo },
+                        { title: "Rama", value: "develop" },
+                        { title: "Commit", value: $msg }
+                      ]
+                    },
+                    {
+                      type: "Container",
+                      style: "warning",
+                      items: [
+                        { type: "TextBlock", text: " Hagan pull de la develop del FRONTEND antes de programar.", weight: "Bolder", wrap: true }
+                      ]
+                    }
                   ],
                   actions: [
                     { type: "Action.OpenUrl", title: "Ver commit", url: $url }
