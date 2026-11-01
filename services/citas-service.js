@@ -1,7 +1,7 @@
 const KEY = "citas";
 const ESTADO_CONFIRMADA = "confirmada";
 const ESTADO_CANCELADA = "cancelada";
-const EVENTO_CAMBIO = "citas:changed";
+const EVENTO_CAMBIO = "citas:modificadas";
 
 /** Avisa a quien escuche (la navbar) que las citas cambiaron. */
 function notificarCambio(tipo, cita) {
@@ -52,7 +52,7 @@ export async function guardarCita(data) {
 
   const nueva = {
     ...data,
-    id: Date.now(),              // después de ...data: no se puede sobrescribir
+    id: Date.now(),              
     estado: ESTADO_CONFIRMADA,
     reprogramada: false,
   };

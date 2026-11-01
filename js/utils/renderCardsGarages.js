@@ -1,4 +1,4 @@
-import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
+import { obtenerServiciosTaller } from "../data/catalogos.js";
 import { estaAbiertoElTaller } from "./scheduleCalculator.js";
 
 const FOTO_DEFECTO = "../assets/img/chispa-mascota-3.png";
@@ -17,7 +17,7 @@ export function renderizarTalleres(lista) {
     const badgesServicios = obtenerServiciosTaller(taller)
       .map(
         (servicio) =>
-          `<span class="badge bg-light text-dark border me-1">${servicio}</span>`,
+          `<span class="badge bg-light text-dark border me-1">${servicio.nombre}</span>`,
       )
       .join("");
 

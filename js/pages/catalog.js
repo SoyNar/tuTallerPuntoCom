@@ -7,8 +7,8 @@ import {
 } from "../utils/filtros.js";
 import { mergeTalleres } from "../../services/talleres-service.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
-import { serviciosCatalogo } from "../data/serviciosCatalogo.js";
-import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
+import { serviciosCatalogo } from "../data/catalogos.js";
+import { obtenerServiciosTaller } from "../data/catalogos.js";
 
 const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");

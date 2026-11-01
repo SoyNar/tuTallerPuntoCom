@@ -55,7 +55,7 @@ export class Navbar extends HTMLElement {
 
 
     disconnectedCallback() {
-  window.removeEventListener("citas:changed", this.onCitasChange);
+  window.removeEventListener("citas:modificadas", this.onCitasChange);
   window.removeEventListener("storage", this.onCitasChange);
 }
 
@@ -63,7 +63,7 @@ export class Navbar extends HTMLElement {
      * MEtodop para escuchar cambios de la agenda de citas
      */
     escuchasCambios(){
-        window.addEventListener("citas:changed", this.onCitasChange);
+        window.addEventListener("citas:modificadas", this.onCitasChange);
         window.addEventListener("storage", this.onCitasChange)
     }
 
