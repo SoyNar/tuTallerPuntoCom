@@ -1,98 +1,108 @@
+import { guardarCita } from "../../services/citas-service.js";
+import {
+  fechaLocal,
+  fechaManana,
+  fechaLegible,
+  bloquearHorasPasadas,
+} from "../../js/utils/horarios-cita.js";
+import {
+  avisarCitaAgendada,
+  avisarErrorCita,
+} from "../../js/utils/avisos-cita.js";
+import { plantillaAgendarCita } from "./agendarCitaTemplate.js";
+
 class AgendarCitaModal extends HTMLElement {
   connectedCallback() {
-    this.innerHTML = `
-      <div id="modalCita" class="modal fade" tabindex="-1" aria-labelledby="tituloCita" aria-hidden="true">
-        <div class="modal-dialog modal-dialog-centered mt-0">
-          <div class="modal-content border-0 rounded-4 shadow-lg">
+    this.innerHTML = plantillaAgendarCita;
+    this.modalEl = this.querySelector("#modalCita");
+    this.fecha = this.querySelector("#fecha");
+    this.hora = this.querySelector("#hora");
+    this.btnConfirmar = this.querySelector("#btnConfirmar");
+    this.guardando = false; // evita registrar la cita dos veces
 
-            <!-- Encabezado -->
-            <div class="modal-header border-0 align-items-start pb-0">
-              <div>
-                <h2 class="modal-title fs-5 fw-bold" id="tituloCita">Agendar cita</h2>
-                <p class="small text-secondary mb-0">Elige servicio, vehículo, fecha y hora.</p>
-              </div>
-              <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
-            </div>
+    this.fecha.addEventListener("change", () => this.refrescar());
+    this.hora.addEventListener("change", () => this.actualizarResumen());
+    this.querySelector("#formCita").addEventListener("submit", (e) =>
+      this.confirmar(e),
+    );
+    this.modalEl.addEventListener("hidden.bs.modal", () => this.alCerrar());
 
-            <!-- Cuerpo -->
-            <div class="modal-body">
-              <form id="formCita" class="vstack gap-3">
+    this.reiniciar();
+  }
 
-                <!-- Taller -->
-                <div class="d-flex align-items-center gap-3   rounded-4 p-3" style="background-color: var(--color-bg-soft);">
-<img id="citaTallerFoto" src="" alt="" class="flex-shrink-0 rounded-3 border" style="width:44px;height:44px;object-fit:cover">                  <div class="flex-grow-1">
-                    <div class="fw-bold" id="citaTallerNombre">Taller El Pistón</div>
-                    <div class="small text-secondary"><span class="text-warning">★</span> 4.8 · 1.2 km · Abierto</div>
-                  </div>
-                  <a href="#" class="small fw-semibold text-decoration-none">Cambiar</a>
-                </div>
+  abrir({ id, nombre }) {
+    this.modalEl.dataset.tallerId = id;
+    this.querySelector("#citaTallerNombre").textContent = nombre;
+    this.reiniciar();
 
-                <!-- Servicio -->
-                <div>
-                  <label for="servicio" class="form-label small fw-medium">Servicio</label>
-                  <select id="servicio" class="form-select">
-                    <option selected>Cambio de aceite</option>
-                    <option>Alineación y balanceo</option>
-                    <option>Revisión de frenos</option>
-                  </select>
-                </div>
+    window.bootstrap.Modal.getOrCreateInstance(this.modalEl).show();
+  }
 
-                <!-- Vehículo -->
-                <div>
-                  <label for="vehiculo" class="form-label small fw-medium">Vehículo</label>
-                  <select id="vehiculo" class="form-select">
-                    <option selected>Mazda 3 · ABC123</option>
-                  </select>
-                </div>
+  reiniciar() {
+    this.fecha.min = fechaLocal();
+    this.fecha.value = fechaLocal();
+    this.refrescar();
+    if (!this.hayHoras) {
+      this.fecha.value = fechaManana();
+      this.refrescar();
+    }
+  }
 
-                <!-- Fecha y hora -->
-                <div class="row g-3">
-                  <div class="col-12 col-sm-6">
-                    <label for="fecha" class="form-label small fw-medium">Fecha</label>
-                    <input type="date" id="fecha" class="form-control" value="2026-10-10">
-                  </div>
-                  <div class="col-12 col-sm-6">
-                    <label for="hora" class="form-label small fw-medium">Hora</label>
-                    <select id="hora" class="form-select">
-                      <option>08:00 am</option>
-                      <option>09:00 am</option>
-                      <option selected>10:30 am</option>
-                      <option>02:00 pm</option>
-                      <option>04:00 pm</option>
-                    </select>
-                  </div>
-                </div>
+  refrescar() {
+    if (this.fecha.value && this.fecha.value < fechaLocal())
+      this.fecha.value = fechaLocal();
+    this.hayHoras = bloquearHorasPasadas(this.hora, this.fecha.value);
+    this.querySelector("#avisoHoras").classList.toggle("d-none", this.hayHoras);
+    this.btnConfirmar.disabled = !this.hayHoras || this.guardando;
+    this.actualizarResumen();
+  }
 
-                <!-- Resumen -->
-                <div class=" border rounded-4 p-3 small"style="background-color: var(--color-bg-soft);" >
-                  <div class="d-flex justify-content-between mb-1">
-                    <span class="text-secondary">Fecha</span>
-                    <span id="resFecha" class="fw-semibold">Sábado 10 de octubre</span>
-                  </div>
-                  <div class="d-flex justify-content-between">
-                    <span class="text-secondary">Hora</span>
-                    <span id="resHora" class="fw-semibold">10:30 am</span>
-                  </div>
-                  <div class="d-flex justify-content-between align-items-center border-top border-primary-subtle pt-2 mt-2">
-                    <span class="fw-bold">Costo aproximado</span>
-                    <span id="resPrecio" class="fs-4 fw-bold text-primary">$ 90.000</span>
-                  </div>
-                </div>
+  actualizarResumen() {
+    if (this.fecha.value)
+      this.querySelector("#resFecha").textContent = fechaLegible(
+        this.fecha.value,
+      );
+    const op = this.hora.selectedOptions[0];
+    this.querySelector("#resHora").textContent = op.disabled ? "—" : op.text;
+  }
 
-                <p class="small text-secondary mb-0">Te enviaremos la confirmación por correo electrónico.</p>
-              </form>
-            </div>
+  async confirmar(e) {
+    e.preventDefault();
+    if (this.guardando) return;
 
-            <!-- Pie -->
-            <div class="modal-footer">
-              <button type="button" id="btnCancelar" class="btn btn-light border fw-semibold" data-bs-dismiss="modal">Cancelar</button>
-              <button type="submit" id="btnConfirmar" form="formCita" class="btn btn-tt-accent fw-semibold">Confirmar cita</button>
-            </div>
+    const horaElegida = this.hora.value;
+    this.refrescar();
+    if (!this.hayHoras || this.hora.value !== horaElegida) return;
 
-          </div>
-        </div>
-      </div>
-    `;
+    this.guardando = true;
+    this.btnConfirmar.disabled = true;
+    const op = this.hora.selectedOptions[0];
+
+    try {
+      await guardarCita({
+        tallerId: Number(this.modalEl.dataset.tallerId),
+        tallerNombre: this.querySelector("#citaTallerNombre").textContent,
+        servicio: this.querySelector("#servicio").value,
+        vehiculo: this.querySelector("#vehiculo").value,
+        fecha: this.fecha.value,
+        hora: op.value,
+        horaTexto: op.text,
+      });
+    } catch (err) {
+      console.error("Error al guardar la cita:", err);
+      this.guardando = false;
+      this.refrescar();
+      avisarErrorCita();
+      return;
+    }
+
+    avisarCitaAgendada();
+    window.bootstrap.Modal.getInstance(this.modalEl)?.hide();
+  }
+
+  alCerrar() {
+    this.guardando = false;
+    this.refrescar();
   }
 }
 

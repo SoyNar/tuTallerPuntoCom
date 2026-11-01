@@ -1,4 +1,4 @@
-import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
+import { obtenerServiciosTaller } from "../data/catalogos.js";
 import { escapar, legible } from "../utils/formato.js";
 
 const ESTADOS = {
