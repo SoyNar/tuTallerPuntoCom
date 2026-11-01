@@ -25,7 +25,7 @@ class MisCitasModal extends HTMLElement {
                 <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill mb-3 shadow-sm small fw-semibold" role="tablist">
                   <li class="nav-item"><button class="nav-link active rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-todas">Todas</button></li>
                   <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-conf">Confirmadas</button></li>
-                  <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-pend">Pendientes</button></li>
+                  <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-pend">Canceladas</button></li>
                 </ul>
 
                 <!-- Contenedor de listados -->
@@ -54,7 +54,7 @@ class MisCitasModal extends HTMLElement {
                     <p class="text-muted small text-center my-4">Sin citas confirmadas.</p>
                   </div>
                   <div class="tab-pane fade" id="pills-pend">
-                    <p class="text-muted small text-center my-4">Sin citas pendientes.</p>
+                    <p class="text-muted small text-center my-4">Sin citas Canceladas.</p>
                   </div>
                 </div>
               </div>

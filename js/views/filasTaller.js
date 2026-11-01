@@ -1,3 +1,4 @@
+import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
 import { escapar, legible } from "../utils/formato.js";
 
 const ESTADOS = {
@@ -37,7 +38,7 @@ function accionesHTML(t) {
 
 export function filaTallerHTML(t) {
   const estado = ESTADOS[t.estado] ?? ESTADOS.pendiente;
-  const servicios = (t.servicios ?? []).map(legible).join(", ");
+  const servicios = obtenerServiciosTaller(t).map((s) => s.nombre).join(", ");
 
   return `
     <tr>

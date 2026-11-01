@@ -1,3 +1,4 @@
+import { obtenerServiciosTaller } from "../data/serviciosCatalogo.js";
 import { estaAbiertoElTaller } from "./scheduleCalculator.js";
 
 const FOTO_DEFECTO = "../assets/img/chispa-mascota-3.png";
@@ -13,7 +14,7 @@ export function renderizarTalleres(lista) {
     col.className = "col col-12 col-md-6 col-lg-4";
     if (!taller.horarios) console.warn("Taller sin horarios:", taller);
 
-    const badgesServicios = (taller.servicios ?? [])
+    const badgesServicios = obtenerServiciosTaller(taller)
       .map(
         (servicio) =>
           `<span class="badge bg-light text-dark border me-1">${servicio}</span>`,
