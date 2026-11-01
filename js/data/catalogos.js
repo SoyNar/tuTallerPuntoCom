@@ -1,7 +1,7 @@
 // Catálogos compartidos: valor que se guarda -> texto que se muestra.
 // Los usan el wizard (resumen) y la tabla del admin.
 import { serviciosDisponibles } from "./garageMock.js"
-export const TIPOS = { carros: 'Carros', motos: 'Motos', ambos: 'Carros y motos' };
+export const TIPOS = { carros: ["Automóvil"], motos: ["Moto"], ambos: ["Automóvil", "Moto"]};
 
 export const CIUDADES = {
   medellin: 'Medellín',
@@ -37,3 +37,9 @@ export const ESTADOS = {
   pendiente: { texto: 'Pendiente', clase: 'bg-warning text-warning-emphasis' },
   suspendido: { texto: 'Suspendido', clase: 'bg-danger text-danger' },
 };
+export function tiposDelTaller(taller) {
+  return [].concat(taller?.tipoVehiculos ?? []).flatMap((t) => TIPOS[t] ?? [t]);
+}
+
+export const tallerAtiende = (taller, vehiculo) =>
+  tiposDelTaller(taller).includes(vehiculo.tipo);

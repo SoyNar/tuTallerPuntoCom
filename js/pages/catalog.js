@@ -172,16 +172,17 @@ contenedorTalleres.addEventListener("click", (e) => {
   const btnAgendar = e.target.closest(".btn-agendar");
 
   if (btnAgendar) {
-    // 1. Extraemos el id y el nombre que guardamos en el botón
-    const id = btnAgendar.dataset.tallerId;
-    const nombre = btnAgendar.dataset.tallerNombre;
-
+    //pasar el taller ocmplero 
+   const taller = talleresDisponibles.find(
+    (t) => String(t.id) === btnAgendar.dataset.tallerId,
+  );
+  if (!taller) return;
     // 2. Buscamos tu componente web personalizado en la página
     const modalComponent = document.querySelector("agendar-cita-modal");
 
     // 3. Le pasamos los datos a tu componente llamando a su método abrir
     if (modalComponent) {
-      modalComponent.abrir({ id, nombre });
+      modalComponent.abrir(taller);
     }
   }
 });

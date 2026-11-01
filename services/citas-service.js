@@ -45,6 +45,7 @@ export async function citasOrdenadas() {
 
 /**
  * Crea una cita. `data` NO trae id, estado ni reprogramada.
+ * @param {CitaRequest} data
  * @returns {Promise<Object|null>} la cita creada, o null si falló
  */
 export async function guardarCita(data) {

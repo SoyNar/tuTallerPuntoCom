@@ -1,4 +1,7 @@
 import { guardarCita } from "../../services/citas-service.js";
+import {obtenerMisVehiculos} from "../../js/data/usuario-fake.js";
+import {obtenerServiciosTaller} from "../../js/data/catalogos.js";
+import {tallerAtiende} from "../../js/data/catalogos.js"; 
 import {
   fechaLocal,
   fechaManana,
@@ -13,13 +16,16 @@ import { plantillaAgendarCita } from "./agendarCitaTemplate.js";
 
 class AgendarCitaModal extends HTMLElement {
   connectedCallback() {
+   
     this.innerHTML = plantillaAgendarCita;
     this.modalEl = this.querySelector("#modalCita");
     this.fecha = this.querySelector("#fecha");
     this.hora = this.querySelector("#hora");
     this.btnConfirmar = this.querySelector("#btnConfirmar");
     this.guardando = false; // evita registrar la cita dos veces
-
+     this.servicios = [];
+    this.cortos = 0;
+    this.querySelector("#servicio").addEventListener("change", () => this.actualizarPrecio());
     this.fecha.addEventListener("change", () => this.refrescar());
     this.hora.addEventListener("change", () => this.actualizarResumen());
     this.querySelector("#formCita").addEventListener("submit", (e) =>
@@ -30,14 +36,37 @@ class AgendarCitaModal extends HTMLElement {
     this.reiniciar();
   }
 
-  abrir({ id, nombre }) {
-    this.modalEl.dataset.tallerId = id;
-    this.querySelector("#citaTallerNombre").textContent = nombre;
+   async abrir(taller) {
+    this.taller = taller
+    this.modalEl.dataset.tallerId = taller.id;
+    this.querySelector("#citaTallerNombre").textContent = taller.nombre;
+    this.servicios = obtenerServiciosTaller(taller);
+    console.log("taller:", taller);
+console.log("servicios:", this.servicios);
+    this.llenarSelect(this.querySelector("#servicio"), this.servicios);
+    this.actualizarPrecio();
+
+    const vehiculos = (await obtenerMisVehiculos()).filter((v) => tallerAtiende(taller,v));
+    const todos = await obtenerMisVehiculos();
+console.log("sesion:", JSON.parse(localStorage.getItem("sesion")));
+console.log("mis vehiculos:", todos);
+console.log("tipoVehiculos del taller:", taller.tipoVehiculos);
+// const vehiculos = todos.filter(atiende);
+console.log("compatibles:", vehiculos);
+    this.llenarSelect(this.querySelector("#vehiculo"), vehiculos, (v) => `${v.marca} ${v.modelo} (${v.placa})`);
     this.reiniciar();
 
     window.bootstrap.Modal.getOrCreateInstance(this.modalEl).show();
   }
+   llenarSelect(select, items, texto = (i) => i.nombre) {
+    select.replaceChildren(...items.map((i) => new Option(texto(i), i.id)));
+  }
+  actualizarPrecio() {
+    const serv = this.servicios.find((s) => s.id === Number(this.querySelector("#servicio").value));
+    this.costo = serv?.precio ?? 0;
+    this.querySelector("#resPrecio").textContent = `$ ${this.costo.toLocaleString("es-CO")}`;
 
+  }
   reiniciar() {
     this.fecha.min = fechaLocal();
     this.fecha.value = fechaLocal();
@@ -78,18 +107,19 @@ class AgendarCitaModal extends HTMLElement {
     this.btnConfirmar.disabled = true;
     const op = this.hora.selectedOptions[0];
 
-    try {
-      await guardarCita({
-        tallerId: Number(this.modalEl.dataset.tallerId),
-        tallerNombre: this.querySelector("#citaTallerNombre").textContent,
-        servicio: this.querySelector("#servicio").value,
-        vehiculo: this.querySelector("#vehiculo").value,
+    
+     const resp = await guardarCita({
+        taller_id: Number(this.modalEl.dataset.tallerId),
+        // tallerNombre: this.querySelector("#citaTallerNombre").textContent,
+        servicio_id: this.querySelector("#servicio").value,
+        vehiculo_id :this.querySelector("#vehiculo").value,
         fecha: this.fecha.value,
         hora: op.value,
-        horaTexto: op.text,
-      });
-    } catch (err) {
-      console.error("Error al guardar la cita:", err);
+        costo_aproximado: this.costo,
+        // horaTexto: op.text,
+     });
+      
+        if(!resp){
       this.guardando = false;
       this.refrescar();
       avisarErrorCita();
