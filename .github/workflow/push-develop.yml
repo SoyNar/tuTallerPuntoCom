@@ -14,4 +14,43 @@ jobs:
           MSG: ${{ github.event.head_commit.message }}
         run: |
           jq -n --arg t " Push a develop por $ACTOR: $MSG. Hagan pull antes de programar." \
-            '{text: $t}' | curl -X POST "$WEBHOOK" -H "Content-Type: application/json" -d @-
+            '{text: $t}' | curl -X POST "$WEBHOOK" -H "Content-Type: application/json" -d @-name: Aviso push a develop
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Avisar a Teams
+        env:
+          WEBHOOK: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ACTOR: ${{ github.actor }}
+          MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          URL: ${{ github.event.head_commit.url }}
+        run: |
+          jq -n \
+            --arg titulo "🚀 Push a develop en $REPO" \
+            --arg detalle "Por $ACTOR: $MSG" \
+            --arg url "$URL" '{
+              type: "message",
+              attachments: [{
+                contentType: "application/vnd.microsoft.card.adaptive",
+                content: {
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  type: "AdaptiveCard",
+                  version: "1.4",
+                  body: [
+                    { type: "TextBlock", text: $titulo, weight: "Bolder", size: "Medium", wrap: true },
+                    { type: "TextBlock", text: $detalle, wrap: true },
+                    { type: "TextBlock", text: "Hagan pull de develop antes de programar.", wrap: true }
+                  ],
+                  actions: [
+                    { type: "Action.OpenUrl", title: "Ver commit", url: $url }
+                  ]
+                }
+              }]
+            }' | curl -sS -f -X POST
