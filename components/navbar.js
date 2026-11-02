@@ -71,7 +71,7 @@ export class Navbar extends HTMLElement {
     if(!bagdeCitas || !bagdeNumero ) return; 
     const total = await contarCitasActivas();
     bagdeNumero.textContent = total;
-    console.log("Número de citas", total);
+    // console.log("Número de citas", total);
     bagdeCitas.classList.toggle('d-none', total=== 0);
     }
 

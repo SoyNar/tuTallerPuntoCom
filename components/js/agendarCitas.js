@@ -41,18 +41,12 @@ class AgendarCitaModal extends HTMLElement {
     this.modalEl.dataset.tallerId = taller.id;
     this.querySelector("#citaTallerNombre").textContent = taller.nombre;
     this.servicios = obtenerServiciosTaller(taller);
-    console.log("taller:", taller);
-console.log("servicios:", this.servicios);
+  
     this.llenarSelect(this.querySelector("#servicio"), this.servicios);
     this.actualizarPrecio();
 
     const vehiculos = (await obtenerMisVehiculos()).filter((v) => tallerAtiende(taller,v));
     const todos = await obtenerMisVehiculos();
-console.log("sesion:", JSON.parse(localStorage.getItem("sesion")));
-console.log("mis vehiculos:", todos);
-console.log("tipoVehiculos del taller:", taller.tipoVehiculos);
-// const vehiculos = todos.filter(atiende);
-console.log("compatibles:", vehiculos);
     this.llenarSelect(this.querySelector("#vehiculo"), vehiculos, (v) => `${v.marca} ${v.modelo} (${v.placa})`);
     this.reiniciar();
 

@@ -41,7 +41,6 @@ function pintar(raiz) {
 export function autenticar(raiz) {
   const actualizar = () => pintar(raiz);
    const alCerrar = () => {
-     console.log("click en cerrar sesión");
      cerrarSesion();
    };
      const btnCerrar = raiz.querySelector("[data-cerrar-sesion]");
