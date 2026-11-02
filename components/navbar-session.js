@@ -40,16 +40,20 @@ function pintar(raiz) {
 
 export function autenticar(raiz) {
   const actualizar = () => pintar(raiz);
-  const btnCerrar = raiz.querySelector("[data-cerrar-sesion]");
+   const alCerrar = () => {
+     console.log("click en cerrar sesión");
+     cerrarSesion();
+   };
+     const btnCerrar = raiz.querySelector("[data-cerrar-sesion]");
 
   actualizar();
 
-  btnCerrar?.addEventListener("click", cerrarSesion);
+  btnCerrar?.addEventListener("click", alCerrar);
   window.addEventListener(EVENTO_SESION, actualizar);
   window.addEventListener("storage", actualizar);
 
   return () => {
-    btnCerrar?.removeEventListener("click", cerrarSesion);
+    btnCerrar?.removeEventListener("click", alCerrar);
     window.removeEventListener(EVENTO_SESION, actualizar);
     window.removeEventListener("storage", actualizar);
   };

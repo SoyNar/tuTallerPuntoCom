@@ -3,9 +3,12 @@ import "../components/js/modalCitas.js"
 import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
 import {iniciarSesion} from "../services/auth-service.js"
 import { autenticar } from "./navbar-session.js";
+import {iniciarSesionDemo} from "../services/demo-session.js"
 // window.guardarCita = guardarCita; 
 // window.cancelarCita = cancelarCita;
 window.iniciarSesion = iniciarSesion
+iniciarSesionDemo()
+
 
     const BASE_PATH =  new URL('../', import.meta.url);
     const abs = (path) => new URL(path,BASE_PATH)

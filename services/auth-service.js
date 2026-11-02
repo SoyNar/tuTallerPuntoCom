@@ -1,5 +1,6 @@
 const KEY_SESION = "sesion";
 export const EVENTO_SESION = "sesion:actualizada";
+const KEY_DEMO = "demo-sesion-creada";
 
 /** Devuelve { usuario } si hay sesión válida, o null. */
 export function obtenerSesion() {
@@ -13,6 +14,8 @@ export function obtenerSesion() {
 
 export const obtenerUsuario = () => obtenerSesion()?.usuario ?? null;
 export const estaAutenticado = () => obtenerSesion() !== null;
+
+
 
 /**
  * Metodo para simular la autenticación de un usuario
@@ -31,5 +34,6 @@ export function iniciarSesion(usuario) {
  */
 export function cerrarSesion() {
   localStorage.removeItem(KEY_SESION);
+  localStorage.removeItem(KEY_DEMO); //esta es de prueba
   window.dispatchEvent(new CustomEvent(EVENTO_SESION));
 }
