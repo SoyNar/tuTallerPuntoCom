@@ -2,6 +2,7 @@ import { LINKS } from "./link-const.js";
 import "../components/js/modalCitas.js"
 import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
 import {iniciarSesion} from "../services/auth-service.js"
+import { autenticar } from "./navbar-session.js";
 // window.guardarCita = guardarCita; 
 // window.cancelarCita = cancelarCita;
 window.iniciarSesion = iniciarSesion
@@ -35,6 +36,7 @@ export class Navbar extends HTMLElement {
     }
     this.resolvePaths();
     this.render()
+    this.detenerSesion = autenticar(this);
     await this.updateBagde();
     this.escuchasCambios()
     
@@ -57,6 +59,7 @@ export class Navbar extends HTMLElement {
 
 
     disconnectedCallback() {
+        this.detenerSesion?.();
   window.removeEventListener("citas:modificadas", this.onCitasChange);
   window.removeEventListener("storage", this.onCitasChange);
 }

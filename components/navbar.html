@@ -14,6 +14,7 @@
  <button
   type="button"
   class="btn btn-sm btn-tt-outline rounded-3 p-2 position-relative"
+  data-agenda
   data-bs-toggle="modal"
   data-bs-target="#modalAgendas"
   aria-label="Abrir agenda"
@@ -29,13 +30,28 @@
   </span>
 </button>
 
-  <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">
-    Iniciar sesión
-  </a>
+   <!-- Sin sesión -->
+  <div data-invitado class="d-flex align-items-center gap-2">
+    <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">Iniciar sesión</a>
+    <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">Registrarme</a>
+  </div>
 
-  <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">
-    Registrarme
-  </a>
+  <!-- Con sesión -->
+  <div data-usuario class="dropdown d-none">
+    <button type="button"
+      class="btn btn-sm btn-tt-outline rounded-3 d-flex align-items-center gap-2"
+      data-bs-toggle="dropdown" aria-expanded="false">
+      <img data-usuario-foto class="rounded-circle d-none" width="28" height="28"
+           style="object-fit:cover" alt="">
+      <span data-usuario-iniciales
+        class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-semibold"
+        style="width:28px;height:28px;font-size:.7rem"></span>
+      <span data-usuario-nombre class="fw-semibold"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-end">
+      <li><button type="button" class="dropdown-item" data-cerrar-sesion>Cerrar sesión</button></li>
+    </ul>
+  </div>
 
  
 </div>
