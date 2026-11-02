@@ -17,10 +17,15 @@ export class Navbar extends HTMLElement {
 
    async connectedCallback(){
     try{
-     const res = await fetch(abs('components/navbar.html'))
-     if(!res.ok)
-        { throw new Error(`HTTP ${res.status}`)}
-        this.innerHTML = await res.text();
+      const url = abs("components/navbar.html").href;
+  let html = sessionStorage.getItem("navbar-html");
+  if (!html) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    html = await res.text();
+    sessionStorage.setItem("navbar-html", html);
+  }
+  this.innerHTML = html;
 
         // inyectar modal agenda dinamicamente
         if(!document.querySelector('mis-citas-modal')){
@@ -36,11 +41,21 @@ export class Navbar extends HTMLElement {
     }
     this.resolvePaths();
     this.render()
+    this.cerrarMenuAlNavegar();
     this.detenerSesion = autenticar(this);
     await this.updateBagde();
     this.escuchasCambios()
     
     }
+
+    cerrarMenuAlNavegar() {
+  const panel = this.querySelector("#navPrincipal");
+  this.querySelectorAll(".nav-link").forEach((enlace) =>
+    enlace.addEventListener("click", () =>
+      window.bootstrap?.Collapse.getInstance(panel)?.hide(),
+    ),
+  );
+}
 
     /**
      * Metodo que actualiza el bagde de la navbar (Boton de citas agendadas)

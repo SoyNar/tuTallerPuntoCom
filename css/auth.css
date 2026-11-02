@@ -1,0 +1,48 @@
+/* Compartido por login y registro. Solo lo que Bootstrap no resuelve. Los colores salen de theme.css. */
+
+.auth-ancho { max-width: 26rem; }
+
+.auth-marca { background-color: var(--color-primary); }
+
+/* círculo decorativo inferior */
+.auth-marca::after {
+  content: "";
+  position: absolute;
+  width: 26rem;
+  height: 26rem;
+  right: -6rem;
+  bottom: -9rem;
+  border-radius: 50%;
+  background: rgb(255 255 255 / .1);
+  pointer-events: none;
+}
+
+.auth-punto {
+  width: 1rem;
+  height: 1rem;
+  background-color: var(--color-accent);
+}
+
+/* Pills de Bootstrap con los colores de la marca */
+.auth-tabs {
+  --bs-nav-pills-link-active-bg: var(--color-surface);
+  --bs-nav-pills-link-active-color: var(--color-navy);
+  --bs-nav-link-color: var(--color-text-secondary);
+  --bs-nav-link-hover-color: var(--color-navy);
+  background-color: var(--color-bg-soft);
+}
+
+.auth-tabs .nav-link.active { box-shadow: 0 1px 3px rgb(11 27 58 / .12); }
+
+/* Enlaces y foco con el azul de la marca */
+.auth-form a, .auth-ancho > p a { color: var(--color-primary); }
+
+.auth-form .form-control:focus {
+  border-color: var(--color-primary);
+  box-shadow: 0 0 0 .2rem rgb(47 107 255 / .18);
+}
+
+.auth-form .form-check-input:checked {
+  background-color: var(--color-primary);
+  border-color: var(--color-primary);
+}

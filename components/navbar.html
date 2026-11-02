@@ -1,60 +1,59 @@
-<nav class="navbar navbar-expand-lg navbar-tt  border-bottom py-0 sticky-top">
+<nav class="navbar navbar-expand-lg navbar-tt border-bottom py-0 sticky-top">
   <div class="container">
+
     <a class="navbar-brand d-flex align-items-center gap-2 fw-bold fs-6 py-2" data-href="./index.html">
-      <img data-src="assets/img/logo.png" alt="logo" width="120px" >
-      <!-- <span><span class="brand-tu">Tu</span><span class="brand-taller">Taller</span></span> -->
+      <img data-src="assets/img/logo.png" alt="TuTaller" width="120">
     </a>
 
-    <div class="collapse navbar-collapse" id="navPrincipal">
+    <!-- Agenda + perfil + hamburguesa: siempre visibles, a la derecha -->
+    <div class="d-flex align-items-center gap-2 ms-auto order-lg-3">
+
+      <button type="button"
+              class="btn btn-sm btn-tt-outline rounded-3 p-2 position-relative d-none flex-shrink-0"
+              data-agenda
+              data-bs-toggle="modal"
+              data-bs-target="#modalAgendas"
+              aria-label="Abrir agenda"
+              title="Mi agenda">
+        <i class="bi bi-calendar-check fs-5"></i>
+        <span class="position-absolute top-0 start-0 translate-middle-x badge rounded-pill bg-danger d-none" data-badge-citas>
+          <span data-badge-numero>0</span>
+          <span class="visually-hidden">agendas pendientes</span>
+        </span>
+      </button>
+
+      <div data-usuario class="dropdown d-none">
+        <button type="button"
+                class="btn btn-sm btn-tt-accent rounded-3 d-flex align-items-center gap-2"
+                data-bs-toggle="dropdown" aria-expanded="false" aria-label="Mi cuenta">
+          <img data-usuario-foto class="rounded-circle d-none" width="28" height="28"
+               style="object-fit:cover" alt="">
+          <span data-usuario-iniciales
+                class="avatar-tt rounded-circle d-inline-flex align-items-center justify-content-center fw-semibold"></span>
+          <span data-usuario-nombre class="fw-semibold d-none d-lg-inline"></span>
+        </button>
+        <ul class="dropdown-menu dropdown-menu-end">
+          <li><button type="button" class="dropdown-item" data-cerrar-sesion>Cerrar sesión</button></li>
+        </ul>
+      </div>
+
+      <button class="navbar-toggler border-0 shadow-none" type="button"
+              data-bs-toggle="collapse" data-bs-target="#navPrincipal"
+              aria-controls="navPrincipal" aria-expanded="false"
+              aria-label="Abrir menú">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+    </div>
+
+    <!-- Menú desplegable: links y, para visitantes, login/registro -->
+    <div class="collapse navbar-collapse order-lg-2" id="navPrincipal">
       <ul class="navbar-nav mx-auto gap-lg-4" data-nav-links></ul>
 
-      <div class="nav-acciones d-flex align-items-center gap-2 py-3 py-lg-0">
-
-  <!-- BOTÓN DE LA AGENDA MODIFICADO PARA COMPONENTE MODAL -->
- <button
-  type="button"
-  class="btn btn-sm btn-tt-outline rounded-3 p-2 position-relative"
-  data-agenda
-  data-bs-toggle="modal"
-  data-bs-target="#modalAgendas"
-  aria-label="Abrir agenda"
-  title="Mi agenda">
-  
-  <!-- Icono de la agenda -->
-  <i class="bi bi-calendar-check fs-5"></i>
-
-  <!-- Insignia / Badge con número -->
-  <span class="position-absolute top-0 start-0 translate-middle-x badge rounded-pill bg-danger d-none" data-badge-citas>
-    <span data-badge-numero>0</span>
-    <span class="visually-hidden">agendas pendientes</span>
-  </span>
-</button>
-
-   <!-- Sin sesión -->
-  <div data-invitado class="d-flex align-items-center gap-2">
-    <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">Iniciar sesión</a>
-    <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">Registrarme</a>
-  </div>
-
-  <!-- Con sesión -->
-  <div data-usuario class="dropdown d-none">
-    <button type="button"
-      class="btn btn-sm btn-tt-outline rounded-3 d-flex align-items-center gap-2"
-      data-bs-toggle="dropdown" aria-expanded="false">
-      <img data-usuario-foto class="rounded-circle d-none" width="28" height="28"
-           style="object-fit:cover" alt="">
-      <span data-usuario-iniciales
-        class="rounded-circle bg-primary text-white d-inline-flex align-items-center justify-content-center fw-semibold"
-        style="width:28px;height:28px;font-size:.7rem"></span>
-      <span data-usuario-nombre class="fw-semibold"></span>
-    </button>
-    <ul class="dropdown-menu dropdown-menu-end">
-      <li><button type="button" class="dropdown-item" data-cerrar-sesion>Cerrar sesión</button></li>
-    </ul>
-  </div>
-
- 
-</div>
+      <div data-invitado class="d-flex flex-row gap-2 py-3 py-lg-0 ms-lg-3">
+        <a class="btn btn-sm btn-tt-outline px-3 rounded-3" data-href="pages/login.html">Iniciar sesión</a>
+        <a class="btn btn-sm btn-tt-accent px-3 rounded-3" data-href="pages/register.html">Registrarme</a>
+      </div>
     </div>
+
   </div>
 </nav>
