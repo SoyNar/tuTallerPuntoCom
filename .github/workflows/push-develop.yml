@@ -1,0 +1,65 @@
+name: Aviso push a develop (frontend)
+
+on:
+  push:
+    branches: [develop]
+
+jobs:
+  avisar:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Avisar a Teams
+        env:
+          WEBHOOK: ${{ secrets.TEAMS_WEBHOOK_URL }}
+          ACTOR: ${{ github.actor }}
+          MSG: ${{ github.event.head_commit.message }}
+          REPO: ${{ github.repository }}
+          URL: ${{ github.event.head_commit.url }}
+        run: |
+          jq -n \
+            --arg actor "$ACTOR" \
+            --arg msg "$MSG" \
+            --arg repo "$REPO" \
+            --arg url "$URL" '{
+              type: "message",
+              attachments: [{
+                contentType: "application/vnd.microsoft.card.adaptive",
+                content: {
+                  "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+                  type: "AdaptiveCard",
+                  version: "1.4",
+                  msteams: { width: "Full" },
+                  body: [
+                    {
+                      type: "Container",
+                      style: "accent",
+                      bleed: true,
+                      items: [
+                        { type: "TextBlock", text: " FRONTEND · Nuevo push a develop", weight: "Bolder", size: "Large", wrap: true }
+                      ]
+                    },
+                    {
+                      type: "FactSet",
+                      facts: [
+                        { title: "Autor", value: $actor },
+                        { title: "Repo", value: $repo },
+                        { title: "Rama", value: "develop" },
+                        { title: "Commit", value: $msg }
+                      ]
+                    },
+                    {
+                      type: "Container",
+                      style: "warning",
+                      items: [
+                        { type: "TextBlock", text: " Hagan pull de la develop del FRONTEND antes de programar.", weight: "Bolder", wrap: true }
+                      ]
+                    }
+                  ],
+                  actions: [
+                    { type: "Action.OpenUrl", title: "Ver commit", url: $url }
+                  ]
+                }
+              }]
+            }' | curl -sS -f -X POST "$WEBHOOK" \
+                 -H "Content-Type: application/json" \
+                 -d @-

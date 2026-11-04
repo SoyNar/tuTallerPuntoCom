@@ -1,4 +1,4 @@
-import { serviciosCatalogo } from "../../js/data/serviciosCatalogo.js";
+import { serviciosCatalogo } from "../../js/data/catalogos.js";
 
 /**
  * Pinta un grupo de checkboxes con estilo de botón.

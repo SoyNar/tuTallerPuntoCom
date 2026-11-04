@@ -56,3 +56,16 @@
   --bs-btn-hover-border-color: #E85A1C;
   font-weight: 600;
 }
+
+.avatar-tt {
+  width: 28px;
+  height: 28px;
+  font-size: .7rem;
+  background-color: var(--color-navy);
+  color: #fff;
+}
+@media (max-width: 991.98px) {
+  .navbar-tt .nav-link { padding-block: .75rem; }
+  .navbar-tt .nav-link.active::after { display: none; }
+  .navbar-tt .nav-link.active { color: var(--color-accent); }
+}

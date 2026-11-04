@@ -1,8 +1,14 @@
 import { LINKS } from "./link-const.js";
 import "../components/js/modalCitas.js"
 import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
+import {iniciarSesion} from "../services/auth-service.js"
+import { autenticar } from "./navbar-session.js";
+import {iniciarSesionDemo} from "../services/demo-session.js"
 // window.guardarCita = guardarCita; 
 // window.cancelarCita = cancelarCita;
+window.iniciarSesion = iniciarSesion
+iniciarSesionDemo()
+
 
     const BASE_PATH =  new URL('../', import.meta.url);
     const abs = (path) => new URL(path,BASE_PATH)
@@ -14,10 +20,15 @@ export class Navbar extends HTMLElement {
 
    async connectedCallback(){
     try{
-     const res = await fetch(abs('components/navbar.html'))
-     if(!res.ok)
-        { throw new Error(`HTTP ${res.status}`)}
-        this.innerHTML = await res.text();
+      const url = abs("components/navbar.html").href;
+  let html = sessionStorage.getItem("navbar-html");
+  if (!html) {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    html = await res.text();
+    sessionStorage.setItem("navbar-html", html);
+  }
+  this.innerHTML = html;
 
         // inyectar modal agenda dinamicamente
         if(!document.querySelector('mis-citas-modal')){
@@ -33,10 +44,21 @@ export class Navbar extends HTMLElement {
     }
     this.resolvePaths();
     this.render()
+    this.cerrarMenuAlNavegar();
+    this.detenerSesion = autenticar(this);
     await this.updateBagde();
     this.escuchasCambios()
     
     }
+
+    cerrarMenuAlNavegar() {
+  const panel = this.querySelector("#navPrincipal");
+  this.querySelectorAll(".nav-link").forEach((enlace) =>
+    enlace.addEventListener("click", () =>
+      window.bootstrap?.Collapse.getInstance(panel)?.hide(),
+    ),
+  );
+}
 
     /**
      * Metodo que actualiza el bagde de la navbar (Boton de citas agendadas)
@@ -49,13 +71,14 @@ export class Navbar extends HTMLElement {
     if(!bagdeCitas || !bagdeNumero ) return; 
     const total = await contarCitasActivas();
     bagdeNumero.textContent = total;
-    console.log("Número de citas", total);
+    // console.log("Número de citas", total);
     bagdeCitas.classList.toggle('d-none', total=== 0);
     }
 
 
     disconnectedCallback() {
-  window.removeEventListener("citas:changed", this.onCitasChange);
+        this.detenerSesion?.();
+  window.removeEventListener("citas:modificadas", this.onCitasChange);
   window.removeEventListener("storage", this.onCitasChange);
 }
 
@@ -63,7 +86,7 @@ export class Navbar extends HTMLElement {
      * MEtodop para escuchar cambios de la agenda de citas
      */
     escuchasCambios(){
-        window.addEventListener("citas:changed", this.onCitasChange);
+        window.addEventListener("citas:modificadas", this.onCitasChange);
         window.addEventListener("storage", this.onCitasChange)
     }
 
