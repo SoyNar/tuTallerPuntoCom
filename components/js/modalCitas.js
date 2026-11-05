@@ -1,14 +1,9 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
-import { obtenerCitas } from '../../services/citas-service.js';
+import { citasOrdenadas, cancelarCita } from '../../services/citas-service.js';
+import { avisarCitaCancelada } from '../../js/utils/avisos-cita.js';
 
 class MisCitasModal extends HTMLElement {
   async connectedCallback() {
-
-    const citas = await obtenerCitas()
-    const citasConfirmadas = citas.filter(cita => cita.estado === 'confirmada')
-    const citasCanceladas = citas.filter(cita => cita.estado === 'cancelada')
-
-
     this.innerHTML = `
       <!-- ============ INTERFAZ FLOTANTE LATERAL MIS CITAS ============ -->
       <div class="modal fade" id="modalAgendas" tabindex="-1" aria-hidden="true">
@@ -51,7 +46,7 @@ class MisCitasModal extends HTMLElement {
 
               <!-- Pie fijo inferior para acciones -->
               <div class="text-center mt-3 pt-2 border-top">
-                <p class="text-muted x-small mb-2" style="font-size: 0.75rem;"><i class="bi bi-bell-fill text-warning me-1"></i> Próxima cita: 10 oct - 10:30 am</p>
+                <p class="text-muted x-small mb-2" style="font-size: 0.75rem;"><i class="bi bi-bell-fill text-warning me-1"></i> <span id="proximaCita"></span></p>
                 <button id="btnAgendarCita" class="btn btn-tt-accent w-100 rounded-pill py-2 fw-semibold text-white small" style="background-color: #fd7e14; font-size: 0.875rem;">
                   Agendar nueva cita
                 </button>
@@ -63,9 +58,27 @@ class MisCitasModal extends HTMLElement {
       </div>
     `;
 
-    renderizarCitas(citas, "pills-todas");
-    renderizarCitas(citasConfirmadas, "pills-conf");
-    renderizarCitas(citasCanceladas, "pills-cancel");
+    this.addEventListener('click', async (e) => {
+      const enlace = e.target.closest('[data-accion="cancelar"]');
+      if (!enlace) return;
+
+      e.preventDefault(); // evita que el href="#" mueva la página
+
+      if (!confirm('¿Seguro que deseas cancelar esta cita?')) return;
+
+      const cita = await cancelarCita(enlace.dataset.id);
+      if (!cita) {
+        alert('No se pudo cancelar la cita');
+      }
+      avisarCitaCancelada();
+    });
+
+
+    await this.actualizarCitas();
+
+    // volver a renderizar cada vez que se crea o cancela una cita
+    this.alCambiarCitas = () => this.actualizarCitas();
+    window.addEventListener('citas:modificadas', this.alCambiarCitas);
 
     // escuchar click global para abrir modal
     document.addEventListener('click', (e) => {
@@ -91,6 +104,41 @@ class MisCitasModal extends HTMLElement {
         window.location.href = '/pages/catalog.html';
       }
     })
+  }
+
+  disconnectedCallback() {
+    window.removeEventListener('citas:modificadas', this.alCambiarCitas);
+  }
+
+  async actualizarCitas() {
+    const citas = await citasOrdenadas();
+    const citasConfirmadas = citas.filter(cita => cita.estado === 'confirmada');
+    const citasCanceladas = citas.filter(cita => cita.estado === 'cancelada');
+
+    renderizarCitas(citas, "pills-todas");
+    renderizarCitas(citasConfirmadas, "pills-conf");
+    renderizarCitas(citasCanceladas, "pills-cancel");
+
+    await this.actualizarProximaCita();
+  }
+
+  async actualizarProximaCita() {
+    const ahora = new Date();
+    const proxima = (await citasOrdenadas())
+      .filter(cita => cita.estado === 'confirmada')
+      .map(cita => ({ ...cita, inicio: new Date(`${cita.fecha}T${cita.hora}`) }))
+      .find(cita => cita.inicio >= ahora);
+
+    const span = this.querySelector('#proximaCita');
+    if (!proxima) {
+      span.textContent = 'No tienes citas próximas';
+      return;
+    }
+
+    const dia = proxima.inicio.getDate();
+    const mes = proxima.inicio.toLocaleString('es-ES', { month: 'short' }).replace('.', '');
+    const hora = proxima.inicio.toLocaleString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
+    span.textContent = `Próxima cita: ${dia} ${mes} - ${hora}`;
   }
 }
 
