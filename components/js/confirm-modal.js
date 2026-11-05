@@ -60,6 +60,7 @@ export function confirmar({
       "click",
       () => {
         aceptado = true;
+        document.activeElement?.blur();
         modal.hide();
       },
       { signal: ac.signal },
@@ -67,6 +68,7 @@ export function confirmar({
     modalEl.addEventListener(
       "hidden.bs.modal",
       () => {
+        document.activeElement?.blur()
         ac.abort(); 
         resolve(aceptado);
       },
@@ -88,4 +90,17 @@ export const confirmarEliminar = (nombre = "este elemento") =>
     mensaje: `¿Eliminar ${nombre}? Esta acción no se puede deshacer.`,
     textoAceptar: "Eliminar",
     variante: "danger",
+  });
+
+/**
+ * metodo para confirmar eliminacion
+ * @param {*} nombre 
+ * @returns 
+ */
+export const confirmarReprogramar = (nombre = "este elemento") =>
+  confirmar({
+    titulo: "Reprogramar",
+    mensaje: `¿Reprogramar ${nombre}? Esta acción no se puede deshacer.`,
+    textoAceptar: "Reprogramar",
+    variante: "success",
   });
