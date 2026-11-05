@@ -1,7 +1,17 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
-import { citasOrdenadas, cancelarCita } from '../../services/citas-service.js';
-import { avisarCitaCancelada, avisarErrorCancelarCita } from '../../js/utils/avisos-cita.js';
-import { confirmarEliminar } from './confirm-modal.js';
+import { citasOrdenadas, cancelarCita, reprogramarCita } from '../../services/citas-service.js';
+import { avisarCitaCancelada, avisarErrorCancelarCita, avisarCitaReprogramada, avisarErrorReprogramarCita } from '../../js/utils/avisos-cita.js';
+import { confirmarEliminar, confirmarReprogramar } from './confirm-modal.js';
+import { fechaLocal, bloquearHorasPasadas } from '../../js/utils/horarios-cita.js';
+import { plantillaAgendarCita } from './agendarCitaTemplate.js';
+
+// Toma las <option> del select #hora del modal "Agendar cita",
+// así reprogramar ofrece exactamente los mismos horarios que agendar.
+function opcionesHoraAgendar() {
+  const tpl = document.createElement('template');
+  tpl.innerHTML = plantillaAgendarCita;
+  return tpl.content.querySelector('#hora')?.innerHTML ?? '';
+}
 
 class MisCitasModal extends HTMLElement {
   async connectedCallback() {
@@ -74,6 +84,24 @@ class MisCitasModal extends HTMLElement {
       avisarCitaCancelada();
     });
 
+    this.addEventListener('click', async (e) => {
+      const enlace = e.target.closest('[data-accion="reprogramar"]');
+      if (!enlace) return;
+
+      e.preventDefault(); // evita que el href="#" mueva la página
+
+      const nuevo = await this.reprogramarFechayHora(enlace);
+      if (!nuevo) return; // el usuario no eligió fecha/hora
+
+      if (! await confirmarReprogramar('esta cita')) return;
+
+      const cita = await reprogramarCita(enlace.dataset.id, nuevo);
+      if (!cita) {
+        avisarErrorReprogramarCita();
+        return;
+      }
+      avisarCitaReprogramada();
+    });
 
     await this.actualizarCitas();
 
@@ -107,7 +135,8 @@ class MisCitasModal extends HTMLElement {
     })
   }
 
-  disconnectedCallback() {
+
+ disconnectedCallback() {
     window.removeEventListener('citas:modificadas', this.alCambiarCitas);
   }
 
@@ -140,6 +169,81 @@ class MisCitasModal extends HTMLElement {
     const mes = proxima.inicio.toLocaleString('es-ES', { month: 'short' }).replace('.', '');
     const hora = proxima.inicio.toLocaleString('es-ES', { hour: '2-digit', minute: '2-digit', hour12: true });
     span.textContent = `Próxima cita: ${dia} ${mes} - ${hora}`;
+    }
+
+   async reprogramarFechayHora(enlace) {
+    const id = Number(enlace.dataset.id);
+    const cita = (await citasOrdenadas()).find(c => c.id === id);
+    if (!cita) return null;
+
+    const pie = enlace.parentElement; // contenedor de los enlaces Reprogramar / Cancelar
+
+    const form = document.createElement('form');
+    form.className = 'border-top mt-2 pt-2 vstack gap-2';
+    form.innerHTML = `
+      <div class="row g-2">
+        <div class="col-6">
+          <input type="date" name="fecha" class="form-control form-control-sm" aria-label="Nueva fecha" required>
+        </div>
+        <div class="col-6">
+          <select name="hora" class="form-select form-select-sm" aria-label="Nueva hora">
+            ${opcionesHoraAgendar()}
+          </select>
+        </div>
+      </div>
+      <div class="small text-danger d-none" data-aviso>
+        <i class="bi bi-exclamation-circle me-1"></i>No hay horarios disponibles ese día.
+      </div>
+      <div class="d-flex justify-content-end gap-2">
+        <button type="button" class="btn btn-sm btn-outline-secondary" data-volver>Volver</button>
+        <button type="submit" class="btn btn-sm btn-primary">Guardar</button>
+      </div>
+    `;
+
+    const fecha = form.elements.fecha;
+    const hora = form.elements.hora;
+    const aviso = form.querySelector('[data-aviso]');
+    const btnGuardar = form.querySelector('[type="submit"]');
+
+    // valores iniciales: la fecha/hora actual de la cita (sin permitir días pasados)
+    fecha.min = fechaLocal();
+    fecha.value = cita.fecha < fechaLocal() ? fechaLocal() : cita.fecha;
+    if ([...hora.options].some(op => op.value === cita.hora)) hora.value = cita.hora;
+
+    // bloquea horas pasadas si la fecha es hoy
+    const refrescar = () => {
+      const hayHoras = bloquearHorasPasadas(hora, fecha.value);
+      aviso.classList.toggle('d-none', hayHoras);
+      btnGuardar.disabled = !hayHoras;
+    };
+    fecha.addEventListener('change', refrescar);
+    refrescar();
+
+    pie.classList.add('d-none');
+    pie.after(form);
+    fecha.focus();
+
+    return new Promise((resolve) => {
+      const cerrar = (resultado) => {
+        form.remove();
+        pie.classList.remove('d-none');
+        resolve(resultado);
+      };
+
+      form.querySelector('[data-volver]').addEventListener('click', () => cerrar(null));
+
+      form.addEventListener('submit', (e) => {
+        e.preventDefault();
+        if (!fecha.value || fecha.value < fechaLocal()) return;
+        refrescar();
+        if (btnGuardar.disabled) return;
+
+        // si no cambió nada, no hay nada que reprogramar
+        if (fecha.value === cita.fecha && hora.value === cita.hora) return cerrar(null);
+
+        cerrar({ fecha: fecha.value, hora: hora.value });
+      });
+    });
   }
 }
 
