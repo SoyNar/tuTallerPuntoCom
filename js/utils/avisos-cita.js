@@ -17,6 +17,13 @@ export const avisarErrorCita = () =>
 export const avisarCitaCancelada = () =>
   showToast(
     "Tu cita ha sido cancelada.",
-    "warning",
+    "success",
     "Cita cancelada",
+  );
+
+export const avisarErrorCancelarCita = () =>
+  showToast(
+    "Inténtalo de nuevo en unos minutos.",
+    "error",
+    "No pudimos agendar la cita",
   );

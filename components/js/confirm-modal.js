@@ -60,6 +60,7 @@ export function confirmar({
       "click",
       () => {
         aceptado = true;
+        document.activeElement?.blur();
         modal.hide();
       },
       { signal: ac.signal },
@@ -67,6 +68,7 @@ export function confirmar({
     modalEl.addEventListener(
       "hidden.bs.modal",
       () => {
+        document.activeElement?.blur()
         ac.abort(); 
         resolve(aceptado);
       },

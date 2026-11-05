@@ -1,6 +1,7 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
 import { citasOrdenadas, cancelarCita } from '../../services/citas-service.js';
-import { avisarCitaCancelada } from '../../js/utils/avisos-cita.js';
+import { avisarCitaCancelada, avisarErrorCancelarCita } from '../../js/utils/avisos-cita.js';
+import { confirmarEliminar } from './confirm-modal.js';
 
 class MisCitasModal extends HTMLElement {
   async connectedCallback() {
@@ -36,7 +37,6 @@ class MisCitasModal extends HTMLElement {
                 <div class="tab-content">
                   <div class="tab-pane fade show active" id="pills-todas">
                   </div>
-                  
                   <div class="tab-pane fade" id="pills-conf">
                   </div>
                   <div class="tab-pane fade" id="pills-cancel">
@@ -64,11 +64,12 @@ class MisCitasModal extends HTMLElement {
 
       e.preventDefault(); // evita que el href="#" mueva la página
 
-      if (!confirm('¿Seguro que deseas cancelar esta cita?')) return;
+      if (! await confirmarEliminar('esta cita')) return;
 
       const cita = await cancelarCita(enlace.dataset.id);
       if (!cita) {
-        alert('No se pudo cancelar la cita');
+        avisarErrorCancelarCita();
+        return;
       }
       avisarCitaCancelada();
     });
