@@ -1,7 +1,7 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
 import { citasOrdenadas, cancelarCita, reprogramarCita } from '../../services/citas-service.js';
 import { avisarCitaCancelada, avisarErrorCancelarCita, avisarCitaReprogramada, avisarErrorReprogramarCita } from '../../js/utils/avisos-cita.js';
-import { confirmarEliminar, confirmarReprogramar } from './confirm-modal.js';
+import { confirmar } from './confirm-modal.js';
 import { fechaLocal, bloquearHorasPasadas } from '../../js/utils/horarios-cita.js';
 import { plantillaAgendarCita } from './agendarCitaTemplate.js';
 
@@ -33,38 +33,36 @@ class MisCitasModal extends HTMLElement {
             </div>
 
             <!-- Cuerpo del panel lateral ajustable -->
-            <div class="modal-body p-3 bg-light text-start d-flex flex-column justify-content-between">
-              
-              <div>
-                <!-- Selector de Pestañas ultra compacto -->
-                <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill mb-3 shadow-sm small fw-semibold" role="tablist">
-                  <li class="nav-item"><button class="nav-link active rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-todas">Todas</button></li>
-                  <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-conf">Confirmadas</button></li>
-                  <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-cancel">Canceladas</button></li>
-                </ul>
-
-                <!-- Contenedor de listados -->
-                <div class="tab-content flex-grow-1 overflow-y-auto px-1" style="max-height: calc(100vh - 15rem); content-visibility: auto;">
-                  <div class="tab-pane fade show active" id="pills-todas">
-                  </div>
-                  <div class="tab-pane fade" id="pills-conf">
-                  </div>
-                  <div class="tab-pane fade" id="pills-cancel">
-                  </div>
-                </div>
-
-              <!-- Pie fijo inferior para acciones -->
-              <div class="text-center mt-3 pt-2 border-top">
-                <p class="text-muted x-small mb-2" style="font-size: 0.75rem;"><i class="bi bi-bell-fill text-warning me-1"></i> <span id="proximaCita"></span></p>
-                <button id="btnAgendarCita" class="btn btn-tt-accent w-100 rounded-pill py-2 fw-semibold text-white small" style="background-color: #fd7e14; font-size: 0.875rem;">
-                  Agendar nueva cita
-                </button>
-              </div>
-
+            <div class="modal-body p-3 bg-light text-start d-flex flex-column" style="height: calc(100% - 75px); overflow: hidden;">
+            <!-- Contenedor superior independiente (Ocupa el espacio disponible y tiene scroll propio) -->
+            <div class="d-flex flex-column flex-grow-1 overflow-hidden mb-2">
+            
+            <!-- Selector de Pestañas ultra compacto -->
+            <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill mb-3 shadow-sm small fw-semibold" role="tablist">
+            <li class="nav-item"><button class="nav-link active rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-todas">Todas</button></li>
+            <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-conf">Confirmadas</button></li>
+            <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-cancel">Canceladas</button></li>
+            </ul>
+            
+            <!-- Contenedor de listados con Scroll integrado -->
+            <div class="tab-content flex-grow-1 overflow-y-auto px-1" style="max-height: 100%;">
+            <div class="tab-pane fade show active" id="pills-todas">
             </div>
-          </div>
-        </div>
-      </div>
+            <div class="tab-pane fade" id="pills-conf">
+            </div>
+            <div class="tab-pane fade" id="pills-cancel">
+            </div>
+            </div>
+            </div>
+            
+            <!-- Pie fijo inferior para acciones (Nunca se mueve ni se oculta) -->
+            <div class="text-center mt-auto pt-2 border-top bg-light position-sticky bottom-0">
+            <p class="text-muted x-small mb-2" style="font-size: 0.75rem;"><i class="bi bi-bell-fill text-warning me-1"></i> <span id="proximaCita"></span></p>
+            <button id="btnAgendarCita" class="btn btn-tt-accent w-100 rounded-pill py-2 fw-semibold text-white small" style="background-color: #fd7e14; font-size: 0.875rem;">
+            Agendar nueva cita
+            </button>
+            </div>
+            </div>
     `;
 
     this.addEventListener('click', async (e) => {
@@ -73,7 +71,15 @@ class MisCitasModal extends HTMLElement {
 
       e.preventDefault(); // evita que el href="#" mueva la página
 
-      if (! await confirmarEliminar('esta cita')) return;
+      const confirmado = await confirmar({
+          titulo: "Cancelar",
+          mensaje: `¿Cancelar esta cita? Esta acción no se puede deshacer.`,
+          textoAceptar: "Cancelar cita",
+          textoCancelar: "Mantener cita",
+          variante: "danger",
+        })
+
+      if (! confirmado ) return;
 
       const cita = await cancelarCita(enlace.dataset.id);
       if (!cita) {
@@ -92,7 +98,14 @@ class MisCitasModal extends HTMLElement {
       const nuevo = await this.reprogramarFechayHora(enlace);
       if (!nuevo) return; // el usuario no eligió fecha/hora
 
-      if (! await confirmarReprogramar('esta cita')) return;
+      const confirmado = await confirmar({
+        titulo: "Reprogramar",
+        mensaje: `¿Reprogramar esta cita? Esta acción no se puede deshacer.`,
+        textoAceptar: "Reprogramar",
+        variante: "success",
+      })
+
+      if (! confirmado ) return;
 
       const cita = await reprogramarCita(enlace.dataset.id, nuevo);
       if (!cita) {
