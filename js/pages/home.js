@@ -23,7 +23,7 @@ async function obtenerTalleres() {
     ocultarCargando();
   }
 }
-
+// Para abrir el modal de cita desde los botones de agendar
 activarBotonesAgendar(contenedorTalleres, () => talleres);
 
 // Ejecutar la carga al cargar el DOM
