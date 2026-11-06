@@ -72,8 +72,20 @@ export async function guardarCita(data) {
  * @returns {Promise<Object|null>} la cita actualizada, o null si no existe,
  *   está cancelada o no se pudo guardar
  */
-export async function reprogramarCita() {
-  
+export async function reprogramarCita(id, { fecha, hora } = {}) {
+  if (!fecha || !hora) return null;
+
+  const citas = await obtenerCitas();
+  const cita = citas.find((c) => c.id === Number(id));
+  if (!cita || cita.estado === ESTADO_CANCELADA) return null;
+
+  cita.fecha = fecha;
+  cita.hora = hora;
+  cita.reprogramada = true;
+  if (!persistir(citas)) return null;
+
+  notificarCambio("reprogramada", cita);
+  return cita;
 }
 
 /**

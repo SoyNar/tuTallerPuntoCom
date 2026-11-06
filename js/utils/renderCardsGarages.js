@@ -12,7 +12,6 @@ export function renderizarTalleres(lista) {
     const foto = taller.foto || FOTO_DEFECTO;
 
     col.className = "col col-12 col-md-6 col-lg-4";
-    if (!taller.horarios) console.warn("Taller sin horarios:", taller);
 
     const badgesServicios = obtenerServiciosTaller(taller)
       .map(
