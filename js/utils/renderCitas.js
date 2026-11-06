@@ -43,11 +43,12 @@ export async function renderizarCitas(listaDeCitas, contendorId) {
                     <p class="mb-0 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-clock me-1"></i> ${hora}</p>
                 </div>
             </div>
-
+            ${cita?.estado !== 'cancelada' ? `
             <div class="d-flex justify-content-between border-top mt-2 pt-2" style="font-size: 0.8rem;">
                 <a href="#" class="fw-semibold text-primary text-decoration-none" data-accion="reprogramar" data-id="${cita.id}">Reprogramar</a>
                 <a href="#" class="fw-semibold text-secondary text-decoration-none" data-accion="cancelar" data-id="${cita.id}">Cancelar</a>
-            </div>
+            </div> `
+            : ""}
     `;
 
     contenedor.appendChild(col);
