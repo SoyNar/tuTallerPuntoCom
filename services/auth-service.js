@@ -1,6 +1,33 @@
+import { guardarUsuario } from "../js/views/api-fake.js";
+
+
 const KEY_SESION = "sesion";
 export const EVENTO_SESION = "sesion:actualizada";
 const KEY_DEMO = "demo-sesion-creada";
+const RUTAS = {
+  cliente: '/index.html',
+  admin:'/pagesadmin.html',
+}
+/**
+ * metodo para redirigir a un usuario a la pagina correspondiente segun su rol
+ * @param {string} rol 
+ */
+export function redirigirPorRol(rol)
+{
+   window.location.href = RUTAS[rol] ?? '/pages/login.html';
+}
+
+/**
+ * Metodo para registrar un usuario
+ * @param {object} usuario 
+ * @returns 
+ */
+export async function registrar(payload) {
+  const { usuario, token } = await guardarUsuario(payload);
+  localStorage.setItem('token', token);
+  iniciarSesion(usuario);
+  return usuario;
+}
 
 /** Devuelve { usuario } si hay sesión válida, o null. */
 export function obtenerSesion() {
