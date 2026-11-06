@@ -78,29 +78,3 @@ export function confirmar({
     modal.show();
   });
 }
-
-/**
- * metodo para confirmar eliminacion
- * @param {*} nombre 
- * @returns 
- */
-export const confirmarEliminar = (nombre = "este elemento") =>
-  confirmar({
-    titulo: "Eliminar",
-    mensaje: `¿Eliminar ${nombre}? Esta acción no se puede deshacer.`,
-    textoAceptar: "Eliminar",
-    variante: "danger",
-  });
-
-/**
- * metodo para confirmar eliminacion
- * @param {*} nombre 
- * @returns 
- */
-export const confirmarReprogramar = (nombre = "este elemento") =>
-  confirmar({
-    titulo: "Reprogramar",
-    mensaje: `¿Reprogramar ${nombre}? Esta acción no se puede deshacer.`,
-    textoAceptar: "Reprogramar",
-    variante: "success",
-  });

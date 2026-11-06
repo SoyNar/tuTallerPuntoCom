@@ -1,7 +1,7 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
 import { citasOrdenadas, cancelarCita, reprogramarCita } from '../../services/citas-service.js';
 import { avisarCitaCancelada, avisarErrorCancelarCita, avisarCitaReprogramada, avisarErrorReprogramarCita } from '../../js/utils/avisos-cita.js';
-import { confirmarEliminar, confirmarReprogramar } from './confirm-modal.js';
+import { confirmar } from './confirm-modal.js';
 import { fechaLocal, bloquearHorasPasadas } from '../../js/utils/horarios-cita.js';
 import { plantillaAgendarCita } from './agendarCitaTemplate.js';
 
@@ -59,7 +59,6 @@ class MisCitasModal extends HTMLElement {
             <div class="text-center mt-auto pt-2 border-top bg-light position-sticky bottom-0">
             <p class="text-muted x-small mb-2" style="font-size: 0.75rem;"><i class="bi bi-bell-fill text-warning me-1"></i> <span id="proximaCita"></span></p>
             <button id="btnAgendarCita" class="btn btn-tt-accent w-100 rounded-pill py-2 fw-semibold text-white small" style="background-color: #fd7e14; font-size: 0.875rem;">
-            
             Agendar nueva cita
             </button>
             </div>
@@ -72,7 +71,15 @@ class MisCitasModal extends HTMLElement {
 
       e.preventDefault(); // evita que el href="#" mueva la página
 
-      if (! await confirmarEliminar('esta cita')) return;
+      const confirmado = await confirmar({
+          titulo: "Cancelar",
+          mensaje: `¿Cancelar esta cita? Esta acción no se puede deshacer.`,
+          textoAceptar: "Cancelar cita",
+          textoCancelar: "Mantener cita",
+          variante: "danger",
+        })
+
+      if (! confirmado ) return;
 
       const cita = await cancelarCita(enlace.dataset.id);
       if (!cita) {
@@ -91,7 +98,14 @@ class MisCitasModal extends HTMLElement {
       const nuevo = await this.reprogramarFechayHora(enlace);
       if (!nuevo) return; // el usuario no eligió fecha/hora
 
-      if (! await confirmarReprogramar('esta cita')) return;
+      const confirmado = await confirmar({
+        titulo: "Reprogramar",
+        mensaje: `¿Reprogramar esta cita? Esta acción no se puede deshacer.`,
+        textoAceptar: "Reprogramar",
+        variante: "success",
+      })
+
+      if (! confirmado ) return;
 
       const cita = await reprogramarCita(enlace.dataset.id, nuevo);
       if (!cita) {
