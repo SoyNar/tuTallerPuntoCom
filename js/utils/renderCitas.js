@@ -1,8 +1,10 @@
 import { mergeTalleres } from '../../services/talleres-service.js';
 
-const TALLERES = mergeTalleres();
 
-export function renderizarCitas(listaDeCitas, contendorId) {
+export async function renderizarCitas(listaDeCitas, contendorId) {
+
+    const TALLERES =  await mergeTalleres();
+
   const contenedor = document.getElementById(contendorId);
   contenedor.innerHTML = ""
   
@@ -19,7 +21,9 @@ export function renderizarCitas(listaDeCitas, contendorId) {
     const mes = fecha.toLocaleString("es-ES", { month: "short" })
     const dia = fecha.getDate()
     const hora = fecha.toLocaleString("es-ES", { hour: "2-digit", minute: "2-digit", hour12: true })
-    const taller = TALLERES.find(taller => taller.id === cita.taller_id)
+    const taller = TALLERES.find(taller => String(taller.id) === String(cita.taller_id))
+    const nombreTaller = taller ? taller.nombre : "Taller desconocido"
+    const nombreServicio = taller?.servicios?.[cita.servicio_id] ?? 'Servicio desconocido'
     const estadoBadge = cita.estado === 'confirmada' ? 'success' : 'danger'
 
     col.className = "card border-0 rounded-3 shadow-sm p-3 mb-2 bg-white text-dark"
@@ -32,10 +36,10 @@ export function renderizarCitas(listaDeCitas, contendorId) {
                 </div>
                 <div class="col-9 ps-3">
                 <div class="d-flex justify-content-between align-items-start mb-1">
-                    <h6 class="fw-bold mb-0 text-truncate small" style="max-width: 65%;">${taller.nombre}</h6>
-                    <span class="badge rounded-pill bg-${estadoBadge}-subtle text-${estadoBadge} x-small" style="font-size: 0.65rem;">${cita.estado}</span>
+                    <h6 class="fw-bold mb-0 text-truncate small" style="max-width: 65%;">${nombreTaller}</h6>
+                    <span class="badge rounded-pill bg-${estadoBadge}-subtle text-${estadoBadge} x-small" style="font-size: 0.65rem;">${cita?.estado}</span>
                 </div>
-                    <p class="mb-1 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-wrench me-1"></i> ${taller.servicios[cita.servicio_id]} · ${cita.vehiculo_id}</p>
+                    <p class="mb-1 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-wrench me-1"></i> ${nombreServicio} · ${cita?.vehiculo_id}</p>
                     <p class="mb-0 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-clock me-1"></i> ${hora}</p>
                 </div>
             </div>

@@ -3,8 +3,22 @@ import { Taller } from "../js/models/garage.js";
 
 const KEY = 'talleres';
 
-export function obtenerTalleres(){
+
+/***
+ * LEctura cruda de localStorage, sin normalizar ni instanciar Taller
+ */
+export function leerLocalStorage(){
+  try {
     return JSON.parse(localStorage.getItem(KEY)) ?? [];
+  } catch (e) {
+    console.error("No se pudo leer localStorage", e);
+    return [];
+  }
+
+}
+
+export function obtenerTalleres(){
+    return leerLocalStorage().map(t => new Taller(t));
 }
 
 // funcion para guardar taller en el localstorage
@@ -12,12 +26,12 @@ export function obtenerTalleres(){
 
 export function guardarTaller(taller)
 {
-    const talleres = obtenerTalleres();
+    const talleres = leerLocalStorage();
     const nuevo = normalizarTaller(taller);
     talleres.push(nuevo);
     try{
     localStorage.setItem(KEY,JSON.stringify(talleres));
-    return taller;
+    return nuevo;
     }catch(e){
         console.error("No se pudo guardar en el localstrage",e);
         return null;
@@ -27,7 +41,10 @@ export function guardarTaller(taller)
 }
 
 export function mergeTalleres(){
-    return[... talleresMock.map(t => ({...t, esBase: true})), ...obtenerTalleres().map(t => new Taller(t))];
+    return [
+    ...talleresMock.map(t => ({ ...t, esBase: true })),
+    ...obtenerTalleres(),
+  ];
 }
 
 function normalizarTaller(f) {
@@ -49,7 +66,7 @@ function normalizarTaller(f) {
 }
 
 export function eliminarTaller(id) {
-  const restantes = obtenerTalleres().filter(t => t.id !== Number(id));
+  const restantes = leerLocalStorage().filter(t => String(t.id) !== String(id));
   localStorage.setItem(KEY, JSON.stringify(restantes));
 }
 

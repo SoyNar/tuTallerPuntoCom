@@ -67,16 +67,16 @@ export async function guardarCita(data) {
 
 /**
  * Reprograma una cita: cambia SOLO fecha y hora. El estado sigue "confirmada".
- * @param {number|string} id_cita
+ * @param {number|string} id
  * @param {{fecha: string, hora: string}} nuevo
  * @returns {Promise<Object|null>} la cita actualizada, o null si no existe,
  *   está cancelada o no se pudo guardar
  */
-export async function reprogramarCita(id_cita, { fecha, hora } = {}) {
+export async function reprogramarCita(id, { fecha, hora } = {}) {
   if (!fecha || !hora) return null;
 
   const citas = await obtenerCitas();
-  const cita = citas.find((c) => c.id === Number(id_cita));
+  const cita = citas.find((c) => c.id === Number(id));
   if (!cita || cita.estado === ESTADO_CANCELADA) return null;
 
   cita.fecha = fecha;
