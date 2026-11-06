@@ -21,7 +21,6 @@
     />
     <!-- Estilos personalizados globales y específicos -->
     <link rel="stylesheet" href="./css/main.css" />
- 
 
     <script type="module" src="./js/pages/home.js"></script>
   </head>
@@ -83,7 +82,9 @@
           <!-- Cabecera de la sección -->
           <div class="d-flex justify-content-between align-items-center mb-4">
             <h2 class="fw-bold fs-3 mb-0">Talleres destacados</h2>
-            <a href="#" class="text-decoration-none fw-semibold link-catalog"
+            <a
+              href="./pages/catalog.html"
+              class="text-decoration-none fw-semibold link-catalog"
               >Ver catálogo</a
             >
           </div>
@@ -181,11 +182,13 @@
           </div>
         </div>
       </section>
+
+      <!--Insertamos el modal-->
+      <agendar-cita-modal></agendar-cita-modal>
     </main>
     <tu-footer></tu-footer>
-  
-    <script type="module" src="./js/components.js"></script>
-    
-  </body>
 
+    <script type="module" src="./js/components.js"></script>
+    <script type="module" src="./components/js/agendarCitas.js"></script>
+  </body>
 </html>
