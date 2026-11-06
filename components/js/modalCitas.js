@@ -44,7 +44,7 @@ class MisCitasModal extends HTMLElement {
                 </ul>
 
                 <!-- Contenedor de listados -->
-                <div class="tab-content">
+                <div class="tab-content flex-grow-1 overflow-y-auto px-1" style="max-height: calc(100vh - 15rem); content-visibility: auto;">
                   <div class="tab-pane fade show active" id="pills-todas">
                   </div>
                   <div class="tab-pane fade" id="pills-conf">
@@ -52,7 +52,6 @@ class MisCitasModal extends HTMLElement {
                   <div class="tab-pane fade" id="pills-cancel">
                   </div>
                 </div>
-              </div>
 
               <!-- Pie fijo inferior para acciones -->
               <div class="text-center mt-3 pt-2 border-top">
