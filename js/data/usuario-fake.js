@@ -1,20 +1,12 @@
 // Vehículos registrados en el sistema (catálogo simulado)}
 import {obtenerUsuario} from "../../services/auth-service.js"
-export const vehiculosCatalogo = [
-  { id: 7, usuario_id: 12, tipo: "Automóvil", marca: "Mazda", modelo: "3", placa: "ABC123" },
-  { id: 8, usuario_id: 12, tipo: "Moto",  marca: "Yamaha", modelo: "FZ 150", placa: "XYZ45F" },
-  { id: 9, usuario_id: 30, tipo: "Automóvil", marca: "Renault", modelo: "Duster", placa: "QWE987" },
-];
+import { usuariosFake } from "../data/usuarios-fake.js";
+import { vehiculosCatalogo } from "../data/vehiculos-fake.js";
+
+export const vehiculosCatalogo = vehiculosCatalogo;
 
 // Usuario simulado: guarda ids de sus vehículos
-export const usuarioMock = {
-  id: 12,
-  nombre: "JOhana Bedoya",
-  apellido: "Gómez Hernandez",
-  foto: "",
-  direccion: "Calle 12 # 43E-49, Medellín",
-  vehiculos: [7, 8],
-};
+export const usuarioMock = usuariosFake[0]
 
 export function obtenerVehiculosUsuario(usuario) {
   const ids = usuario?.vehiculos ?? [];
