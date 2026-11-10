@@ -2,9 +2,13 @@ import { renderizarTalleres } from "../utils/renderCardsGarages.js";
 import { fetchTalleres } from "../../services/garageService.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 import { activarBotonesAgendar } from "../utils/agenDesdeTarjetas.js";
+import {EVENTO_SESION } from "../../services/auth-service.js";
+import { activarVisibilidadSesion } from "../utils/session-ui.js";
 
 const contenedorTalleres = document.getElementById("contenedor-talleres");
 let talleres = [];
+
+
 
 async function obtenerTalleres() {
   // mostrarCargando("Cargando su Solicitud...");
@@ -27,4 +31,8 @@ async function obtenerTalleres() {
 activarBotonesAgendar(contenedorTalleres, () => talleres);
 
 // Ejecutar la carga al cargar el DOM
-document.addEventListener("DOMContentLoaded", obtenerTalleres);
+document.addEventListener("DOMContentLoaded",() =>  {
+  activarVisibilidadSesion()
+  obtenerTalleres});
+
+window.addEventListener(EVENTO_SESION,activarVisibilidadSesion());

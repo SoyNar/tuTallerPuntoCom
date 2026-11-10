@@ -112,6 +112,90 @@ feature/talleres             ●───●
 
 ---
 
+### Modelado de datos 
+
+---
+
+## 🗄️ Modelado de datos
+
+```mermaid
+erDiagram
+    USUARIO ||--o{ VEHICULO : registra
+    USUARIO |o--o{ TALLER : administra
+    VEHICULO ||--o{ CITA : "se atiende en"
+    TALLER ||--o{ CITA : recibe
+    SERVICIO ||--o{ CITA : "se solicita en"
+    TALLER ||--o{ HORARIO_TALLER : abre
+    TALLER ||--o{ TALLER_SERVICIO : ofrece
+    SERVICIO ||--o{ TALLER_SERVICIO : "es ofrecido"
+
+    USUARIO {
+        bigint id PK
+        varchar nombre
+        varchar apellido
+        varchar correo UK
+        varchar telefono
+        varchar clave_hash
+        varchar foto_url
+        enum rol "cliente | taller | admin"
+        timestamp creado_en
+    }
+    VEHICULO {
+        bigint id PK
+        bigint usuario_id FK
+        enum tipo "automovil | moto"
+        varchar marca
+        varchar modelo
+        varchar placa UK
+    }
+    TALLER {
+        bigint id PK
+        bigint propietario_id FK "nullable"
+        varchar nombre
+        varchar nit UK
+        varchar telefono
+        varchar correo
+        varchar direccion
+        varchar ciudad
+        decimal latitud
+        decimal longitud
+        varchar foto_url
+        enum tipos_atendidos "automovil | moto | ambos"
+        enum estado "activo | pendiente | suspendido"
+        timestamp creado_en
+    }
+    SERVICIO {
+        int id PK
+        varchar nombre
+        enum categoria "mantenimiento | frenos | motor | ..."
+        decimal precio_base
+    }
+    TALLER_SERVICIO {
+        bigint taller_id PK, FK
+        int servicio_id PK, FK
+        decimal precio "opcional: precio propio"
+    }
+    HORARIO_TALLER {
+        bigint id PK
+        bigint taller_id FK
+        enum dia_semana "lunes..domingo"
+        time apertura
+        time cierre
+    }
+    CITA {
+        bigint id PK
+        bigint vehiculo_id FK
+        bigint taller_id FK
+        int servicio_id FK
+        date fecha
+        time hora
+        decimal costo_aproximado
+        enum estado "confirmada | cancelada"
+        boolean reprogramada
+        timestamp creado_en
+    }
+```
+
 ## 📏 Convenciones del equipo
 
 1. **Una página = un HTML + un JS.** Quien trabaja en una página solo toca sus archivos, así se evitan conflictos.
