@@ -1,0 +1,28 @@
+/* Botón "Agregar vehículo" */
+.btn-agregar-vehiculo {
+  color: var(--azul);
+  border: 1px solid var(--azul);
+  background: transparent;
+}
+
+.btn-agregar-vehiculo:hover,
+.btn-agregar-vehiculo:focus {
+  color: var(--color-primary);
+  border: 1px solid var(--color-primary);
+}
+
+/* Chip de vehículo */
+.chip-vehiculo {
+  color: var(--azul);
+  border: 1px solid var(--azul);
+  background: transparent;
+}
+
+/* La X del chip */
+.btn-quitar-vehiculo {
+  color: var(--azul);
+  line-height: 1;
+  padding: 0;
+  border: 0;
+  background: transparent;
+}

@@ -8,7 +8,8 @@ const RULES = {
     digits: (v,[a,b]) => { const n = v.replace(/\D/g, '').length; return n >= a && n <= b; },
     noCode: (v) => !/[<>{}\\]/.test(v),
     patron: (v, re) => re.test(v),
-    later:(v,sel) =>  v > (document.querySelector(sel)?.value ?? '')
+    later:(v,sel) =>  v > (document.querySelector(sel)?.value ?? ''),
+    match: (v, sel) => v === document.querySelector(sel)?.value
 }
 
 const MESSAGGES = {
@@ -20,7 +21,8 @@ const MESSAGGES = {
     digits: ([a,b]) => `Ingrese entre ${a} y ${b} digitos`,
     noCode: 'No se permiten los caracteres < > { } \\.',
     patron: 'Formato invalido.',
-    later: 'EL valor debe ser posterior al campo anterior'
+    later: 'EL valor debe ser posterior al campo anterior',
+    match: 'Las contraseñas no coinciden'
 }
 
 function paint(isValid, input, message, withBorder = true) {
@@ -102,6 +104,26 @@ function paint(isValid, input, message, withBorder = true) {
         return validate;
 
      }
+
+     /**
+ * Valida un arreglo de funciones de validación (retornadas por validateField).
+ * Útil para ejecutar al presionar el botón de submit.
+ * @param {Array<Function>} validadores 
+ * @returns {boolean} true si todo es válido, false si hay errores
+ */
+export function validarFormulario(validadores) {
+    let esValido = true;
+    for (const validar of validadores) {
+        if (typeof validar === 'function') {
+            // Ejecutamos cada validador para forzar que pinte los errores si están vacíos
+            const resultado = validar();
+            if (!resultado) {
+                esValido = false;
+            }
+        }
+    }
+    return esValido;
+}
 
 
      /**

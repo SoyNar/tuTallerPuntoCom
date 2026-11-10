@@ -10,7 +10,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;700;800&display=swap" rel="stylesheet" />
 <link rel="stylesheet" href="../css/main.css" />
 <link rel="stylesheet" href="../css/auth.css" />
-<link rel="stylesheet" href="../css/components.css" />
+<link rel="stylesheet" href="../css/registrar.css" />
 </head>
 <body>
 
@@ -61,20 +61,39 @@
               <div class="invalid-feedback">Escribe un teléfono válido.</div>
             </div>
 
-            <div class="col-sm-6">
-              <label for="tipoVehiculo" class="form-label small fw-semibold text-secondary">Tipo de vehículo</label>
-              <select id="tipoVehiculo" name="tipoVehiculo" class="form-select rounded-3 py-2" required>
-                <option value="Automóvil" selected>Automóvil</option>
-                <option value="Moto">Moto</option>
-              </select>
-            </div>
+          <div class="col-sm-6">
+  <label for="tipoVehiculo" class="form-label small fw-semibold text-secondary">Tipo de vehículo</label>
+  <select id="tipoVehiculo" name="tipoVehiculo" class="form-select rounded-3 py-2">
+    <option value="Automóvil" selected>Automóvil</option>
+    <option value="Moto">Moto</option>
+  </select>
+</div>
 
-            <div class="col-sm-6">
-              <label for="placa" class="form-label small fw-semibold text-secondary">Placa</label>
-              <input type="text" id="placa" name="placa" class="form-control rounded-3 py-2 text-uppercase"
-                     placeholder="ABC123" maxlength="6" autocomplete="off" required>
-              <div class="invalid-feedback">Escribe una placa válida.</div>
-            </div>
+<div class="col-sm-6" >
+  <label for="placa" class="form-label small fw-semibold text-secondary">Placa</label>
+  <input type="text" id="placa" name="placa" class="form-control rounded-3 py-2 text-uppercase"
+         placeholder="ABC123" maxlength="6" autocomplete="off">
+  <div class="invalid-feedback" id="errorPlaca">Escribe una placa válida (ej. ABC123 o ABC12D).</div>
+</div>
+
+<div class="col-12">
+<div class="col-12">
+  <button type="button" id="btnAgregarVehiculo" class="btn btn-agregar-vehiculo w-100">
+    <i class="bi bi-plus-lg"></i> Agregar vehículo
+  </button>
+</div>
+</div>
+
+<div class="col-12">
+  <label class="form-label small fw-semibold text-secondary d-block">
+    Tus vehículos (<span id="contadorVehiculos">0</span>)
+  </label>
+  <div id="listaVehiculos" class="d-flex flex-wrap gap-2"></div>
+<p id="errorVehiculos" class="small text-danger mb-0 mt-1" hidden>
+  Agrega al menos un vehículo.
+</p>
+  <div class="form-text">Puedes agregar más vehículos después desde tu perfil.</div>
+</div>
 
             <div class="col-sm-6">
               <label for="clave" class="form-label small fw-semibold text-secondary">Contraseña</label>
@@ -119,5 +138,6 @@
 
   <script type="module" src="../js/views/authMarcha.js"></script>
   <script type="module" src="../js/components.js"></script>
+  <script type="module" src="../js/views/formulario-validacion-registro.js"></script>
 </body>
 </html>

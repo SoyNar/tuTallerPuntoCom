@@ -1,8 +1,8 @@
 import { obtenerSesion, iniciarSesion } from "./auth-service.js";
 import { usuarioMock } from "../js/data/usuario-fake.js";
 
-// Pon en false cuando exista el login real.
-export const MODO_DEMO = true;
+// Poneren false cuando exista el login real.
+export const MODO_DEMO = false;
 
 const KEY_DEMO = "demo-sesion-creada";
 

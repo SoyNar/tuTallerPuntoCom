@@ -1,12 +1,15 @@
 import { renderizarTalleres } from "../utils/renderCardsGarages.js";
 import { fetchTalleres } from "../../services/garageService.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
+import { activarBotonesAgendar } from "../utils/agenDesdeTarjetas.js";
 
+const contenedorTalleres = document.getElementById("contenedor-talleres");
+let talleres = [];
 
 async function obtenerTalleres() {
-    // mostrarCargando("Cargando su Solicitud...");
+  // mostrarCargando("Cargando su Solicitud...");
   try {
-    const talleres = await fetchTalleres().then(talleres => talleres.slice(0,3))
+    talleres = await fetchTalleres().then((talleres) => talleres.slice(0, 3));
     //Devuelve solo tres talleres
     // Reemplaza esta URL por la endpoint real de tu API cuando la tengas
     // const respuesta = await fetch("https://api.tutaller.com/talleres");
@@ -16,10 +19,12 @@ async function obtenerTalleres() {
     renderizarTalleres(talleres);
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
-  }finally{
+  } finally {
     ocultarCargando();
   }
 }
+// Para abrir el modal de cita desde los botones de agendar
+activarBotonesAgendar(contenedorTalleres, () => talleres);
 
 // Ejecutar la carga al cargar el DOM
 document.addEventListener("DOMContentLoaded", obtenerTalleres);
