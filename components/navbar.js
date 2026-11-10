@@ -1,13 +1,8 @@
 import { LINKS } from "./link-const.js";
 import "../components/js/modalCitas.js"
-import { contarCitasActivas, cancelarCita } from "../services/citas-service.js";
-import {iniciarSesion} from "../services/auth-service.js"
+import { contarCitasActivas } from "../services/citas-service.js";
 import { autenticar } from "./navbar-session.js";
-import {iniciarSesionDemo} from "../services/demo-session.js"
-// window.guardarCita = guardarCita; 
-// window.cancelarCita = cancelarCita;
-window.iniciarSesion = iniciarSesion
-iniciarSesionDemo()
+
 
 
     const BASE_PATH =  new URL('../', import.meta.url);
@@ -52,12 +47,15 @@ export class Navbar extends HTMLElement {
     }
 
     cerrarMenuAlNavegar() {
-  const panel = this.querySelector("#navPrincipal");
-  this.querySelectorAll(".nav-link").forEach((enlace) =>
-    enlace.addEventListener("click", () =>
-      window.bootstrap?.Collapse.getInstance(panel)?.hide(),
-    ),
-  );
+  if (this.menuListener) return;
+
+  this.menuListener = (e) => {
+    if(!e.target.closest(".nav-link")) return;
+    const panel = this.querySelector("#navPrincipal");
+   window.bootstrap?.Collapse.getInstance(panel)?.hide();
+
+  };
+    this.addEventListener("click", this.menuListener);
 }
 
     /**
@@ -102,13 +100,13 @@ export class Navbar extends HTMLElement {
     }
 
     isActive(href){
-        let path = location.pathname;
-        if(path.endsWith('/')) path += 'index.html';
-        return path  === abs(href).pathname
+      const limpia = p => p.replace(/index\.html$/, '').replace(/\.html$/, '').replace(/\/$/, '');
+     return limpia(location.pathname) === limpia(abs(href).pathname);
     }
 
     render(){
        const ul  = this.querySelector('[data-nav-links]')
+       if (!ul) return;
        ul.innerHTML = LINKS.map(({text,href})=>{
         const active = this.isActive(href);
         return `

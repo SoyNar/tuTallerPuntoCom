@@ -6,6 +6,6 @@ export class Usuario {
         this.foto = foto ?? "";
         this.direccion = direccion;
         this.vehiculos = vehiculos ?? [];
-        this.contrasenia = Sha256.hash(contrasenia);
+        this.contrasenia = contrasenia;
     }
 }

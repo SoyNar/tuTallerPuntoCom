@@ -1,9 +1,9 @@
 import { guardarUsuario } from "../js/views/api-fake.js";
+import { validarCredenciales } from "../js/views/api-fake.js";
 
 
 const KEY_SESION = "sesion";
 export const EVENTO_SESION = "sesion:actualizada";
-const KEY_DEMO = "demo-sesion-creada";
 const RUTAS = {
   cliente: '/index.html',
   admin:'/pagesadmin.html',
@@ -43,16 +43,28 @@ export const obtenerUsuario = () => obtenerSesion()?.usuario ?? null;
 export const estaAutenticado = () => obtenerSesion() !== null;
 
 
-
-/**
- * Metodo para simular la autenticación de un usuario
- * guarda la info del usuario en el localstorage
- * cuando haya backend esto lo hara el backend
- * @param {object} usuario 
- */
 export function iniciarSesion(usuario) {
   localStorage.setItem(KEY_SESION, JSON.stringify({ usuario }));
   window.dispatchEvent(new CustomEvent(EVENTO_SESION));
+}
+
+/**
+ * metodo para simular el login de un usuario
+ * cuando haya backend esto lo hara el backend
+ * @param {string} correo
+ * @param {string} clave
+ * @returns 
+ */
+export async function login({ correo, clave }) {
+  const usuario = await validarCredenciales(correo, clave);
+
+  if (!usuario) {
+    throw new Error('Correo o contraseña incorrectos');
+  }
+
+  localStorage.setItem('token', 'fake-token');
+  iniciarSesion(usuario);
+  return usuario;
 }
 
 /**
@@ -61,6 +73,5 @@ export function iniciarSesion(usuario) {
  */
 export function cerrarSesion() {
   localStorage.removeItem(KEY_SESION);
-  localStorage.removeItem(KEY_DEMO); //esta es de prueba
   window.dispatchEvent(new CustomEvent(EVENTO_SESION));
 }
