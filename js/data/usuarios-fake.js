@@ -16,3 +16,16 @@ export const usuariosFake = [
     new Usuario(20, "Paula Andrea", "Montoya Salazar", "", "Diagonal 55 # 34-67, Bello", [18, 19], CONTRASENIA_FAKE),
     new Usuario(21, "Sebastián", "Arias Quintero", "", "Carrera 52 # 74-20, Itagüí", [20, 21], CONTRASENIA_FAKE),
 ];
+
+export const correosFake = [
+  'johana@demo.com',
+  'carlos@demo.com',
+  'valentina@demo.com',
+  'santiago@demo.com',
+  'laura@demo.com',
+  'juan@demo.com',
+  'daniela@demo.com',
+  'andres@demo.com',
+  'paula@demo.com',
+  'sebastian@demo.com',
+];

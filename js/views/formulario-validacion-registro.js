@@ -1,6 +1,8 @@
 import { validateField, validarFormulario, validateGroup } from '../utils/GeneralValidatorForm.js';
 import { registrar, redirigirPorRol } from '../../services/auth-service.js';
 import { iniciarVehiculos } from './registrarVehiculos.js';
+import { mostrarCargando, ocultarCargando } from '../utils/loader.js';
+import { showToast } from '../utils/toast-modal.js';
 
 const form = document.querySelector('#formRegistro');
 const vehiculos = iniciarVehiculos();
@@ -27,11 +29,13 @@ form.addEventListener('submit', async e => {
     clave: form.clave.value,
     vehiculos: vehiculos.obtener(),
   };
-
+    mostrarCargando('Procesando Solicitud...');
   try {
     const usuario = await registrar(datos);
     redirigirPorRol(usuario.rol);
   } catch (err) {
-    alert(err.message);
+    showToast(err.message, 'error', 'No pudimos registrar el usuario');
+  } finally {
+    ocultarCargando();
   }
 });

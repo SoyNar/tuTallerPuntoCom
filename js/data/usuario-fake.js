@@ -3,7 +3,6 @@ import {obtenerUsuario} from "../../services/auth-service.js"
 import { usuariosFake } from "../data/usuarios-fake.js";
 import { vehiculosCatalogo } from "../data/vehiculos-fake.js";
 
-export const vehiculosCatalogo = vehiculosCatalogo;
 
 // Usuario simulado: guarda ids de sus vehículos
 export const usuarioMock = usuariosFake[0]
@@ -18,7 +17,11 @@ export function obtenerVehiculosUsuario(usuario) {
  * @returns 
  */
 export async function obtenerMisVehiculos() {
-  const usuario = obtenerUsuario();          // simula "el backend lee la sesión"
-  if (!usuario) return [];                   
-  return vehiculosCatalogo.filter((v) => v.usuario_id === usuario.id);
+  const usuario = obtenerUsuario();
+  if (!usuario) return [];
+
+  const propios = JSON.parse(localStorage.getItem('vehiculos')) ?? [];
+  return [...vehiculosCatalogo, ...propios].filter(
+    (v) => String(v.usuario_id) === String(usuario.id)
+  );
 }
