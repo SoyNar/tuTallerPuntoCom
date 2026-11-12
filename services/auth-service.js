@@ -3,11 +3,11 @@ import { validarCredenciales } from "../js/views/api-fake.js";
 
 const url = (ruta) => new URL(ruta, import.meta.url).href;
 const KEY_SESION = "sesion";
-const LOGIN_URL = url("../../pages/login.html");
+const LOGIN_URL = url("../pages/login.html");
 export const EVENTO_SESION = "sesion:actualizada";
 const RUTAS = {
- cliente: url("../../index.html"),
-  admin: url("../../pagesadmin.html"),
+ cliente: url("../index.html"),
+  admin: url("../../pages/admin.html"),
 }
 /**
  * metodo para redirigir a un usuario a la pagina correspondiente segun su rol
