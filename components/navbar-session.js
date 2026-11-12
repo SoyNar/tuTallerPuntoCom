@@ -1,3 +1,4 @@
+import { aplicarVisibilidadSesion } from "../js/utils/session-ui.js";
 import { obtenerUsuario, cerrarSesion, EVENTO_SESION } from "../services/auth-service.js";
 
 const iniciales = (usuario) =>
@@ -39,7 +40,10 @@ function pintar(raiz) {
 }
 
 export function autenticar(raiz) {
-  const actualizar = () => pintar(raiz);
+  const actualizar = () => {
+    pintar(raiz);
+    aplicarVisibilidadSesion(raiz);
+  };
    const alCerrar = () => {
      cerrarSesion();
    };
