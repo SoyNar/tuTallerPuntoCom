@@ -57,6 +57,7 @@ export function renderizarTalleres(lista) {
             <button
               type="button"
               class="btn btn-outline-secondary btn-sm w-50 fw-semibold rounded-3 py-2"
+              onclick="window.location.href='../pages/contact.html'"
             >
               Cotizar
             </button>

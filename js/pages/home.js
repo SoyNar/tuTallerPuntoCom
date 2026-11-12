@@ -11,7 +11,7 @@ let talleres = [];
 
 
 async function obtenerTalleres() {
-  // mostrarCargando("Cargando su Solicitud...");
+  mostrarCargando("Cargando su Solicitud...");
   try {
     talleres = await fetchTalleres().then((talleres) => talleres.slice(0, 3));
     //Devuelve solo tres talleres
@@ -33,6 +33,8 @@ activarBotonesAgendar(contenedorTalleres, () => talleres);
 // Ejecutar la carga al cargar el DOM
 document.addEventListener("DOMContentLoaded",() =>  {
   activarVisibilidadSesion()
-  obtenerTalleres});
+  obtenerTalleres()
+
+});
 
 window.addEventListener(EVENTO_SESION,activarVisibilidadSesion());
