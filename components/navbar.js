@@ -104,19 +104,18 @@ export class Navbar extends HTMLElement {
      return limpia(location.pathname) === limpia(abs(href).pathname);
     }
 
-    render(){
-       const ul  = this.querySelector('[data-nav-links]')
+ render() {
+       const ul = this.querySelector('[data-nav-links]');
        if (!ul) return;
-       ul.innerHTML = LINKS.map(({text,href})=>{
+       ul.innerHTML = LINKS.map(({ text, href, rol }) => {
         const active = this.isActive(href);
         return `
-        <li class="nav-item">
+        <li class="nav-item ${rol ? 'd-none' : ''}" ${rol ? `data-requiere-sesion data-rol="${rol}"` : ''}>
           <a class="nav-link nav-link-tt ${active ? 'active' : ''}"
              ${active ? 'aria-current="page"' : ''}
              href="${abs(href).href}">${text}</a>
         </li>`;
-       }).join('')
-        
+       }).join('');
     }
 }
 customElements.define('nav-bar', Navbar)

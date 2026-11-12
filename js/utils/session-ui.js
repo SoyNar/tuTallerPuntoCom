@@ -1,4 +1,4 @@
-import { estaAutenticado, EVENTO_SESION } from "../../services/auth-service.js";
+import { estaAutenticado, obtenerUsuario, EVENTO_SESION } from "../../services/auth-service.js";
 
 /**
  * Muestra u oculta elementos según la sesión.
@@ -7,12 +7,16 @@ import { estaAutenticado, EVENTO_SESION } from "../../services/auth-service.js";
  */
 export function aplicarVisibilidadSesion(raiz = document) {
   const logueado = estaAutenticado();
+  const rolActual = obtenerUsuario()?.rol ?? null;
 
   raiz.querySelectorAll("[data-requiere-sesion]")
     .forEach((el) => el.classList.toggle("d-none", !logueado));
 
   raiz.querySelectorAll("[data-solo-anonimo]")
     .forEach((el) => el.classList.toggle("d-none", logueado));
+
+    raiz.querySelectorAll("[data-rol]")
+    .forEach((el) => el.classList.toggle("d-none", el.dataset.rol !== rolActual));
 }
 
 /** Mantiene la visibilidad sincronizada cuando cambia la sesión. */
