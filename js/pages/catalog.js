@@ -9,6 +9,7 @@ import { mergeTalleres } from "../../services/talleres-service.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 import { serviciosCatalogo } from "../data/catalogos.js";
 import { obtenerServiciosTaller } from "../data/catalogos.js";
+import {crearPaginador} from '../utils/paginator.js'
 
 const contenedor = document.getElementById("filtros-talleres");
 const servicioSelect = document.getElementById("servicioSelect");
@@ -17,6 +18,18 @@ const vehiculoSelect = document.getElementById("vehiculoSelect");
 const contenedorTalleres = document.getElementById("contenedor-talleres");
 
 let talleresDisponibles = [];
+let listaFiltrada  = [];
+
+const paginator = crearPaginador({
+  porPagina: 6,
+  contenedor:document.getElementById("paginacion"),
+  info:document.getElementById("infoPaginacion"),
+  alCambiar: () => {
+    pintar();
+    contenedorTalleres.scrollIntoView({behavior: "smooth",block: "start"})
+  }
+
+})
 
 const reglas = {
   texto: (taller, valor) => {
@@ -58,6 +71,18 @@ const reglas = {
   },
 };
 
+function pintar(){
+  renderizarTalleres(paginator.paginar(listaFiltrada));
+}
+
+function aplicarFiltros(){
+  listaFiltrada = filtrarLista(talleresDisponibles,filtros.valores(), reglas);
+  paginator.reiniciar();
+  pintar();
+}
+
+
+
 function obtenerOpcionesUnicas(lista, clave) {
   const valores = lista
     .flatMap((item) => {
@@ -76,11 +101,7 @@ function obtenerOpcionesUnicas(lista, clave) {
 const filtros = crearFiltros({
   contenedor,
   modo: "vivo",
-  alCambiar: () => {
-    renderizarTalleres(
-      filtrarLista(talleresDisponibles, filtros.valores(), reglas),
-    );
-  },
+  alCambiar: aplicarFiltros,
 });
 
 
@@ -104,9 +125,10 @@ async function obtenerTalleres() {
       "Todos",
     );
 
-    renderizarTalleres(
-      filtrarLista(talleresDisponibles, filtros.valores(), reglas),
-    );
+    aplicarFiltros()
+    // renderizarTalleres(
+    //   filtrarLista(talleresDisponibles, filtros.valores(), reglas),
+    // );
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
   } finally {

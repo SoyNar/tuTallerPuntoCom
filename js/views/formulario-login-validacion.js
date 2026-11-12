@@ -24,6 +24,7 @@ form.addEventListener('submit', async (e) => {
       correo: form.correo.value.trim(),
       clave: form.clave.value,
     });
+    console.log("rol:" , usuario.rol)
     redirigirPorRol(usuario.rol);
   } catch (err) {
     showToast(err.message, 'error', 'No pudimos iniciar sesión');

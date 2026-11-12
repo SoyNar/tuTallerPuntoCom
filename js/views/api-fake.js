@@ -50,7 +50,7 @@ export async function validarCredenciales(correo, clave) {
 
   const { clave: _omitida, ...usuarioPublico } = encontrado;
   return usuarioPublico;
-}
+} 
 
 export function sembrarUsuariosDemo() {
   const guardados = JSON.parse(localStorage.getItem(KEY)) ?? [];
@@ -63,7 +63,7 @@ export function sembrarUsuariosDemo() {
       apellido: u.apellido,
       correo: correosFake[i],
       clave: u.contrasenia,
-      rol: 'cliente',
+      rol: u.rol || 'cliente',
     }))
     .filter(u => !correosExistentes.has(u.correo));
 

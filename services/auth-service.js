@@ -7,7 +7,7 @@ const LOGIN_URL = url("../pages/login.html");
 export const EVENTO_SESION = "sesion:actualizada";
 const RUTAS = {
  cliente: url("../index.html"),
-  admin: url("../../pages/admin.html"),
+  admin: url("../pages/admin.html"),
 }
 /**
  * metodo para redirigir a un usuario a la pagina correspondiente segun su rol
@@ -15,7 +15,7 @@ const RUTAS = {
  */
 export function redirigirPorRol(rol)
 {
-   window.location.href = RUTAS[rol] ?? LOGIN_URL;
+   window.location.href = RUTAS[rol];
 }
 
 /**

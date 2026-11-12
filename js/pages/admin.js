@@ -1,4 +1,4 @@
-import { confirmarEliminar } from "../../components/js/confirm-modal.js";
+import { confirmar } from "../../components/js/confirm-modal.js";
 import {
   eliminarTaller,
   mergeTalleres,
@@ -50,7 +50,7 @@ tbody.addEventListener("click", async (e) => {
   const taller = mergeTalleres().find(
     (t) => t.id === Number(boton.dataset.eliminar),
   );
-  if (!(await confirmarEliminar(`"${taller?.nombre}"`))) return;
+  if (!(await confirmar(`"${taller?.nombre}"`))) return;
 
   eliminarTaller(boton.dataset.eliminar);
   renderizarTabla();
