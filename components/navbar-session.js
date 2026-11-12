@@ -1,4 +1,4 @@
-import { obtenerUsuario, cerrarSesion, EVENTO_SESION } from "../../services/auth-service.js";
+import { obtenerUsuario, cerrarSesion, EVENTO_SESION } from "../services/auth-service.js";
 
 const iniciales = (usuario) =>
   [usuario?.nombre, usuario?.apellido]

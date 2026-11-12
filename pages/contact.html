@@ -170,16 +170,12 @@
                         class="form-label small fw-semibold text-secondary"
                         >Asunto</label
                       >
-                      <select
-                        class="form-select py-2 rounded-3 text-muted"
-                        id="campo-asunto"
-                        name="asunto"
-                      >
-                        <option selected disabled>Selecciona un asunto</option>
-                        <option value="cotizacion">Cotización</option>
-                        <option value="soporte">Soporte técnico</option>
-                        <option value="otro">Otro</option>
-                      </select>
+                     <select class="form-select py-2 rounded-3 text-muted" id="campo-asunto" name="asunto">
+                      <option value="" selected disabled>Selecciona un asunto</option>
+                      <option value="cotizacion">Cotización</option>
+                      <option value="soporte">Soporte técnico</option>
+                      <option value="otro">Otro</option>
+                    </select>
                     </div>
 
                     <!-- Teléfono -->
@@ -222,7 +218,7 @@
                     <div class="col-12 mt-4">
                       <button
                         type="submit"
-                        class="btn text-white rounded-3 px-4 py-2 fw-semibold"
+                        class="btn text-white rounded-3 px-4 py-2 fw-semibold d-none"
                       >
                         Enviar mensaje
                       </button>

@@ -77,7 +77,8 @@ export const plantillaAgendarCita = `
 
         <div class="modal-footer">
           <button type="button" class="btn btn-light border fw-semibold" data-bs-dismiss="modal">Cancelar</button>
-          <button type="submit" id="btnConfirmar" form="formCita" class="btn btn-tt-accent fw-semibold">Confirmar cita</button>
+          <button type="submit" id="btnConfirmar" form="formCita" 
+          class="btn btn-tt-accent fw-semibold">Confirmar cita</button>
         </div>
 
       </div>
