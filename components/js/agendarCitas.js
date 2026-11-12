@@ -2,6 +2,8 @@ import { guardarCita } from "../../services/citas-service.js";
 import {obtenerMisVehiculos} from "../../js/data/usuario-fake.js";
 import {obtenerServiciosTaller} from "../../js/data/catalogos.js";
 import {tallerAtiende} from "../../js/data/catalogos.js"; 
+import { estaAutenticado } from "../../services/auth-service.js";
+import { confirmar as pedirConfirmacion } from "./confirm-modal.js";
 import {
   fechaLocal,
   fechaManana,
@@ -37,6 +39,9 @@ class AgendarCitaModal extends HTMLElement {
   }
 
    async abrir(taller) {
+      // if(!estaAutenticado()){
+      //   window.location.href = '../../pages/login.html'
+      // }
     this.taller = taller
     this.modalEl.dataset.tallerId = taller.id;
     this.querySelector("#citaTallerNombre").textContent = taller.nombre;
@@ -91,6 +96,10 @@ class AgendarCitaModal extends HTMLElement {
 
   async confirmar(e) {
     e.preventDefault();
+    if(!estaAutenticado()){
+      window.location.href = '../../pages/login.html'
+      return;
+    }
     if (this.guardando) return;
 
     const horaElegida = this.hora.value;
@@ -100,6 +109,37 @@ class AgendarCitaModal extends HTMLElement {
     this.guardando = true;
     this.btnConfirmar.disabled = true;
     const op = this.hora.selectedOptions[0];
+  const servicioTexto = this.querySelector("#servicio").selectedOptions[0]?.text ?? "";
+  const vehiculoTexto = this.querySelector("#vehiculo").selectedOptions[0]?.text ?? "";
+  this.ocultarModal();
+
+
+  const aceptado = await pedirConfirmacion({
+  titulo: "Confirmar cita",
+  mensaje: "Revisa los datos antes de agendar.",
+  detalles: [
+    { etiqueta: "Taller", valor: this.taller.nombre },
+    { etiqueta: "Servicio", valor: servicioTexto },
+    { etiqueta: "Vehículo", valor: vehiculoTexto },
+    { etiqueta: "Fecha", valor: fechaLegible(this.fecha.value) },
+    { etiqueta: "Hora", valor: op.text },
+  ],
+  total: {
+    etiqueta: "Costo aproximado",
+    valor: `$ ${this.costo.toLocaleString("es-CO")}`,
+  },
+  textoAceptar: "Sí, agendar",
+  textoCancelar: "Revisar",
+  variante: "success",
+});
+
+  if (!aceptado){
+    this.mostrarModal();
+    return;
+  };
+
+  this.guardando = true;
+  this.btnConfirmar.disabled = true;
 
     
      const resp = await guardarCita({
@@ -117,12 +157,24 @@ class AgendarCitaModal extends HTMLElement {
       this.guardando = false;
       this.refrescar();
       avisarErrorCita();
+      this.mostrarModal();
       return;
     }
 
     avisarCitaAgendada();
     window.bootstrap.Modal.getInstance(this.modalEl)?.hide();
   }
+
+  ocultarModal() {
+  return new Promise((resolve) => {
+    this.modalEl.addEventListener("hidden.bs.modal", resolve, { once: true });
+    window.bootstrap.Modal.getInstance(this.modalEl)?.hide();
+  });
+}
+
+mostrarModal() {
+  window.bootstrap.Modal.getOrCreateInstance(this.modalEl).show();
+}
 
   alCerrar() {
     this.guardando = false;
