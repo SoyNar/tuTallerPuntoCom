@@ -2,6 +2,7 @@ import { obtenerServiciosTaller } from "../data/catalogos.js";
 import { estaAbiertoElTaller } from "./scheduleCalculator.js";
 
 const FOTO_DEFECTO = "../assets/img/chispa-mascota-3.png";
+const CONTACTO_URL = new URL("../../pages/contact.html", import.meta.url).href;
 
 export function renderizarTalleres(lista) {
   const contenedor = document.getElementById("contenedor-talleres");
@@ -57,7 +58,7 @@ export function renderizarTalleres(lista) {
             <button
               type="button"
               class="btn btn-outline-secondary btn-sm w-50 fw-semibold rounded-3 py-2"
-              onclick="window.location.href='../pages/contact.html'"
+              onclick="window.location.href='${CONTACTO_URL}'"
             >
               Cotizar
             </button>
