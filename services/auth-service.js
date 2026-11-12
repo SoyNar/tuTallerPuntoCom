@@ -1,12 +1,13 @@
 import { guardarUsuario } from "../js/views/api-fake.js";
 import { validarCredenciales } from "../js/views/api-fake.js";
 
-
+const url = (ruta) => new URL(ruta, import.meta.url).href;
 const KEY_SESION = "sesion";
+const LOGIN_URL = url("../../pages/login.html");
 export const EVENTO_SESION = "sesion:actualizada";
 const RUTAS = {
-  cliente: '/index.html',
-  admin:'/pagesadmin.html',
+ cliente: url("../../index.html"),
+  admin: url("../../pagesadmin.html"),
 }
 /**
  * metodo para redirigir a un usuario a la pagina correspondiente segun su rol
@@ -14,7 +15,7 @@ const RUTAS = {
  */
 export function redirigirPorRol(rol)
 {
-   window.location.href = RUTAS[rol] ?? '/pages/login.html';
+   window.location.href = RUTAS[rol] ?? LOGIN_URL;
 }
 
 /**

@@ -24,6 +24,7 @@ class AgendarCitaModal extends HTMLElement {
     this.fecha = this.querySelector("#fecha");
     this.hora = this.querySelector("#hora");
     this.btnConfirmar = this.querySelector("#btnConfirmar");
+    const LOGIN_URL = new URL("../../pages/login.html", import.meta.url).href;
     this.guardando = false; // evita registrar la cita dos veces
      this.servicios = [];
     this.cortos = 0;
@@ -97,7 +98,7 @@ class AgendarCitaModal extends HTMLElement {
   async confirmar(e) {
     e.preventDefault();
     if(!estaAutenticado()){
-      window.location.href = '../../pages/login.html'
+      window.location.href = LOGIN_URL
       return;
     }
     if (this.guardando) return;
