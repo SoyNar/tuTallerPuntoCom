@@ -55,17 +55,94 @@
             </div>
             <div class="col-lg-6">
               <div
-                class="ratio border rounded bg-body-tertiary"
-                style="--bs-aspect-ratio: 55%"
+                id="carruselProyecto"
+                class="carousel slide border rounded overflow-hidden shadow-sm"
+                data-bs-ride="carousel"
               >
-                <div class="d-flex align-items-center justify-content-center">
-                  <span class="badge rounded-pill text-bg-light border"
-                    >Imagen del proyecto</span
-                  >
+                <!-- Indicadores inferiores (rayitas) -->
+                <div class="carousel-indicators">
+                  <button
+                    type="button"
+                    data-bs-target="#carruselProyecto"
+                    data-bs-slide-to="0"
+                    class="active"
+                    aria-current="true"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carruselProyecto"
+                    data-bs-slide-to="1"
+                  ></button>
+                  <button
+                    type="button"
+                    data-bs-target="#carruselProyecto"
+                    data-bs-slide-to="2"
+                  ></button>
                 </div>
+
+                <!-- Contenedor de las imágenes -->
+                <div class="carousel-inner">
+                  <!-- Imagen 1 -->
+                  <div class="carousel-item active">
+                    <div class="ratio" style="--bs-aspect-ratio: 60%">
+                      <img
+                        src="https://img.magnific.com/foto-gratis/pareja-feliz-saludando-su-mecanico-taller-reparacion-automoviles_637285-8674.jpg?semt=ais_hybrid&w=740&q=80"
+                        class="w-100 h-100 object-fit-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Imagen 2 -->
+                  <div class="carousel-item">
+                    <div class="ratio" style="--bs-aspect-ratio: 60%">
+                      <img
+                        src="https://www.prudentialuniforms.com/wp-content/uploads/2019/05/Car-Mechanic-Wearing-a-Uniform-Helping-a-Customer.jpg"
+                        class="w-100 h-100 object-fit-cover"
+                      />
+                    </div>
+                  </div>
+
+                  <!-- Imagen 3 -->
+                  <div class="carousel-item">
+                    <div class="ratio" style="--bs-aspect-ratio: 60%">
+                      <img
+                        src="https://www.cronoshare.com/blog/wp-content/uploads/2017/02/abrir-un-taller-mec%C3%A1nico.png"
+                        class="w-100 h-100 object-fit-cover"
+                        alt="Herramientas y diagnóstico automotriz"
+                      />
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Botón Anterior (Flecha izquierda) -->
+                <button
+                  class="carousel-control-prev"
+                  type="button"
+                  data-bs-target="#carruselProyecto"
+                  data-bs-slide="prev"
+                >
+                  <span
+                    class="carousel-control-prev-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Anterior</span>
+                </button>
+
+                <!-- Botón Siguiente (Flecha derecha) -->
+                <button
+                  class="carousel-control-next"
+                  type="button"
+                  data-bs-target="#carruselProyecto"
+                  data-bs-slide="next"
+                >
+                  <span
+                    class="carousel-control-next-icon"
+                    aria-hidden="true"
+                  ></span>
+                  <span class="visually-hidden">Siguiente</span>
+                </button>
               </div>
             </div>
-          </div>
         </div>
       </section>
 
