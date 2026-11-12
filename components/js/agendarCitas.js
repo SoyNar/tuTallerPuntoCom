@@ -15,6 +15,8 @@ import {
   avisarErrorCita,
 } from "../../js/utils/avisos-cita.js";
 import { plantillaAgendarCita } from "./agendarCitaTemplate.js";
+    const LOGIN_URL = new URL("../../pages/login.html", import.meta.url).href;
+
 
 class AgendarCitaModal extends HTMLElement {
   connectedCallback() {
@@ -24,7 +26,6 @@ class AgendarCitaModal extends HTMLElement {
     this.fecha = this.querySelector("#fecha");
     this.hora = this.querySelector("#hora");
     this.btnConfirmar = this.querySelector("#btnConfirmar");
-    const LOGIN_URL = new URL("../../pages/login.html", import.meta.url).href;
     this.guardando = false; // evita registrar la cita dos veces
      this.servicios = [];
     this.cortos = 0;
