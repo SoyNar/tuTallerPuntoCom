@@ -12,6 +12,7 @@ function opcionesHoraAgendar() {
   tpl.innerHTML = plantillaAgendarCita;
   return tpl.content.querySelector('#hora')?.innerHTML ?? '';
 }
+const CATALOGO_URL = new URL("../../pages/catalog.html", import.meta.url).href;
 
 class MisCitasModal extends HTMLElement {
   async connectedCallback() {
@@ -142,7 +143,7 @@ class MisCitasModal extends HTMLElement {
         e.preventDefault();
         e.stopPropagation();
         // ir a catalogo de talleres para agendar cita
-        window.location.href = '/pages/catalog.html';
+        window.location.href = CATALOGO_URL;
       }
     })
   }
