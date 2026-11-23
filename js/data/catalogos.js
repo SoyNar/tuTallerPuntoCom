@@ -1,7 +1,7 @@
 // Catálogos compartidos: valor que se guarda -> texto que se muestra.
 // Los usan el wizard (resumen) y la tabla del admin.
 import { serviciosDisponibles } from "./garageMock.js"
-export const TIPOS = { carros: ["Automóvil"], motos: ["Moto"], ambos: ["Automóvil", "Moto"]};
+export const TIPOS = { carros: ["CARRO"], motos: ["MOTO"], ambos: ["CARRO", "MOTO"]};
 
 export const CIUDADES = {
   medellin: 'Medellín',
