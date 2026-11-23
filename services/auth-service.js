@@ -1,36 +1,61 @@
-import { guardarUsuario } from "../js/views/api-fake.js";
-import { validarCredenciales } from "../js/views/api-fake.js";
+import { loginBackend, registerUser } from "../js/api/auth-api.js";
 
 const url = (ruta) => new URL(ruta, import.meta.url).href;
 const KEY_SESION = "sesion";
-const LOGIN_URL = url("../pages/login.html");
+const KEY_TOKEN = "token";
 export const EVENTO_SESION = "sesion:actualizada";
+
 const RUTAS = {
- cliente: url("../index.html"),
-  admin: url("../pages/admin.html"),
-}
+  CLIENTE: url("../index.html"),
+  ADMIN: url("../pages/admin.html"),
+};
+
 /**
- * metodo para redirigir a un usuario a la pagina correspondiente segun su rol
- * @param {string} rol 
+ * Redirige al usuario a la página según su rol.
+ * @param {string} rol  "CLIENTE" | "ADMIN"
  */
-export function redirigirPorRol(rol)
-{
-   window.location.href = RUTAS[rol];
+export function redirigirPorRol(rol) {
+  window.location.href = RUTAS[rol] ?? RUTAS.CLIENTE;
 }
 
 /**
- * Metodo para registrar un usuario
- * @param {object} usuario 
- * @returns 
+ * Registra un usuario y guarda la sesión.
+ * @param {object} payload  name, lastname, email, phone, password, address, vehicle
  */
 export async function registrar(payload) {
-  const { usuario, token } = await guardarUsuario(payload);
-  localStorage.setItem('token', token);
-  iniciarSesion(usuario);
-  return usuario;
+  const body = {
+    name: payload.name,
+    lastname: payload.lastname || null,
+    email: payload.email,
+    phone: payload.phone,
+    password: payload.password,
+    address: payload.address,
+    vehicles: payload.vehicles,
+  };
+
+  const { token, user } = await registerUser(body);
+  guardarSesion(token, user);
+  return user;
 }
 
-/** Devuelve { usuario } si hay sesión válida, o null. */
+/**
+ * Inicia sesión y guarda la sesión.
+ * @param {{ correo: string, clave: string }} credenciales
+ */
+export async function login({ correo, clave }) {
+  const { token, user } = await loginBackend({ email: correo, password: clave });
+  guardarSesion(token, user);
+  return user;
+}
+
+/** Cierra la sesión y borra el token. */
+export function cerrarSesion() {
+  localStorage.removeItem(KEY_SESION);
+  localStorage.removeItem(KEY_TOKEN);
+  window.dispatchEvent(new CustomEvent(EVENTO_SESION));
+}
+
+/** Devuelve la sesión si es válida, o null. */
 export function obtenerSesion() {
   try {
     const sesion = JSON.parse(localStorage.getItem(KEY_SESION));
@@ -42,37 +67,10 @@ export function obtenerSesion() {
 
 export const obtenerUsuario = () => obtenerSesion()?.usuario ?? null;
 export const estaAutenticado = () => obtenerSesion() !== null;
+export const obtenerToken = () => localStorage.getItem(KEY_TOKEN);
 
-
-export function iniciarSesion(usuario) {
+function guardarSesion(token, usuario) {
+  localStorage.setItem(KEY_TOKEN, token);
   localStorage.setItem(KEY_SESION, JSON.stringify({ usuario }));
-  window.dispatchEvent(new CustomEvent(EVENTO_SESION));
-}
-
-/**
- * metodo para simular el login de un usuario
- * cuando haya backend esto lo hara el backend
- * @param {string} correo
- * @param {string} clave
- * @returns 
- */
-export async function login({ correo, clave }) {
-  const usuario = await validarCredenciales(correo, clave);
-
-  if (!usuario) {
-    throw new Error('Correo o contraseña incorrectos');
-  }
-
-  localStorage.setItem('token', 'fake-token');
-  iniciarSesion(usuario);
-  return usuario;
-}
-
-/**
- * MEtodo para cerrar sesion
- * borra la key del localstorage
- */
-export function cerrarSesion() {
-  localStorage.removeItem(KEY_SESION);
   window.dispatchEvent(new CustomEvent(EVENTO_SESION));
 }
