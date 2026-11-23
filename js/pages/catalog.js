@@ -121,7 +121,7 @@ async function obtenerTalleres() {
     llenarSelect(ciudadSelect, ciudades, "Todas");
     llenarSelect(
       vehiculoSelect,
-      vehiculos.length ? vehiculos : ["Automóvil", "Moto"],
+      vehiculos.length ? vehiculos : ["CARRO", "MOTO"],
       "Todos",
     );
 
