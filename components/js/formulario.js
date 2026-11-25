@@ -20,7 +20,7 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
       canvas.height = Math.round(img.height * escala);
 
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff';                       // los PNG transparentes quedarían negros en JPG
+      ctx.fillStyle = '#fff';                       
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
@@ -40,19 +40,27 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
  * Lee los datos de los pasos con FormData y devuelve un objeto.
  * @returns {Object} datos
  */
-  export async function recogerDatos() {
-  const fd = new FormData(document.getElementById('formTaller'));
-  const datos = {};
+export async function recogerDatos() {
+  const form = document.getElementById('formTaller');
+  const fd = new FormData(form);
 
-  for (const clave of new Set(fd.keys())) {
-    datos[clave] = MULTIPLES.includes(clave) ? fd.getAll(clave) : fd.get(clave);
-  }
-  datos.servicios = fd.getAll('servicios').map(Number);
+  const datos = {
+    name: fd.get('nombre'),
+    nit: fd.get('nit'),
+    phone: fd.get('telefono'),
+    email: fd.get('correo'),
+    address: fd.get('direccion'),
+    city: fd.get('ciudad'),
+    latitude: Number(fd.get('latitud')),
+    longitude: Number(fd.get('longitud')),
+    typeVehicle: fd.get('tipoVehiculo'),
+  };
 
   const foto = fd.get('fotos');
-  datos.foto = foto instanceof File && foto.size > 0 ? await comprimirImagen(foto) : null;
-
-  return datos;
+  return {
+    datos,
+    foto: foto instanceof File && foto.size > 0 ? foto : null,
+  };
 }
 
 /**

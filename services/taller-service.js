@@ -31,7 +31,7 @@ export async function obtenerTallerPorId(id) {
 }
 
 export async function crearTaller(datos) {
-  const resultado = await crearTaller(datos);
+  const resultado = await createTaller(datos);
   cambioRealizado("creado", resultado);
   return resultado;
 }

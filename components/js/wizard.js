@@ -7,6 +7,7 @@ import {
 } from "../../js/utils/GeneralValidatorForm.js";
 import { clearCover, fillPreview, initPhotos } from "./preview.js";
 import { showToast } from "../../js/utils/toast-modal.js";
+import { crearTaller } from "../../services/taller-service.js";
 
 /**
  * wizard.js: lógica del modal "Agregar taller" con formulario de pasos.
@@ -178,10 +179,26 @@ function mostrarPaso(n) {
  *   document.dispatchEvent(new CustomEvent("taller:guardado"));
  */
 async function guardar() {
-  showToast(
-    "El registro de talleres estará disponible cuando exista el endpoint de creación.",
-    "info",
-  );
+  const btn = document.getElementById("btnSiguiente");
+  btn.disabled = true;
+
+  try {
+    const { datos, foto } = await recogerDatos(); 
+    console.log("datos que se envían:", datos, "foto:", foto);
+    const taller = await crearTaller(datos, foto);
+
+    showToast("Taller registrado correctamente.", "success");
+    document.dispatchEvent(new CustomEvent("taller:guardado", { detail: taller }));
+
+    const modal = bootstrap.Modal.getInstance(document.getElementById("modalTaller"));
+    modal?.hide();
+ } catch (error) {
+  console.error("Error al guardar taller:", error);
+  console.error(error.stack);
+  showToast(error.message, "danger");
+} finally {
+    btn.disabled = false;
+  }
 }
 
 async function siguiente() {
