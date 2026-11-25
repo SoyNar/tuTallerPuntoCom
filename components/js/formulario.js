@@ -8,7 +8,8 @@ const MULTIPLES = ['dias', 'servicios'];
 
 
 /** Reduce la imagen y la devuelve como texto (Data URL) para poder guardarla. */
-function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
+/** Reduce la imagen y la devuelve como File JPEG para enviarla por FormData. */
+function comprimirImagen(file, maxLado = 1200, calidad = 0.8) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -20,12 +21,21 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
       canvas.height = Math.round(img.height * escala);
 
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff';                       // los PNG transparentes quedarían negros en JPG
+      ctx.fillStyle = '#fff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL('image/jpeg', calidad));
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return reject(new Error('No se pudo comprimir la imagen'));
+          const nombreBase = file.name.replace(/\.[^.]+$/, '');
+          resolve(new File([blob], `${nombreBase}.jpg`, { type: 'image/jpeg' }));
+        },
+        'image/jpeg',
+        calidad
+      );
     };
 
     img.onerror = () => {
@@ -40,19 +50,47 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
  * Lee los datos de los pasos con FormData y devuelve un objeto.
  * @returns {Object} datos
  */
-  export async function recogerDatos() {
-  const fd = new FormData(document.getElementById('formTaller'));
-  const datos = {};
+export async function recogerDatos() {
+  const form = document.getElementById('formTaller');
+  const fd = new FormData(form);
 
-  for (const clave of new Set(fd.keys())) {
-    datos[clave] = MULTIPLES.includes(clave) ? fd.getAll(clave) : fd.get(clave);
-  }
-  datos.servicios = fd.getAll('servicios').map(Number);
+  const datos = {
+    name: fd.get('nombre'),
+    nit: fd.get('nit'),
+    phone: fd.get('telefono'),
+    email: fd.get('correo'),
+    address: fd.get('direccion'),
+    city: fd.get('ciudad'),
+    latitude: Number(fd.get('latitud')),
+    longitude: Number(fd.get('longitud')),
+    typeVehicle: fd.get('tipoVehiculo'),
+  };
 
-  const foto = fd.get('fotos');
-  datos.foto = foto instanceof File && foto.size > 0 ? await comprimirImagen(foto) : null;
+  // Horarios: un objeto por día marcado, con la misma apertura y cierre
+  const apertura = fd.get('apertura');
+  const cierre = fd.get('cierre');
 
-  return datos;
+  datos.garageStatus = "ACTIVO";
+datos.schedule = fd.getAll('dias').map((dia) => ({
+  day: dia,
+  openAt: apertura,
+  closesAt: cierre,
+}));
+
+datos.services = [
+  ...document.querySelectorAll('#serviciosTaller input[name="servicios"]:checked'),
+].map((chk) => ({
+  serviceId: Number(chk.value),
+  price: Number(chk.dataset.price),
+}));
+
+  const inputFoto = document.querySelector('input[name="fotos"]');
+  const archivo = inputFoto?.files?.[0] ?? null;
+  const foto = archivo && archivo.size > 0 ? await comprimirImagen(archivo) : null;
+  return {
+    datos,
+    foto,
+  };
 }
 
 /**

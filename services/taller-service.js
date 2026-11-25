@@ -30,8 +30,8 @@ export async function obtenerTallerPorId(id) {
   return lista.find((t) => String(t.id) === String(id));
 }
 
-export async function crearTaller(datos) {
-  const resultado = await crearTaller(datos);
+export async function crearTaller(datos, archivoFoto = null) {
+  const resultado = await createTaller(datos, archivoFoto);
   cambioRealizado("creado", resultado);
   return resultado;
 }

@@ -1,6 +1,7 @@
-import { get } from "./http.js";
+import { get, post,del } from "./http.js";
 
 const BASE = "/workshops";
+const BASE_IMAGENES = "/images";
 
 /** Página de talleres del servidor. */
 export function getPaginaTalleres({ page = 0, size = 6, status } = {}) {
@@ -20,8 +21,25 @@ export function getTallerPorId(id) {
  * @param {object} data 
  * @returns 
  */
-export function createTaller(data){
-      return post(BASE, data);
+
+export async function createTaller(data, archivoFoto = null) {
+  let imagen = null;
+
+  if (archivoFoto) {
+    const formData = new FormData();
+    formData.append("file", archivoFoto);
+    imagen = await post(BASE_IMAGENES, formData); 
+  }
+
+  try {
+    return await post(BASE, { ...data, photoUrl: imagen?.url ?? null });
+  } catch (error) {
+    if (imagen) {
+      await del(`${BASE_IMAGENES}?publicId=${encodeURIComponent(imagen.publicId)}`)
+        .catch(() => {});
+    }
+    throw error;
+  }
 }
 
 export function putActualizarTaller(id, datos) {

@@ -19,19 +19,24 @@ function buildMessage(data, status) {
     return data?.message || `Error ${status}`;
 }
 
+
 export async function request(path, { method = "GET", body, headers = {}, signal } = {}) {
+    const esFormData = body instanceof FormData;
+    const token = localStorage.getItem("token");
+
     const config = {
         method,
         headers: {
             "Accept": "application/json",
-            ...(body !== undefined && { "Content-Type": "application/json" }),
+            ...(token && { "Authorization": `Bearer ${token}` }),
+            ...(body !== undefined && !esFormData && { "Content-Type": "application/json" }),
             ...headers,
         },
         signal,
     };
 
     if (body !== undefined) {
-        config.body = JSON.stringify(body);
+        config.body = esFormData ? body : JSON.stringify(body);
     }
     console.log("body enviado", body)
     console.log("serializado", config.body)
@@ -48,7 +53,7 @@ export async function request(path, { method = "GET", body, headers = {}, signal
         ? await response.json()
         : await response.text();
 
-        console.log(`⬅️ ${response.status} ${method} ${path}`, data);
+        console.log(`${response.status} ${method} ${path}`, data);
 
   if (!response.ok) {
     console.error(`[${method} ${path}] ${response.status}`, data);
