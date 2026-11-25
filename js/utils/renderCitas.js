@@ -1,9 +1,8 @@
-import { mergeTalleres } from '../../services/talleres-service.js';
-
+import { obtenerTalleres } from '../../services/taller-service.js';
 
 export async function renderizarCitas(listaDeCitas, contendorId) {
-
-    const TALLERES =  await mergeTalleres();
+  const TALLERES = await obtenerTalleres();
+  // resto igual...
 
   const contenedor = document.getElementById(contendorId);
   contenedor.innerHTML = ""
@@ -21,9 +20,10 @@ export async function renderizarCitas(listaDeCitas, contendorId) {
     const mes = fecha.toLocaleString("es-ES", { month: "short" })
     const dia = fecha.getDate()
     const hora = fecha.toLocaleString("es-ES", { hour: "2-digit", minute: "2-digit", hour12: true })
-    const taller = TALLERES.find(taller => String(taller.id) === String(cita.taller_id))
-    const nombreTaller = taller ? taller.nombre : "Taller desconocido"
-    const nombreServicio = taller?.servicios?.[cita.servicio_id] ?? 'Servicio desconocido'
+    const taller = TALLERES.find(t => String(t.id) === String(cita.taller_id))
+const nombreTaller = taller ? taller.name : "Taller desconocido"
+const servicio = taller?.services?.find(s => String(s.id) === String(cita.servicio_id))
+const nombreServicio = servicio?.name ?? "Servicio desconocido"
     const estadoBadge = cita.estado === 'confirmada' ? 'success' : 'danger'
 
     col.className = "card border-0 rounded-3 shadow-sm p-3 mb-2 bg-white text-dark"

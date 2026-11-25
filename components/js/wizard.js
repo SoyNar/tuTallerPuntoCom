@@ -1,9 +1,6 @@
-import { guardarTaller } from "../../services/talleres-service.js";
 import { recogerDatos } from "./formulario.js";
 import { mostrarMapa } from "./mapa.js";
-import { paintOptions, STATUS } from "./options.js";
-import { DAYS } from "./options.js";
-import { SERVICES } from "./options.js";
+import { DAYS, SERVICES, STATUS, paintOptions } from "./options.js";
 import {
   validateField,
   validateGroup,
@@ -17,8 +14,11 @@ import { showToast } from "../../js/utils/toast-modal.js";
  * Inyecta con fetch el modal y los pasos (components/template/) y muestra
  * uno a la vez. Los pasos quedan en el DOM, así no se pierde lo escrito.
  * Mapa en mapa.js, lectura y validación de horarios en formulario.js,
- * validaciones de campos en validaciones.js, guardado en
- * services/talleres-service.js. Requiere Bootstrap JS en la página.
+ * validaciones de campos en GeneralValidatorForm.js.
+ *
+ * El guardado todavía no está conectado: el backend aún no expone
+ * POST /api/garages. Cuando exista, se usa post() de api/http.js.
+ * Requiere Bootstrap JS en la página.
  */
 
 const TOTAL = 5;
@@ -51,22 +51,26 @@ async function cargarPasos() {
         : `<p class="text-danger">No se pudo cargar el paso ${i + 1}.</p>`;
     body.appendChild(div);
   });
+
   paintOptions("diasAtencion", DAYS, {
     name: "dias",
     idPrefix: "dia",
     labelClass: "wizard-dia",
   });
+
   paintOptions("serviciosTaller", SERVICES, {
     name: "servicios",
     idPrefix: "srv",
     labelClass: "wizard-chip",
   });
+
   paintOptions("estadoTaller", STATUS, {
     name: "estado",
-    idPrefix: "est",
+    idPrefix: "estado",
     labelClass: "wizard-chip",
     type: "radio",
   });
+
   initPhotos();
   activarValidaciones();
   mostrarPaso(0);
@@ -74,7 +78,7 @@ async function cargarPasos() {
 
 /**
  * Engancha los validadores a los campos de cada paso (una sola vez).
- * Los índices empiezan en 0: 0 Datos, 1 Ubicación, 2 Horarios y servicios...
+ * Los índices empiezan en 0: 0 Datos, 1 Ubicación, 2 Horarios y servicios, 3 Estado, 4 Vista previa.
  */
 function activarValidaciones() {
   validadores[0] = [
@@ -102,7 +106,7 @@ function activarValidaciones() {
       ["max", 100],
       "noCode",
     ]),
-  ];
+  ].filter(Boolean);
 
   validadores[2] = [
     validateGroup("#diasAtencion", "dias", 1, "Selecciona al menos un día."),
@@ -118,8 +122,7 @@ function activarValidaciones() {
   ].filter(Boolean);
 
   validadores[3] = [
-    validateGroup("#estadoTaller", "estado", 1, "Elige al menos un estado"),
-    // validatePhoto({ required: true }),
+    validateGroup("#estadoTaller", "estado", 1, "Elige un estado."),
   ].filter(Boolean);
 }
 
@@ -167,25 +170,18 @@ function mostrarPaso(n) {
   if (n === 4) fillPreview();
 }
 
+/**
+ * Guardado pendiente: el backend todavía no tiene POST /api/workshops.
+ * Cuando exista, aquí irá:
+ *   await post("/workshops", await recogerDatos());
+ *   invalidarTalleres();
+ *   document.dispatchEvent(new CustomEvent("taller:guardado"));
+ */
 async function guardar() {
-  const btn = document.getElementById("btnSiguiente");
-  btn.disabled = true;
-
-  try {
-    await guardarTaller(await recogerDatos());
-    document.dispatchEvent(new CustomEvent("taller:guardado"));
-    bootstrap.Modal.getInstance(document.getElementById("modalTaller")).hide();
-    document.getElementById("formTaller").reset();
-    clearCover();
-    limpiarValidaciones();
-    showToast("taller crear exitosamente", 'success');
-    mostrarPaso(0);
-  } catch (error) {
-    console.error(error);
-    showToast("Error al eliminar un taller",'error');
-  } finally {
-    btn.disabled = false;
-  }
+  showToast(
+    "El registro de talleres estará disponible cuando exista el endpoint de creación.",
+    "info",
+  );
 }
 
 async function siguiente() {
@@ -201,17 +197,15 @@ function atras() {
 async function iniciarWizard() {
   const modalContainer = document.getElementById("modalContainer");
   if (!modalContainer) {
-    console.error("Modal  no existe aun en esta pagina");
+    console.error("El contenedor #modalContainer no existe en esta página.");
     return;
   }
-  try {
-    // Inyectar el contenedor del modal
 
+  try {
     modalContainer.innerHTML = await cargarHTML(
       "template/modal-container.html",
     );
 
-    // Ya existe en el DOM: enlazar todo
     document
       .getElementById("btnSiguiente")
       .addEventListener("click", siguiente);
@@ -220,7 +214,7 @@ async function iniciarWizard() {
       .getElementById("modalTaller")
       .addEventListener("show.bs.modal", cargarPasos, { once: true });
   } catch (error) {
-    console.error("Fallo al cargar el modal: ", error);
+    console.error("Fallo al cargar el modal:", error);
   }
 }
 
