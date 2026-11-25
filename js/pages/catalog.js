@@ -1,6 +1,6 @@
 import { renderizarTalleres } from "../utils/renderCardsGarages.js";
 import { crearFiltros, normalizar } from "../utils/filtros.js";
-import { obtenerPaginaTalleres } from "../../services/taller-service.js";
+import { getPaginaTalleres } from "../../js/api/taller.api.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 import { crearPaginador } from "../utils/paginator.js";
 
@@ -25,11 +25,7 @@ const paginator = crearPaginador({
 async function cargarPagina() {
   mostrarCargando("Cargando Talleres...");
   try {
-    const data = await obtenerPaginaTalleres({
-      page: paginaActual,
-      size: POR_PAGINA,
-      status: "ACTIVO",
-    });
+    const data = await getPaginaTalleres({ page: paginaActual, size: POR_PAGINA, status: "ACTIVO" });
 
     // Filtro de texto solo sobre la página recibida
     visiblesActuales = data.content.filter((t) =>
