@@ -8,7 +8,8 @@ const MULTIPLES = ['dias', 'servicios'];
 
 
 /** Reduce la imagen y la devuelve como texto (Data URL) para poder guardarla. */
-function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
+/** Reduce la imagen y la devuelve como File JPEG para enviarla por FormData. */
+function comprimirImagen(file, maxLado = 1200, calidad = 0.8) {
   return new Promise((resolve, reject) => {
     const url = URL.createObjectURL(file);
     const img = new Image();
@@ -20,12 +21,21 @@ function comprimirImagen(file, maxLado = 800, calidad = 0.8) {
       canvas.height = Math.round(img.height * escala);
 
       const ctx = canvas.getContext('2d');
-      ctx.fillStyle = '#fff';                       
+      ctx.fillStyle = '#fff';
       ctx.fillRect(0, 0, canvas.width, canvas.height);
       ctx.drawImage(img, 0, 0, canvas.width, canvas.height);
 
       URL.revokeObjectURL(url);
-      resolve(canvas.toDataURL('image/jpeg', calidad));
+
+      canvas.toBlob(
+        (blob) => {
+          if (!blob) return reject(new Error('No se pudo comprimir la imagen'));
+          const nombreBase = file.name.replace(/\.[^.]+$/, '');
+          resolve(new File([blob], `${nombreBase}.jpg`, { type: 'image/jpeg' }));
+        },
+        'image/jpeg',
+        calidad
+      );
     };
 
     img.onerror = () => {
@@ -56,10 +66,30 @@ export async function recogerDatos() {
     typeVehicle: fd.get('tipoVehiculo'),
   };
 
-  const foto = fd.get('fotos');
+  // Horarios: un objeto por día marcado, con la misma apertura y cierre
+  const apertura = fd.get('apertura');
+  const cierre = fd.get('cierre');
+
+  datos.garageStatus = "ACTIVO";
+datos.schedule = fd.getAll('dias').map((dia) => ({
+  day: dia,
+  openAt: apertura,
+  closesAt: cierre,
+}));
+
+datos.services = [
+  ...document.querySelectorAll('#serviciosTaller input[name="servicios"]:checked'),
+].map((chk) => ({
+  serviceId: Number(chk.value),
+  price: Number(chk.dataset.price),
+}));
+
+  const inputFoto = document.querySelector('input[name="fotos"]');
+  const archivo = inputFoto?.files?.[0] ?? null;
+  const foto = archivo && archivo.size > 0 ? await comprimirImagen(archivo) : null;
   return {
     datos,
-    foto: foto instanceof File && foto.size > 0 ? foto : null,
+    foto,
   };
 }
 

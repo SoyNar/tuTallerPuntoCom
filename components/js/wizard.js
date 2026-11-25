@@ -1,10 +1,8 @@
 import { recogerDatos } from "./formulario.js";
 import { mostrarMapa } from "./mapa.js";
-import { DAYS, SERVICES, STATUS, paintOptions } from "./options.js";
-import {
-  validateField,
-  validateGroup,
-} from "../../js/utils/GeneralValidatorForm.js";
+import { DAYS, STATUS, paintOptions } from "./options.js";
+import { cargarServiciosCatalogo } from "./catalog-services.js";
+import { activarValidaciones, limpiarValidaciones } from "./validaciones-wizard.js";
 import { clearCover, fillPreview, initPhotos } from "./preview.js";
 import { showToast } from "../../js/utils/toast-modal.js";
 import { crearTaller } from "../../services/taller-service.js";
@@ -14,17 +12,12 @@ import { crearTaller } from "../../services/taller-service.js";
  *
  * Inyecta con fetch el modal y los pasos (components/template/) y muestra
  * uno a la vez. Los pasos quedan en el DOM, así no se pierde lo escrito.
- * Mapa en mapa.js, lectura y validación de horarios en formulario.js,
- * validaciones de campos en GeneralValidatorForm.js.
- *
- * El guardado todavía no está conectado: el backend aún no expone
- * POST /api/garages. Cuando exista, se usa post() de api/http.js.
  * Requiere Bootstrap JS en la página.
  */
 
 const TOTAL = 5;
 let actual = 0;
-const validadores = {}; // { indiceDePaso: [funciones validar] }
+let validadores = {}; // { indiceDePaso: [funciones validar] }
 
 const base = new URL("../", import.meta.url);
 
@@ -39,8 +32,8 @@ async function cargarPasos() {
 
   const htmls = await Promise.allSettled(
     Array.from({ length: TOTAL }, (_, i) =>
-      cargarHTML(`template/modal-content${i + 1}.html`),
-    ),
+      cargarHTML(`template/modal-content${i + 1}.html`)
+    )
   );
 
   htmls.forEach((r, i) => {
@@ -59,12 +52,6 @@ async function cargarPasos() {
     labelClass: "wizard-dia",
   });
 
-  paintOptions("serviciosTaller", SERVICES, {
-    name: "servicios",
-    idPrefix: "srv",
-    labelClass: "wizard-chip",
-  });
-
   paintOptions("estadoTaller", STATUS, {
     name: "estado",
     idPrefix: "estado",
@@ -72,78 +59,16 @@ async function cargarPasos() {
     type: "radio",
   });
 
+  await cargarServiciosCatalogo();
+
   initPhotos();
-  activarValidaciones();
+  validadores = activarValidaciones();
   mostrarPaso(0);
-}
-
-/**
- * Engancha los validadores a los campos de cada paso (una sola vez).
- * Los índices empiezan en 0: 0 Datos, 1 Ubicación, 2 Horarios y servicios, 3 Estado, 4 Vista previa.
- */
-function activarValidaciones() {
-  validadores[0] = [
-    validateField("#tallerNombre", [
-      "required",
-      ["min", 3],
-      ["max", 20],
-      "noCode",
-    ]),
-    validateField("#tallerNit", ["required", ["digits", [9, 15]]]),
-    validateField("#tallerTelefono", ["required", "phone"]),
-    validateField("#tallerCorreo", ["required", "email"]),
-  ].filter(Boolean);
-
-  validadores[1] = [
-    validateField("#taller-direccion", [
-      "required",
-      ["min", 5],
-      ["max", 100],
-      "noCode",
-    ]),
-    validateField("#taller-ciudad", [
-      "required",
-      ["min", 4],
-      ["max", 100],
-      "noCode",
-    ]),
-  ].filter(Boolean);
-
-  validadores[2] = [
-    validateGroup("#diasAtencion", "dias", 1, "Selecciona al menos un día."),
-    validateField('[name="cierre"]', [["later", '[name="apertura"]']], {
-      later: "La hora de cierre debe ser posterior a la de apertura.",
-    }),
-    validateGroup(
-      "#serviciosTaller",
-      "servicios",
-      1,
-      "Elige al menos un servicio.",
-    ),
-  ].filter(Boolean);
-
-  validadores[3] = [
-    validateGroup("#estadoTaller", "estado", 1, "Elige un estado."),
-  ].filter(Boolean);
 }
 
 /** Ejecuta todos los validadores del paso; muestra todas las alertas a la vez. */
 function pasoEsValido(n) {
   return (validadores[n] ?? []).map((validar) => validar()).every(Boolean);
-}
-
-/** Quita alertas y bordes de validación (al cerrar tras guardar). */
-function limpiarValidaciones() {
-  document
-    .querySelectorAll("#wizardBody .alerta-validacion")
-    .forEach((a) => a.remove());
-  document
-    .querySelectorAll(
-      "#wizardBody .border-warning, #wizardBody .border-success",
-    )
-    .forEach((el) =>
-      el.classList.remove("border", "border-warning", "border-success"),
-    );
 }
 
 /**
@@ -171,32 +96,40 @@ function mostrarPaso(n) {
   if (n === 4) fillPreview();
 }
 
+/** Reinicia el formulario, fotos y validaciones al guardar con éxito. */
+function reiniciarWizard() {
+  document.getElementById("formTaller")?.reset();
+  clearCover();
+  limpiarValidaciones();
+  mostrarPaso(0);
+}
+
 /**
- * Guardado pendiente: el backend todavía no tiene POST /api/workshops.
- * Cuando exista, aquí irá:
- *   await post("/workshops", await recogerDatos());
- *   invalidarTalleres();
- *   document.dispatchEvent(new CustomEvent("taller:guardado"));
+ * Crea el taller con sus horarios y servicios (POST /api/talleres).
+ * Al terminar bien, avisa con el evento taller:guardado y cierra el modal.
  */
 async function guardar() {
   const btn = document.getElementById("btnSiguiente");
   btn.disabled = true;
 
   try {
-    const { datos, foto } = await recogerDatos(); 
-    console.log("datos que se envían:", datos, "foto:", foto);
+    const { datos, foto } = await recogerDatos();
     const taller = await crearTaller(datos, foto);
 
     showToast("Taller registrado correctamente.", "success");
-    document.dispatchEvent(new CustomEvent("taller:guardado", { detail: taller }));
+    document.dispatchEvent(
+      new CustomEvent("taller:guardado", { detail: taller })
+    );
 
-    const modal = bootstrap.Modal.getInstance(document.getElementById("modalTaller"));
+    const modal = bootstrap.Modal.getInstance(
+      document.getElementById("modalTaller")
+    );
     modal?.hide();
- } catch (error) {
-  console.error("Error al guardar taller:", error);
-  console.error(error.stack);
-  showToast(error.message, "danger");
-} finally {
+    reiniciarWizard();
+  } catch (error) {
+    console.error("Error al guardar taller:", error);
+    showToast(error.message, "danger");
+  } finally {
     btn.disabled = false;
   }
 }
@@ -220,7 +153,7 @@ async function iniciarWizard() {
 
   try {
     modalContainer.innerHTML = await cargarHTML(
-      "template/modal-container.html",
+      "template/modal-container.html"
     );
 
     document

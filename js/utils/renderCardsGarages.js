@@ -17,6 +17,15 @@ function estaAbierto(schedules = []) {
   return horaActual >= horario.openAt && horaActual < horario.closesAt;
 }
 
+function escapar(texto = "") {
+  return String(texto)
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#39;");
+}
+
 export function renderizarTalleres(lista) {
   const contenedor = document.getElementById("contenedor-talleres");
   contenedor.innerHTML = "";
@@ -25,7 +34,7 @@ export function renderizarTalleres(lista) {
     const col = document.createElement("div");
     col.className = "col col-12 col-md-6 col-lg-4";
 
-    const foto = taller.image || FOTO_DEFECTO;
+    const foto = escapar(taller.photoUrl || FOTO_DEFECTO);
     const serviciosActivos = (taller.services ?? []).filter((s) => s.active);
     const abierto = estaAbierto(taller.schedules);
 
@@ -41,7 +50,7 @@ export function renderizarTalleres(lista) {
         <div class="border-bottom" style="height: 160px; background-color: #e2e8f0">
           <img
             src="${foto}"
-            alt="${taller.name}"
+            alt="${escapar(taller.name)}"
             loading="lazy"
             decoding="async"
             class="w-100 h-100"
@@ -51,7 +60,7 @@ export function renderizarTalleres(lista) {
 
         <div class="card-body p-3">
           <div class="d-flex justify-content-between align-items-center mb-1">
-            <h3 class="card-title h6 fw-bold mb-0">${taller.name}</h3>
+            <h3 class="card-title h6 fw-bold mb-0">${escapar(taller.name)}</h3>
             <span
               class="badge text-white px-3 py-1 rounded-3 ${abierto ? "bg-primary" : "bg-secondary"}"
               style="font-size: 0.75rem"
@@ -59,7 +68,7 @@ export function renderizarTalleres(lista) {
               ${abierto ? "Abierto" : "Cerrado"}
             </span>
           </div>
-          <p class="small mb-2 text-secondary">${taller.address}</p>
+          <p class="small mb-2 text-secondary">${escapar(taller.address)}</p>
           <div class="d-flex flex-wrap gap-1 mb-3">
             ${badgesServicios}
           </div>

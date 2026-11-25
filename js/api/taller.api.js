@@ -1,7 +1,7 @@
-import { get, post } from "./http.js";
+import { get, post,del } from "./http.js";
 
 const BASE = "/workshops";
-const BASE_IMAGENES = "/imagenes";
+const BASE_IMAGENES = "/images";
 
 /** Página de talleres del servidor. */
 export function getPaginaTalleres({ page = 0, size = 6, status } = {}) {
