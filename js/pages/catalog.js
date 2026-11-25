@@ -1,211 +1,70 @@
 import { renderizarTalleres } from "../utils/renderCardsGarages.js";
-import {
-  llenarSelect,
-  crearFiltros,
-  filtrarLista,
-  normalizar,
-} from "../utils/filtros.js";
-import { mergeTalleres } from "../../services/talleres-service.js";
+import { crearFiltros, normalizar } from "../utils/filtros.js";
+import { getPaginaTalleres } from "../../js/api/taller.api.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
-import { serviciosCatalogo } from "../data/catalogos.js";
-import { obtenerServiciosTaller } from "../data/catalogos.js";
-import {crearPaginador} from '../utils/paginator.js'
+import { crearPaginador } from "../utils/paginator.js";
 
-const contenedor = document.getElementById("filtros-talleres");
-const servicioSelect = document.getElementById("servicioSelect");
-const ciudadSelect = document.getElementById("ciudadSelect");
-const vehiculoSelect = document.getElementById("vehiculoSelect");
 const contenedorTalleres = document.getElementById("contenedor-talleres");
 
-let talleresDisponibles = [];
-let listaFiltrada  = [];
+const POR_PAGINA = 6;
+let paginaActual = 0;
+let filtroTexto = "";
+let visiblesActuales = [];
 
 const paginator = crearPaginador({
-  porPagina: 6,
-  contenedor:document.getElementById("paginacion"),
-  info:document.getElementById("infoPaginacion"),
+  porPagina: POR_PAGINA,
+  contenedor: document.getElementById("paginacion"),
+  info: document.getElementById("infoPaginacion"),
   alCambiar: () => {
-    pintar();
-    contenedorTalleres.scrollIntoView({behavior: "smooth",block: "start"})
-  }
-
-})
-
-const reglas = {
-  texto: (taller, valor) => {
-    const buscador = [
-      taller?.nombre,
-      taller?.ciudad,
-      taller?.direccion,
-      ...(taller?.servicios ?? []),
-      ...(Array.isArray(taller?.tipoVehiculos)
-        ? taller.tipoVehiculos
-        : [taller?.tipoVehiculos].filter(Boolean)),
-    ]
-      .join(" ")
-      .trim();
-
-    return normalizar(buscador).includes(normalizar(valor));
+    paginaActual = paginator.paginaActual();
+    cargarPagina();
+    contenedorTalleres.scrollIntoView({ behavior: "smooth", block: "start" });
   },
-
-  servicio: (taller, valor) =>
-   obtenerServiciosTaller(taller).some((info) => 
-    
-       normalizar(info.nombre).includes(normalizar(valor)) ||
-      normalizar(info.categoria).includes(normalizar(valor))
-
-    
-    ),
-
-  ciudad: (taller, valor) =>
-    normalizar(taller?.ciudad ?? "") === normalizar(valor),
-
-  vehiculo: (taller, valor) => {
-    const tipos = Array.isArray(taller?.tipoVehiculos)
-      ? taller.tipoVehiculos
-      : [taller?.tipoVehiculos].filter(Boolean);
-
-    if (!tipos.length) return true;
-
-    return tipos.some((tipo) => normalizar(tipo).includes(normalizar(valor)));
-  },
-};
-
-function pintar(){
-  renderizarTalleres(paginator.paginar(listaFiltrada));
-}
-
-function aplicarFiltros(){
-  listaFiltrada = filtrarLista(talleresDisponibles,filtros.valores(), reglas);
-  paginator.reiniciar();
-  pintar();
-}
-
-
-
-function obtenerOpcionesUnicas(lista, clave) {
-  const valores = lista
-    .flatMap((item) => {
-      const valor = item?.[clave];
-      if (Array.isArray(valor)) return valor;
-      if (valor) return [valor];
-      return [];
-    })
-    .filter(Boolean)
-    .map((valor) => String(valor).trim())
-    .filter((valor) => valor.length > 0);
-
-  return [...new Set(valores)].sort((a, b) => a.localeCompare(b));
-}
-
-const filtros = crearFiltros({
-  contenedor,
-  modo: "vivo",
-  alCambiar: aplicarFiltros,
 });
 
-
-async function obtenerTalleres() {
+async function cargarPagina() {
   mostrarCargando("Cargando Talleres...");
   try {
-    talleresDisponibles = await mergeTalleres();
+    const data = await getPaginaTalleres({ page: paginaActual, size: POR_PAGINA, status: "ACTIVO" });
 
-    const servicios = [...new Set(serviciosCatalogo.map((s) => s.categoria ))]
-    const ciudades = obtenerOpcionesUnicas(talleresDisponibles, "ciudad");
-    const vehiculos = obtenerOpcionesUnicas(
-      talleresDisponibles,
-      "tipoVehiculos",
+    // Filtro de texto solo sobre la página recibida
+    visiblesActuales = data.content.filter((t) =>
+      normalizar(`${t.name} ${t.address} ${t.city} ${t.typeVehicle}`).includes(
+        normalizar(filtroTexto),
+      ),
     );
 
-    llenarSelect(servicioSelect, servicios, "Todos");
-    llenarSelect(ciudadSelect, ciudades, "Todas");
-    llenarSelect(
-      vehiculoSelect,
-      vehiculos.length ? vehiculos : ["CARRO", "MOTO"],
-      "Todos",
-    );
-
-    aplicarFiltros()
-    // renderizarTalleres(
-    //   filtrarLista(talleresDisponibles, filtros.valores(), reglas),
-    // );
+    renderizarTalleres(visiblesActuales);
+    paginator.actualizar({
+      pagina: data.page,
+      totalPaginas: data.totalPage,
+      totalElementos: data.totalElements,
+    });
   } catch (error) {
     console.error("Error al obtener los talleres:", error);
   } finally {
     ocultarCargando();
   }
 }
-const formatoCOP = new Intl.NumberFormat("es-CO", {
-  style: "currency",
-  currency: "COP",
-  maximumFractionDigits: 0,
+
+const filtros = crearFiltros({
+  contenedor: document.getElementById("filtros-talleres"),
+  modo: "vivo",
+  alCambiar: () => {
+    filtroTexto = filtros.valores().texto ?? "";
+    paginaActual = 0;
+    cargarPagina();
+  },
 });
 
-function poner(modal, selector, texto) {
-  const el = modal.querySelector(selector);
-  if (!el) return console.warn("No existe", selector);
-  el.textContent = texto;
-}
-
-function llenarModalCita(modal, taller) {
-  modal.dataset.tallerId = taller.id;
-
-  poner(modal, "#citaTallerNombre", taller.nombre);
-
-  const foto = modal.querySelector("#citaTallerFoto");
-  if (foto && taller.foto) {
-    foto.src = taller.foto;
-    foto.alt = taller.nombre;
-  }
-
-  const servicios = obtenerServiciosTaller(taller);
-  const select = modal.querySelector("#servicio");
-  select.innerHTML = servicios
-    .map((s) => `<option value="${s.id}">${s.nombre}</option>`)
-    .join("");
-  select.disabled = servicios.length === 0;
-
-  const actualizarCosto = () => {
-    const servicio = servicios.find((s) => s.id === Number(select.value));
-    poner(modal, "#resPrecio", servicio ? formatoCOP.format(servicio.precio) : "—");
-  };
-
-  select.onchange = actualizarCosto;
-  actualizarCosto();
-}
-
-/**
- * abrir el modal de agendar cita
- * aqui mismo se usan los datos de talleresDisponibles para llenar los datos en el modal
- */
-// contenedorTalleres.addEventListener("click", (e) => {
-//   const btnAgendar = e.target.closest(".btn-agendar");
-
-//   if (btnAgendar) {
-//     const modalElement = document.getElementById("modalCita");
-
-//     if (window.bootstrap && window.bootstrap.Modal) {
-//       const modalInstance = window.bootstrap.Modal.getOrCreateInstance(modalElement);
-//       modalInstance.show();
-//     }
-//   }
-// });
 contenedorTalleres.addEventListener("click", (e) => {
   const btnAgendar = e.target.closest(".btn-agendar");
+  if (!btnAgendar) return;
 
-  if (btnAgendar) {
-    //pasar el taller ocmplero 
-   const taller = talleresDisponibles.find(
+  const taller = visiblesActuales.find(
     (t) => String(t.id) === btnAgendar.dataset.tallerId,
   );
-  if (!taller) return;
-    // 2. Buscamos tu componente web personalizado en la página
-    const modalComponent = document.querySelector("agendar-cita-modal");
-
-    // 3. Le pasamos los datos a tu componente llamando a su método abrir
-    if (modalComponent) {
-      modalComponent.abrir(taller);
-    }
-  }
+  if (taller) document.querySelector("agendar-cita-modal")?.abrir(taller);
 });
-document.addEventListener("DOMContentLoaded", obtenerTalleres);
+
+document.addEventListener("DOMContentLoaded", cargarPagina);

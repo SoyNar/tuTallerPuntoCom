@@ -1,7 +1,5 @@
 import { guardarCita } from "../../services/citas-service.js";
 import {obtenerMisVehiculos} from "../../js/data/usuario-fake.js";
-import {obtenerServiciosTaller} from "../../js/data/catalogos.js";
-import {tallerAtiende} from "../../js/data/catalogos.js"; 
 import { estaAutenticado } from "../../services/auth-service.js";
 import { confirmar as pedirConfirmacion } from "./confirm-modal.js";
 import {
@@ -40,34 +38,42 @@ class AgendarCitaModal extends HTMLElement {
     this.reiniciar();
   }
 
-   async abrir(taller) {
-      // if(!estaAutenticado()){
-      //   window.location.href = '../../pages/login.html'
-      // }
-    this.taller = taller
-    this.modalEl.dataset.tallerId = taller.id;
-    this.querySelector("#citaTallerNombre").textContent = taller.nombre;
-    this.servicios = obtenerServiciosTaller(taller);
-  
-    this.llenarSelect(this.querySelector("#servicio"), this.servicios);
-    this.actualizarPrecio();
+  async abrir(taller) {
+  this.taller = taller;
+  this.modalEl.dataset.tallerId = taller.id;
+  this.querySelector("#citaTallerNombre").textContent = taller.name;
 
-    const vehiculos = (await obtenerMisVehiculos()).filter((v) => tallerAtiende(taller,v));
-    const todos = await obtenerMisVehiculos();
-    this.llenarSelect(this.querySelector("#vehiculo"), vehiculos, (v) => `${v.marca} ${v.modelo} (${v.placa})`);
-    this.reiniciar();
+  // Solo servicios activos, con el formato que usa el select
+  this.servicios = (taller.services ?? []).filter((s) => s.active);
 
-    window.bootstrap.Modal.getOrCreateInstance(this.modalEl).show();
-  }
-   llenarSelect(select, items, texto = (i) => i.nombre) {
-    select.replaceChildren(...items.map((i) => new Option(texto(i), i.id)));
-  }
-  actualizarPrecio() {
-    const serv = this.servicios.find((s) => s.id === Number(this.querySelector("#servicio").value));
-    this.costo = serv?.precio ?? 0;
-    this.querySelector("#resPrecio").textContent = `$ ${this.costo.toLocaleString("es-CO")}`;
+  this.llenarSelect(
+    this.querySelector("#servicio"),
+    this.servicios,
+    (s) => s.name,
+  );
+  this.actualizarPrecio();
 
-  }
+  // Los vehículos sí siguen siendo del usuario, no del taller
+  const vehiculos = await obtenerMisVehiculos();
+  this.llenarSelect(
+    this.querySelector("#vehiculo"),
+    vehiculos,
+    (v) => `${v.marca} ${v.modelo} (${v.placa})`,
+  );
+
+  this.reiniciar();
+  window.bootstrap.Modal.getOrCreateInstance(this.modalEl).show();
+}
+  llenarSelect(select, items, texto = (i) => i.name) {
+  select.replaceChildren(...items.map((i) => new Option(texto(i), i.id)));
+}
+ actualizarPrecio() {
+  const serv = this.servicios.find(
+    (s) => String(s.id) === this.querySelector("#servicio").value,
+  );
+  this.costo = Number(serv?.price ?? 0);
+  this.querySelector("#resPrecio").textContent = `$ ${this.costo.toLocaleString("es-CO")}`;
+}
   reiniciar() {
     this.fecha.min = fechaLocal();
     this.fecha.value = fechaLocal();
@@ -120,7 +126,7 @@ class AgendarCitaModal extends HTMLElement {
   titulo: "Confirmar cita",
   mensaje: "Revisa los datos antes de agendar.",
   detalles: [
-    { etiqueta: "Taller", valor: this.taller.nombre },
+    { etiqueta: "Taller", valor: this.taller.name },
     { etiqueta: "Servicio", valor: servicioTexto },
     { etiqueta: "Vehículo", valor: vehiculoTexto },
     { etiqueta: "Fecha", valor: fechaLegible(this.fecha.value) },
@@ -147,7 +153,7 @@ class AgendarCitaModal extends HTMLElement {
      const resp = await guardarCita({
         taller_id: Number(this.modalEl.dataset.tallerId),
         // tallerNombre: this.querySelector("#citaTallerNombre").textContent,
-        servicio_id: this.querySelector("#servicio").value,
+        servicio_id:  Number(this.querySelector("#servicio").value),
         vehiculo_id :this.querySelector("#vehiculo").value,
         fecha: this.fecha.value,
         hora: op.value,

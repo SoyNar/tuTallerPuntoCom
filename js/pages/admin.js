@@ -1,21 +1,16 @@
-import { confirmar } from "../../components/js/confirm-modal.js";
-import {
-  eliminarTaller,
-  mergeTalleres,
-} from "../../services/talleres-service.js";
+import { obtenerTalleres } from "../../services/taller-service.js";
 import { crearFiltros, filtrarLista, normalizar } from "../utils/filtros.js";
 import { crearPaginador } from "../utils/paginator.js";
 import { filaTallerHTML, activarFallbackFotos } from "../views/filasTaller.js";
 
 const tbody = document.getElementById("filas-tabla");
 
-// una regla por filtro: (taller, valor) => ¿cumple?
+let talleres = [];
+
 const reglas = {
   texto: (t, v) =>
-    normalizar(`${t.nombre} ${t.nit} ${t.direccion} ${t.ciudad}`).includes(
-      normalizar(v),
-    ),
-  estado: (t, v) => t.estado === v,
+    normalizar(`${t.name} ${t.address} ${t.type}`).includes(normalizar(v)),
+  estado: (t, v) => t.status === v,
 };
 
 const paginador = crearPaginador({
@@ -35,7 +30,7 @@ const filtros = crearFiltros({
 });
 
 function renderizarTabla() {
-  const lista = filtrarLista(mergeTalleres(), filtros.valores(), reglas);
+  const lista = filtrarLista(talleres, filtros.valores(), reglas);
   const pagina = paginador.paginar(lista);
 
   tbody.innerHTML = pagina.length
@@ -43,19 +38,14 @@ function renderizarTabla() {
     : `<tr><td colspan="6" class="text-center text-secondary py-5">No hay talleres para mostrar.</td></tr>`;
 }
 
-tbody.addEventListener("click", async (e) => {
-  const boton = e.target.closest("[data-eliminar]");
-  if (!boton) return;
-
-  const taller = mergeTalleres().find(
-    (t) => t.id === Number(boton.dataset.eliminar),
-  );
-  if (!(await confirmar(`"${taller?.nombre}"`))) return;
-
-  eliminarTaller(boton.dataset.eliminar);
+async function cargar() {
+  talleres = await obtenerTalleres();
   renderizarTabla();
+}
+
+document.addEventListener("taller:guardado", () => {
+  cargar();
 });
 
-document.addEventListener("taller:guardado", renderizarTabla);
 activarFallbackFotos(tbody);
-renderizarTabla();
+cargar();

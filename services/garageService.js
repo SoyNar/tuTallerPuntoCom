@@ -1,50 +1,35 @@
 import {
-    mergeTalleres
-} from "../services/talleres-service.js";
+  obtenerTalleres,
+  obtenerTallerPorId,
+} from "./taller-service.js";
 
-
-
-// Consultar todos los talleres
-export async function fetchTalleres() {
-    await new Promise(resolve => setTimeout(resolve, 300));
-    return [...mergeTalleres()];
+// Todos los talleres del backend
+export function fetchTalleres() {
+  return obtenerTalleres();
 }
 
-// Buscar un taller por su id
-export async function fetchTallerPorId(id) {
-    const talleres = await fetchTalleres();
-    return talleres.get(id);
+// Un taller por id (usa la caché)
+export function fetchTallerPorId(id) {
+  return obtenerTallerPorId(id);
 }
 
-// Filtrar los talleres por estado activo
+// Talleres que tienen al menos un servicio activo
 export async function fetchTalleresActivos() {
-    const talleres = await fetchTalleres();
-
-    return talleres.filter(
-        taller => taller.estado === "activo"
-    );
+  const talleres = await obtenerTalleres();
+  return talleres.filter((t) => (t.services ?? []).some((s) => s.active));
 }
 
-// Filtrar los talleres por ciudad
-export async function buscarTalleresPorCiudad(ciudad) {
-    const talleres = await fetchTalleres();
-
-    return talleres.filter(
-        taller =>
-            taller.ciudad.toLowerCase() ===
-            ciudad.trim().toLowerCase()
-    );
-}
-
-// Filtrar los talleres por servicio
+// Talleres que ofrecen un servicio activo con ese nombre o categoría
 export async function buscarTalleresPorServicio(servicio) {
-    const talleres = await fetchTalleres();
+  const valor = servicio.trim().toLowerCase();
+  const talleres = await obtenerTalleres();
 
-    return talleres.filter(taller =>
-        taller.servicios.some(
-            item =>
-                item.toLowerCase() ===
-                servicio.trim().toLowerCase()
-        )
-    );
+  return talleres.filter((t) =>
+    (t.services ?? []).some(
+      (s) =>
+        s.active &&
+        (s.name.toLowerCase().includes(valor) ||
+          s.categoryServices.toLowerCase() === valor),
+    ),
+  );
 }

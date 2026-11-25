@@ -30,24 +30,39 @@ contenedor.innerHTML = html;
     alCambiar();
   });
 
-  return {
-    paginar(lista) {
-      total = lista.length;
-      if (pagina > totalPaginas()) pagina = totalPaginas();
+ return {
+  paginar(lista) {
+    total = lista.length;
+    if (pagina > totalPaginas()) pagina = totalPaginas();
 
-      const inicio = (pagina - 1) * porPagina;
-      const items = lista.slice(inicio, inicio + porPagina);
+    const inicio = (pagina - 1) * porPagina;
+    const items = lista.slice(inicio, inicio + porPagina);
 
-      if (info) {
-        info.textContent = total
-          ? `Mostrando ${inicio + 1}-${inicio + items.length} de ${total}`
-          : "";
-      }
-      pintarBotones();
-      return items;
-    },
-    reiniciar() {
-      pagina = 1;
-    },
-  };
+    if (info) {
+      info.textContent = total
+        ? `Mostrando ${inicio + 1}-${inicio + items.length} de ${total}`
+        : "";
+    }
+    pintarBotones();
+    return items;
+  },
+
+  actualizar({ pagina: paginaServidor, totalPaginas: tp, totalElementos }) {
+    pagina = paginaServidor + 1; 
+    total = totalElementos;
+    if (info) {
+      const inicio = paginaServidor * porPagina;
+      info.textContent = total
+        ? `Mostrando ${inicio + 1}-${Math.min(inicio + porPagina, total)} de ${total}`
+        : "";
+    }
+    pintarBotones();
+  },
+
+  paginaActual(){return pagina -1},
+
+  reiniciar() {
+    pagina = 1;
+  },
+};
 }
