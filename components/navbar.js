@@ -12,6 +12,12 @@ export class Navbar extends HTMLElement {
 
     onCitasChange = () => this.updateBagde();
 
+    // Al volver a la pestaña se pide el conteo de nuevo: cubre cambios hechos
+    // en otra pestaña y en el backend (p. ej. una cita que pasó a CONFIRMADA).
+    onVolverAPestana = () => {
+      if (document.visibilityState === "visible") this.updateBagde();
+    };
+
 
    async connectedCallback(){
     try{
@@ -77,15 +83,15 @@ export class Navbar extends HTMLElement {
     disconnectedCallback() {
         this.detenerSesion?.();
   window.removeEventListener("citas:modificadas", this.onCitasChange);
-  window.removeEventListener("storage", this.onCitasChange);
+  document.removeEventListener("visibilitychange", this.onVolverAPestana);
 }
 
     /**
-     * MEtodop para escuchar cambios de la agenda de citas
+     * Metodo para escuchar cambios de la agenda de citas
      */
     escuchasCambios(){
         window.addEventListener("citas:modificadas", this.onCitasChange);
-        window.addEventListener("storage", this.onCitasChange)
+        document.addEventListener("visibilitychange", this.onVolverAPestana);
     }
 
   

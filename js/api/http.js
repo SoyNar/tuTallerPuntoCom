@@ -67,4 +67,5 @@ export async function request(path, { method = "GET", body, headers = {}, signal
 export const get = (path, options) => request(path, { ...options, method: "GET" });
 export const post = (path, body, options) => request(path, { ...options, method: "POST", body });
 export const put = (path, body, options) => request(path, { ...options, method: "PUT", body });
+export const patch = (path, body, options) => request(path, { ...options, method: "PATCH", body });
 export const del = (path, options) => request(path, { ...options, method: "DELETE" });

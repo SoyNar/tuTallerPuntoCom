@@ -1,12 +1,23 @@
-import { obtenerTalleres } from '../../services/taller-service.js';
+import { escapeHTML } from './escapeHTML.js';
 
-export async function renderizarCitas(listaDeCitas, contendorId) {
-  const TALLERES = await obtenerTalleres();
-  // resto igual...
+// Color del badge según el estado que llega del backend
+const COLOR_ESTADO = {
+  confirmada: 'success',
+  pendiente: 'warning',
+  cancelada: 'danger',
+};
 
+/**
+ * Pinta una lista de citas en un contenedor.
+ * Los nombres (taller, servicio, placa) ya vienen en cada cita desde el backend.
+ * @param {Cita[]} listaDeCitas
+ * @param {string} contendorId
+ */
+export function renderizarCitas(listaDeCitas, contendorId) {
   const contenedor = document.getElementById(contendorId);
+  if (!contenedor) return;
   contenedor.innerHTML = ""
-  
+
   if (listaDeCitas.length === 0) {
     const pCitasVacias = document.createElement("p")
     pCitasVacias.className = "text-muted small text-center my-4"
@@ -20,11 +31,11 @@ export async function renderizarCitas(listaDeCitas, contendorId) {
     const mes = fecha.toLocaleString("es-ES", { month: "short" })
     const dia = fecha.getDate()
     const hora = fecha.toLocaleString("es-ES", { hour: "2-digit", minute: "2-digit", hour12: true })
-    const taller = TALLERES.find(t => String(t.id) === String(cita.taller_id))
-const nombreTaller = taller ? taller.name : "Taller desconocido"
-const servicio = taller?.services?.find(s => String(s.id) === String(cita.servicio_id))
-const nombreServicio = servicio?.name ?? "Servicio desconocido"
-    const estadoBadge = cita.estado === 'confirmada' ? 'success' : 'danger'
+    const nombreTaller = escapeHTML(cita.taller_nombre || "Taller desconocido")
+    const nombreServicio = escapeHTML(cita.servicio_nombre || "Servicio desconocido")
+    const placa = escapeHTML(cita.vehiculo_placa || `Vehículo #${cita.vehiculo_id}`)
+    const estado = escapeHTML(cita.estado)
+    const estadoBadge = COLOR_ESTADO[cita.estado] ?? 'secondary'
 
     col.className = "card border-0 rounded-3 shadow-sm p-3 mb-2 bg-white text-dark"
 
@@ -37,13 +48,13 @@ const nombreServicio = servicio?.name ?? "Servicio desconocido"
                 <div class="col-9 ps-3">
                 <div class="d-flex justify-content-between align-items-start mb-1">
                     <h6 class="fw-bold mb-0 text-truncate small" style="max-width: 65%;">${nombreTaller}</h6>
-                    <span class="badge rounded-pill bg-${estadoBadge}-subtle text-${estadoBadge} x-small" style="font-size: 0.65rem;">${cita?.estado}</span>
+                    <span class="badge rounded-pill bg-${estadoBadge}-subtle text-${estadoBadge} x-small" style="font-size: 0.65rem;">${estado}</span>
                 </div>
-                    <p class="mb-1 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-wrench me-1"></i> ${nombreServicio} · ${cita?.vehiculo_id}</p>
+                    <p class="mb-1 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-wrench me-1"></i> ${nombreServicio} · ${placa}</p>
                     <p class="mb-0 text-muted x-small" style="font-size: 0.75rem;"><i class="bi bi-clock me-1"></i> ${hora}</p>
                 </div>
             </div>
-            ${cita?.estado !== 'cancelada' ? `
+            ${cita.estado !== 'cancelada' ? `
             <div class="d-flex justify-content-between border-top mt-2 pt-2" style="font-size: 0.8rem;">
                 <a href="#" class="fw-semibold text-primary text-decoration-none" data-accion="reprogramar" data-id="${cita.id}">Reprogramar</a>
                 <a href="#" class="fw-semibold text-secondary text-decoration-none" data-accion="cancelar" data-id="${cita.id}">Cancelar</a>

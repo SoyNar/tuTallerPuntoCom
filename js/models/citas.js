@@ -12,15 +12,17 @@
 /**
  * 
  * @typedef {Object} Cita
+ * Cita tal como la usa el front (convertida desde el JSON del backend en citas-service).
  * @property {number} id
  * @property {number} taller_id
- * @property {number} usuario_id
+ * @property {string} taller_nombre      garageName
  * @property {number} servicio_id
+ * @property {string} servicio_nombre    serviceName
  * @property {number} vehiculo_id
- * @property {string} fecha
- * @property {string} hora
- * @property {number} costo_aproximado
- * @property {"confirmada"|"cancelada"} estado
+ * @property {string} vehiculo_placa     vehiclePlate
+ * @property {string} fecha              YYYY-MM-DD
+ * @property {string} hora               HH:mm
+ * @property {"pendiente"|"confirmada"|"cancelada"} estado
  * @property {boolean} reprogramada
  */
 

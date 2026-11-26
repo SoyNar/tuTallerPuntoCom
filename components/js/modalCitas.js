@@ -1,5 +1,5 @@
 import { renderizarCitas } from '../../js/utils/renderCitas.js';
-import { citasOrdenadas, cancelarCita, reprogramarCita } from '../../services/citas-service.js';
+import { citasOrdenadas, cancelarCita, reprogramarCita, esActiva, ESTADOS } from '../../services/citas-service.js';
 import { avisarCitaCancelada, avisarErrorCancelarCita, avisarCitaReprogramada, avisarErrorReprogramarCita } from '../../js/utils/avisos-cita.js';
 import { confirmar } from './confirm-modal.js';
 import { fechaLocal, bloquearHorasPasadas } from '../../js/utils/horarios-cita.js';
@@ -41,6 +41,7 @@ class MisCitasModal extends HTMLElement {
             <!-- Selector de Pestañas ultra compacto -->
             <ul class="nav nav-pills nav-fill bg-white p-1 rounded-pill mb-3 shadow-sm small fw-semibold" role="tablist">
             <li class="nav-item"><button class="nav-link active rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-todas">Todas</button></li>
+            <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-pend">Pendientes</button></li>
             <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-conf">Confirmadas</button></li>
             <li class="nav-item"><button class="nav-link rounded-pill py-1 small" data-bs-toggle="pill" data-bs-target="#pills-cancel">Canceladas</button></li>
             </ul>
@@ -48,6 +49,8 @@ class MisCitasModal extends HTMLElement {
             <!-- Contenedor de listados con Scroll integrado -->
             <div class="tab-content flex-grow-1 overflow-y-auto px-1" style="max-height: 100%;">
             <div class="tab-pane fade show active" id="pills-todas">
+            </div>
+            <div class="tab-pane fade" id="pills-pend">
             </div>
             <div class="tab-pane fade" id="pills-conf">
             </div>
@@ -122,6 +125,15 @@ class MisCitasModal extends HTMLElement {
     this.alCambiarCitas = () => this.actualizarCitas();
     window.addEventListener('citas:modificadas', this.alCambiarCitas);
 
+    // al volver a la pestaña, recargar (cambios en otra pestaña o en el backend).
+    // Si el formulario de reprogramar está abierto no se recarga, para no borrarlo.
+    this.alVolverAPestana = () => {
+      if (document.visibilityState !== 'visible') return;
+      if (this.querySelector('[data-volver]')) return;
+      this.actualizarCitas();
+    };
+    document.addEventListener('visibilitychange', this.alVolverAPestana);
+
     // escuchar click global para abrir modal
     document.addEventListener('click', (e) => {
       const btn = e.target.closest('#btnAbrirAgenda');
@@ -151,24 +163,27 @@ class MisCitasModal extends HTMLElement {
 
  disconnectedCallback() {
     window.removeEventListener('citas:modificadas', this.alCambiarCitas);
+    document.removeEventListener('visibilitychange', this.alVolverAPestana);
   }
 
   async actualizarCitas() {
+    // Una sola petición: la lista se reutiliza en pestañas, próxima cita y reprogramar
     const citas = await citasOrdenadas();
-    const citasConfirmadas = citas.filter(cita => cita.estado === 'confirmada');
-    const citasCanceladas = citas.filter(cita => cita.estado === 'cancelada');
+    this.citas = citas;
+    const porEstado = (estado) => citas.filter(cita => cita.estado === estado);
 
     renderizarCitas(citas, "pills-todas");
-    renderizarCitas(citasConfirmadas, "pills-conf");
-    renderizarCitas(citasCanceladas, "pills-cancel");
+    renderizarCitas(porEstado(ESTADOS.PENDIENTE), "pills-pend");
+    renderizarCitas(porEstado(ESTADOS.CONFIRMADA), "pills-conf");
+    renderizarCitas(porEstado(ESTADOS.CANCELADA), "pills-cancel");
 
-    await this.actualizarProximaCita();
+    this.actualizarProximaCita(citas);
   }
 
-  async actualizarProximaCita() {
+  actualizarProximaCita(citas) {
     const ahora = new Date();
-    const proxima = (await citasOrdenadas())
-      .filter(cita => cita.estado === 'confirmada')
+    const proxima = citas
+      .filter(esActiva)
       .map(cita => ({ ...cita, inicio: new Date(`${cita.fecha}T${cita.hora}`) }))
       .find(cita => cita.inicio >= ahora);
 
@@ -186,7 +201,7 @@ class MisCitasModal extends HTMLElement {
 
    async reprogramarFechayHora(enlace) {
     const id = Number(enlace.dataset.id);
-    const cita = (await citasOrdenadas()).find(c => c.id === id);
+    const cita = (this.citas ?? []).find(c => c.id === id);
     if (!cita) return null;
 
     const pie = enlace.parentElement; // contenedor de los enlaces Reprogramar / Cancelar
