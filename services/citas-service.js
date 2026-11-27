@@ -1,3 +1,5 @@
+import { agendarCita } from "../js/api/citas-api.js";
+
 const KEY = "citas";
 const ESTADO_CONFIRMADA = "confirmada";
 const ESTADO_CANCELADA = "cancelada";
@@ -49,20 +51,14 @@ export async function citasOrdenadas() {
  * @returns {Promise<Object|null>} la cita creada, o null si falló
  */
 export async function guardarCita(data) {
-  const citas = await obtenerCitas();
-
-  const nueva = {
-    ...data,
-    id: Date.now(),              
-    estado: ESTADO_CONFIRMADA,
-    reprogramada: false,
-  };
-
-  citas.push(nueva);
-  if (!persistir(citas)) return null;
-
-  notificarCambio("creada", nueva);
-  return nueva;
+  try {
+    const nueva = await agendarCita(data);
+    notificarCambio("creada", nueva);
+    return nueva;
+  } catch (error) {
+    console.error("No se pudo agendar la cita:", error);
+    return null;
+  }
 }
 
 /**
