@@ -55,9 +55,10 @@ class AgendarCitaModal extends HTMLElement {
 
   // Los vehículos sí siguen siendo del usuario, no del taller
   const vehiculos = await obtenerMisVehiculos();
+  const compatibles  = vehiculos.filter((v) => taller.typeVehicle === "AMBOS" || v.typeVehicle === taller.typeVehicle)
   this.llenarSelect(
     this.querySelector("#vehiculo"),
-    vehiculos,
+    compatibles,
     (v) => v.nombre,
   );
 
@@ -151,12 +152,12 @@ class AgendarCitaModal extends HTMLElement {
 
     
      const resp = await guardarCita({
-        taller_id: Number(this.modalEl.dataset.tallerId),
+        garageId: Number(this.modalEl.dataset.tallerId),
         // tallerNombre: this.querySelector("#citaTallerNombre").textContent,
-        servicio_id:  Number(this.querySelector("#servicio").value),
-        vehiculo_id :this.querySelector("#vehiculo").value,
-        fecha: this.fecha.value,
-        hora: op.value,
+        serviceId:  Number(this.querySelector("#servicio").value),
+        vehicleId :this.querySelector("#vehiculo").value,
+        date: this.fecha.value,
+        hour: op.value,
         costo_aproximado: this.costo,
         // horaTexto: op.text,
      });

@@ -3,6 +3,8 @@ import { crearFiltros, normalizar } from "../utils/filtros.js";
 import { getPaginaTalleres } from "../../js/api/taller.api.js";
 import { mostrarCargando, ocultarCargando } from "../utils/loader.js";
 import { crearPaginador } from "../utils/paginator.js";
+import { estaAutenticado } from "../../services/auth-service.js";
+import { obtenerMisVehiculos } from "../../services/profile-user-service.js";
 
 const contenedorTalleres = document.getElementById("contenedor-talleres");
 
@@ -10,6 +12,22 @@ const POR_PAGINA = 6;
 let paginaActual = 0;
 let filtroTexto = "";
 let visiblesActuales = [];
+let tiposUsuario = new Set(); // vacío = sin filtro
+
+async function resolverTiposUsuario() {
+  if (!estaAutenticado()) return;
+  try {
+    const vehiculos = await obtenerMisVehiculos();
+    tiposUsuario = new Set(vehiculos.map((v) => v.typeVehicle));
+  } catch (error) {
+    console.error("No se pudieron cargar los vehículos:", error);
+  }
+}
+
+function atiendeAlUsuario(taller) {
+  if (tiposUsuario.size === 0) return true;
+  return taller.typeVehicle === "AMBOS" || tiposUsuario.has(taller.typeVehicle);
+}
 
 const paginator = crearPaginador({
   porPagina: POR_PAGINA,
@@ -25,13 +43,19 @@ const paginator = crearPaginador({
 async function cargarPagina() {
   mostrarCargando("Cargando Talleres...");
   try {
-    const data = await getPaginaTalleres({ page: paginaActual, size: POR_PAGINA, status: "ACTIVO" });
+    const data = await getPaginaTalleres({
+      page: paginaActual,
+      size: POR_PAGINA,
+      status: "ACTIVO",
+    });
 
-    // Filtro de texto solo sobre la página recibida
-    visiblesActuales = data.content.filter((t) =>
-      normalizar(`${t.name} ${t.address} ${t.city} ${t.typeVehicle}`).includes(
-        normalizar(filtroTexto),
-      ),
+    // Filtra por tipo de vehículo del usuario y por texto, sobre la página recibida
+    visiblesActuales = data.content.filter(
+      (t) =>
+        atiendeAlUsuario(t) &&
+        normalizar(`${t.name} ${t.address} ${t.city} ${t.typeVehicle}`).includes(
+          normalizar(filtroTexto),
+        ),
     );
 
     renderizarTalleres(visiblesActuales);
@@ -67,4 +91,7 @@ contenedorTalleres.addEventListener("click", (e) => {
   if (taller) document.querySelector("agendar-cita-modal")?.abrir(taller);
 });
 
-document.addEventListener("DOMContentLoaded", cargarPagina);
+document.addEventListener("DOMContentLoaded", async () => {
+  await resolverTiposUsuario();
+  cargarPagina();
+});
