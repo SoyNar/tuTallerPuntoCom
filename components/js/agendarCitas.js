@@ -1,5 +1,5 @@
 import { guardarCita } from "../../services/citas-service.js";
-import {obtenerMisVehiculos} from "../../js/data/usuario-fake.js";
+import {obtenerMisVehiculos} from "../../services/profile-user-service.js";
 import { estaAutenticado } from "../../services/auth-service.js";
 import { confirmar as pedirConfirmacion } from "./confirm-modal.js";
 import {
@@ -44,7 +44,7 @@ class AgendarCitaModal extends HTMLElement {
   this.querySelector("#citaTallerNombre").textContent = taller.name;
 
   // Solo servicios activos, con el formato que usa el select
-  this.servicios = (taller.services ?? []).filter((s) => s.active);
+  this.servicios = taller.services ?? [];
 
   this.llenarSelect(
     this.querySelector("#servicio"),
@@ -58,7 +58,7 @@ class AgendarCitaModal extends HTMLElement {
   this.llenarSelect(
     this.querySelector("#vehiculo"),
     vehiculos,
-    (v) => `${v.marca} ${v.modelo} (${v.placa})`,
+    (v) => v.nombre,
   );
 
   this.reiniciar();

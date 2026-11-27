@@ -1,27 +1,19 @@
-// Vehículos registrados en el sistema (catálogo simulado)}
-import {obtenerUsuario} from "../../services/auth-service.js"
-import { usuariosFake } from "../data/usuarios-fake.js";
-import { vehiculosCatalogo } from "../data/vehiculos-fake.js";
+import { getUsuarioActual } from "../api/user.api.js";
 
+const TIPOS = { MOTO: "Moto", CARRO: "Carro" }; // ajusta a tu enum real
 
-// Usuario simulado: guarda ids de sus vehículos
-export const usuarioMock = usuariosFake[0]
-
-export function obtenerVehiculosUsuario(usuario) {
-  const ids = usuario?.vehiculos ?? [];
-  return vehiculosCatalogo.filter((v) => ids.includes(v.id));
+export function etiquetaVehiculo(v) {
+  return `${v.brand} ${v.model} · ${v.plate}`;
 }
 
 /**
- * Simulación de peticion de vehiculos al backend 
- * @returns 
+ * Vehículos del usuario autenticado (vienen dentro de /users/me)
  */
 export async function obtenerMisVehiculos() {
-  const usuario = obtenerUsuario();
-  if (!usuario) return [];
-
-  const propios = JSON.parse(localStorage.getItem('vehiculos')) ?? [];
-  return [...vehiculosCatalogo, ...propios].filter(
-    (v) => String(v.usuario_id) === String(usuario.id)
-  );
+  const usuario = await getUsuarioActual();
+  return (usuario?.vehicles ?? []).map((v) => ({
+    ...v,
+    nombre: etiquetaVehiculo(v),
+    tipo: TIPOS[v.typeVehicle] ?? v.typeVehicle,
+  }));
 }

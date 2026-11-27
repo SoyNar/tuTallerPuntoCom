@@ -35,10 +35,9 @@ export function renderizarTalleres(lista) {
     col.className = "col col-12 col-md-6 col-lg-4";
 
     const foto = escapar(taller.photoUrl || FOTO_DEFECTO);
-    const serviciosActivos = (taller.services ?? []).filter((s) => s.active);
-    const abierto = estaAbierto(taller.schedules);
-
-    const badgesServicios = serviciosActivos
+    const serviciosActivos = taller.services ?? [];
+    const abierto = taller.openNow;
+   const badgesServicios = (taller.services ?? [])
       .map(
         (servicio) =>
           `<span class="badge bg-light text-dark border me-1">${servicio.name}</span>`,
